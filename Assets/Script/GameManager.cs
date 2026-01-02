@@ -63,4 +63,35 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    // 전체 정당 지지자 수 계산
+    public int GetTotalPartyASupport()
+    {
+        int total = 0;
+        foreach (var region in allRegions)
+        {
+            total += (region.population * region.partyA.supportRate) / 100;
+        }
+        return total;
+    }
+
+    public int GetTotalPartyBSupport()
+    {
+        int total = 0;
+        foreach (var region in allRegions)
+        {
+            total += (region.population * region.partyB.supportRate) / 100;
+        }
+        return total;
+    }
+
+    public int GetTotalPartyCSupport()
+    {
+        int total = 0;
+        foreach (var region in allRegions)
+        {
+            total += (region.population * region.partyC.supportRate) / 100;
+        }
+        return total;
+    }
+
 }

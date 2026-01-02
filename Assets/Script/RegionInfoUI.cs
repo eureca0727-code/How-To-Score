@@ -4,16 +4,41 @@ using UnityEngine;
 public class RegionInfoUI : MonoBehaviour
 {
     public static RegionInfoUI Instance;
-
     public GameObject panel;
     public TextMeshProUGUI infoText;
 
     void Awake()
     {
         Instance = this;
-        panel.SetActive(false);
+        panel.SetActive(true); // 시작할 때 켜둠
     }
 
+    void Start()
+    {
+        ShowOverallStats(); // 게임 시작 시 전체 통계 표시
+    }
+
+    // 전체 통계 표시
+    public void ShowOverallStats()
+    {
+        panel.SetActive(true);
+
+        int totalA = GameManager.Instance.GetTotalPartyASupport();
+        int totalB = GameManager.Instance.GetTotalPartyBSupport();
+        int totalC = GameManager.Instance.GetTotalPartyCSupport();
+        int totalPopulation = 120; // 전체 인구
+
+        string info = "=== Overall Statistics ===\n\n";
+        info += $"Total Population: {totalPopulation}\n\n";
+        info += "Total Supporters:\n";
+        info += $"Party A: {totalA} people\n";
+        info += $"Party B: {totalB} people\n";
+        info += $"Party C: {totalC} people\n";
+
+        infoText.text = info;
+    }
+
+    // 특정 지역 정보 표시
     public void ShowRegionInfo(Region region)
     {
         panel.SetActive(true);
@@ -28,7 +53,7 @@ public class RegionInfoUI : MonoBehaviour
         info += $"Party C: {region.partyC.supportRate}%\n\n";
 
         // 전체 정책 수요도
-        info += "Policy Demands \n(PartySupport*Demands) \n";
+        info += "Policy Demands\n(PartySupport*Demands)\n";
         info += $"Economy: {region.GetEconomyDemand():F1}\n";
         info += $"Welfare: {region.GetWelfareDemand():F1}\n";
         info += $"Security: {region.GetSecurityDemand():F1}\n";
