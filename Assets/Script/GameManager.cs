@@ -12,18 +12,26 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
 
-        // MapContainer의 자식들에서 Region 컴포넌트 가져오기
         allRegions = mapContainer.GetComponentsInChildren<Region>();
+
+        // 이름순 정렬
+        System.Array.Sort(allRegions, (a, b) =>
+            string.Compare(a.regionName, b.regionName));
     }
 
     void Start()
     {
         InitializeGame();
+
     }
 
     void InitializeGame()
     {
         DistributePopulation();
+
+        // 선거구 랜덤 할당
+        DistrictManager.Instance.AssignRandomDistricts(allRegions);
+
 
         foreach (var region in allRegions)
         {

@@ -35,11 +35,11 @@ public class RegionInfoUI : MonoBehaviour
         int totalPopulation = 120; // 전체 인구
 
         string info = "=== Overall Statistics ===\n\n";
-        info += $"Total Population: {totalPopulation}\n\n";
+        info += $"Total Population: {totalPopulation} M \n\n";
         info += "Total Supporters:\n";
-        info += $"Party A: {totalA} people\n";
-        info += $"Party B: {totalB} people\n";
-        info += $"Party C: {totalC} people\n";
+        info += $"Party A: {totalA} M people\n";
+        info += $"Party B: {totalB} M people\n";
+        info += $"Party C: {totalC} M people\n";
 
         infoText.text = info;
     }
@@ -55,7 +55,7 @@ public class RegionInfoUI : MonoBehaviour
             region.partyC.supportRate);
                                         
         string info = $"Region: {region.regionName}\n";
-        info += $"Population: {region.population}\n\n";
+        info += $"Population: {region.population} M \n\n";
 
 
         // 전체 정책 수요도

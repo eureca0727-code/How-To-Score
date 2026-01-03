@@ -40,6 +40,10 @@ public class Region : MonoBehaviour
     public PartyData partyA; // 갑
     public PartyData partyB; // 을
     public PartyData partyC; // 병
+
+    [Header("District Info")]
+    public int districtId; // 선거구 ID (0=A, 1=B, ...)
+
     // 게임 시작 시 1회 초기화
     public void InitializeRegion()
     {
