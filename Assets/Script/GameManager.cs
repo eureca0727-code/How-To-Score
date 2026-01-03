@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
         allRegions = mapContainer.GetComponentsInChildren<Region>();
 
-        // 이름순 정렬
+        // 이름순 정렬(구역나누기용도)
         System.Array.Sort(allRegions, (a, b) =>
             string.Compare(a.regionName, b.regionName));
     }

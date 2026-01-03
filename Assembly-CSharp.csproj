@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Script\PartyBarChart.cs" />
+    <Compile Include="Assets\Script\UIManager.cs" />
     <Compile Include="Assets\Script\DistrictManager.cs" />
     <Compile Include="Assets\Script\Background.cs" />
     <Compile Include="Assets\Script\Region.cs" />

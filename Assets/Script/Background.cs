@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Background : MonoBehaviour
+public class MapBackground : MonoBehaviour
 {
     void OnMouseDown()
     {
