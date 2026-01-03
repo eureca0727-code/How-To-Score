@@ -7,6 +7,9 @@ public class RegionInfoUI : MonoBehaviour
     public GameObject panel;
     public TextMeshProUGUI infoText;
 
+    [Header("Bar Chart")]
+    public PartyBarChart barChart; 
+
     void Awake()
     {
         Instance = this;
@@ -26,6 +29,9 @@ public class RegionInfoUI : MonoBehaviour
         int totalA = GameManager.Instance.GetTotalPartyASupport();
         int totalB = GameManager.Instance.GetTotalPartyBSupport();
         int totalC = GameManager.Instance.GetTotalPartyCSupport();
+
+        barChart.UpdateChart(totalA, totalB, totalC); //전국 지지도 막대 비율용
+
         int totalPopulation = 120; // 전체 인구
 
         string info = "=== Overall Statistics ===\n\n";
@@ -43,14 +49,14 @@ public class RegionInfoUI : MonoBehaviour
     {
         panel.SetActive(true);
 
+        barChart.UpdateChartPercent(
+            region.partyA.supportRate,
+            region.partyB.supportRate,
+            region.partyC.supportRate);
+                                        
         string info = $"Region: {region.regionName}\n";
         info += $"Population: {region.population}\n\n";
 
-        // 정당 지지도
-        info += "Party Support\n";
-        info += $"Party A: {region.partyA.supportRate}%\n";
-        info += $"Party B: {region.partyB.supportRate}%\n";
-        info += $"Party C: {region.partyC.supportRate}%\n\n";
 
         // 전체 정책 수요도
         info += "Policy Demands\n(PartySupport*Demands)\n";

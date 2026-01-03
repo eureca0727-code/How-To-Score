@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject mapContainer; // Inspector에서 MapContainer 연결
     private Region[] allRegions;
-    private int currentRound = 1;
+    private int currentRound = 1; //아마 10라운드 까지?
 
     void Awake()
     {
@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
             region.UpdateRoundDemands();
         }
 
-        Debug.Log("라운드 " + currentRound + " 시작");
+        Debug.Log("라운드 " + currentRound);
     }
 
     void DistributePopulation()
