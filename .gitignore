@@ -10,6 +10,12 @@
 # MemoryCaptures can get excessive in size
 [Mm]emoryCaptures/
 
+# Visual Studio / Rider
+.vs/
+.idea/
+*.csproj
+*.sln
+
 # Asset meta files
 *.pidb.meta
 *.pdb.meta
@@ -37,3 +43,10 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.csproj
+*.sln
