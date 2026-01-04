@@ -68,7 +68,7 @@ public class RegionInfoUI : MonoBehaviour
     // 특정 지역 정보 표시
     public void ShowRegionInfo(Region region)
     {
-        panel.SetActive(true);
+        panel.SetActive(true); 
         currentRegion = region; // 현재 지역 저장
 
         barChart.UpdateChartPercent(
