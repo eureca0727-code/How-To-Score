@@ -56,15 +56,10 @@ public class Region : MonoBehaviour
         partyA.policyDemand.RandomizeDemands();
         partyB.policyDemand.RandomizeDemands();
         partyC.policyDemand.RandomizeDemands();
+
+
     }
 
-    // 매 라운드 시작 시 호출
-    public void UpdateRoundDemands()
-    {
-        partyA.policyDemand.RandomizeDemands();
-        partyB.policyDemand.RandomizeDemands();
-        partyC.policyDemand.RandomizeDemands();
-    }
 
     void RandomizeSupportRates()
     {
@@ -74,12 +69,18 @@ public class Region : MonoBehaviour
         partyC.supportRate = 100 - partyA.supportRate - partyB.supportRate;
     }
 
-    void OnMouseDown() // 클릭 감지
+    void OnMouseDown()
     {
+        // UI 클릭이 아닐 때만 실행
+        if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         RegionInfoUI.Instance.ShowRegionInfo(this);
     }
 
-     // 각 정책의 전체 수요도 계산
+    // 각 정책의 전체 수요도 계산
     public float GetEconomyDemand()
     {
         return (partyA.policyDemand.economy * partyA.supportRate +

@@ -66,8 +66,11 @@
     <Compile Include="Assets\Script\DistrictManager.cs" />
     <Compile Include="Assets\Script\Background.cs" />
     <Compile Include="Assets\Script\Region.cs" />
+    <Compile Include="Assets\Script\MultiSectionPie.cs" />
+    <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Script\GameManager.cs" />
     <Compile Include="Assets\Script\RegionInfoUI.cs" />
+    <Compile Include="Assets\Script\PromotionUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

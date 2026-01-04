@@ -43,10 +43,6 @@ public class GameManager : MonoBehaviour
     {
         currentRound++;
 
-        foreach (var region in allRegions)
-        {
-            region.UpdateRoundDemands();
-        }
 
         Debug.Log("¶ó¿îµå " + currentRound);
     }

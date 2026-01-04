@@ -31,15 +31,25 @@ public class UIManager : MonoBehaviour
         mapView.SetActive(false);
         promotionView.SetActive(true);
 
+        // PromotionUI 찾기
+        PromotionUI promotionUI = promotionView.GetComponent<PromotionUI>();
+        if (promotionUI == null)
+        {
+            promotionUI = promotionView.GetComponentInChildren<PromotionUI>();
+        }
+
         if (targetRegion != null)
         {
             Debug.Log($"{targetRegion.regionName} 지역 홍보 시작");
-            // TODO: 해당 지역 타겟팅
+            promotionUI.SetRegionalMode(targetRegion);
         }
         else
         {
             Debug.Log("전국 홍보 시작");
-            // TODO: 전국 타겟팅
+            promotionUI.SetNationalMode();
         }
+
+        // 차트 업데이트
+        promotionUI.ShowPromotionPanel();
     }
 }
