@@ -97,7 +97,7 @@ public class PromotionUI : MonoBehaviour
 
         titleText.text = "Regional Rating";
 
-        // 1. 해당 지역 갑/을/병 지지도
+        // 1. 해당 지역 갑/을/병 지지도 , debug 로그 나중에 지울것
         Debug.Log($"=== {selectedRegion.regionName} 지지도 ===");
         Debug.Log($"갑: {selectedRegion.partyA.supportRate}%");
         Debug.Log($"을: {selectedRegion.partyB.supportRate}%");
