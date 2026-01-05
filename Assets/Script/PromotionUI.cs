@@ -51,7 +51,7 @@ public class PromotionUI : MonoBehaviour
 
     void ShowNationalData()
     {
-        titleText.text = "Nation Rating";
+        titleText.text = "전국 지지도";
 
         // 1. 전국 갑/을/병 지지도
         int totalA = GameManager.Instance.GetTotalPartyASupport();
@@ -95,7 +95,7 @@ public class PromotionUI : MonoBehaviour
             return;
         }
 
-        titleText.text = "Regional Rating";
+        titleText.text = $"{selectedRegion.regionName} 지지도";
 
         // 1. 해당 지역 갑/을/병 지지도 , debug 로그 나중에 지울것
         Debug.Log($"=== {selectedRegion.regionName} 지지도 ===");

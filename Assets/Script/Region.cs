@@ -114,10 +114,10 @@ public class Region : MonoBehaviour
     {
         var policies = new System.Collections.Generic.List<(string name, float demand)>
     {
-        ("Economy", GetEconomyDemand()),
-        ("Welfare", GetWelfareDemand()),
-        ("Security", GetSecurityDemand()),
-        ("Environment", GetEnvironmentDemand())
+        ("경제", GetEconomyDemand()),
+        ("복지", GetWelfareDemand()),
+        ("안보", GetSecurityDemand()),
+        ("환경", GetEnvironmentDemand())
     };
 
         // 수요도 높은 순으로 정렬

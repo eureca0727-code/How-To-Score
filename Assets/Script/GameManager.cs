@@ -22,6 +22,12 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         InitializeGame();
+        // 지역 초기화 후 UI 업데이트
+        if (RegionInfoUI.Instance != null)
+        {
+            RegionInfoUI.Instance.ShowOverallStats();
+        }
+
 
     }
 

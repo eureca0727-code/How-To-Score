@@ -6,11 +6,15 @@ public class UIManager : MonoBehaviour
 
     [Header("View Panels")]
     public GameObject mapView;
-    public GameObject promotionView;  
+    public GameObject promotionView;
 
     void Awake()
     {
         Instance = this;
+
+        // 초기에는 지도 뷰만 표시
+        mapView.SetActive(true);
+        promotionView.SetActive(false);
     }
 
     public void ShowMapView()

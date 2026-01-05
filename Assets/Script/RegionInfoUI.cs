@@ -26,7 +26,6 @@ public class RegionInfoUI : MonoBehaviour
         {
             // 강제로 켜기
             promoteButton.gameObject.SetActive(true);
-
             promoteButton.onClick.AddListener(OnPromoteButtonClick);
         }
     }
@@ -41,7 +40,7 @@ public class RegionInfoUI : MonoBehaviour
     {
         panel.SetActive(true);
         currentRegion = null; // 전국 모드
-        
+
         int totalA = GameManager.Instance.GetTotalPartyASupport();
         int totalB = GameManager.Instance.GetTotalPartyBSupport();
         int totalC = GameManager.Instance.GetTotalPartyCSupport();
@@ -49,26 +48,26 @@ public class RegionInfoUI : MonoBehaviour
         barChart.UpdateChart(totalA, totalB, totalC);
 
         int totalPopulation = 120;
-        string info = "=== Overall Statistics ===\n\n";
-        info += $"Total Population: {totalPopulation} M \n\n";
-        info += "Total Supporters:\n";
-        info += $"Party A: {totalA} M people\n";
-        info += $"Party B: {totalB} M people\n";
-        info += $"Party C: {totalC} M people\n";
+        string info = "<size=28><b>전국 통계</b></size>\n\n";
+        info += $"총 인구: {totalPopulation}백만 명\n\n";
+        info += "정당별 지지자 수:\n\n\n";
+        info += $"정당 갑: {totalA}백만 명\n\n";
+        info += $"정당 을: {totalB}백만 명\n\n";
+        info += $"정당 병: {totalC}백만 명\n";
 
         infoText.text = info;
 
         // 버튼 텍스트 변경
         if (promoteButton != null)
         {
-            promoteButton.GetComponentInChildren<TextMeshProUGUI>().text = "Promote Nationwide";
+            promoteButton.GetComponentInChildren<TextMeshProUGUI>().text = "전국 홍보";
         }
     }
 
     // 특정 지역 정보 표시
     public void ShowRegionInfo(Region region)
     {
-        panel.SetActive(true); 
+        panel.SetActive(true);
         currentRegion = region; // 현재 지역 저장
 
         barChart.UpdateChartPercent(
@@ -77,16 +76,14 @@ public class RegionInfoUI : MonoBehaviour
             region.partyC.supportRate
         );
 
-        string info = $"Region: {region.regionName}\n";
-        info += $"Population: {region.population} M \n\n";
-
-        info += "Policy Demands\n(PartySupport*Demands)\n";
-        info += $"Economy: {region.GetEconomyDemand():F1}\n";
-        info += $"Welfare: {region.GetWelfareDemand():F1}\n";
-        info += $"Security: {region.GetSecurityDemand():F1}\n";
-        info += $"Environment: {region.GetEnvironmentDemand():F1}\n\n";
-
-        info += "--- Top 2 Policies ---\n";
+        string info = $"<size=28><b>{region.regionName}</b></size>\n\n";
+        info += $"인구: {region.population}백만 명\n\n";
+        info += "정책 수요도\n(정당지지율 × 수요도)\n";
+        info += $"경제: {region.GetEconomyDemand():F1}\n";
+        info += $"복지: {region.GetWelfareDemand():F1}\n";
+        info += $"안보: {region.GetSecurityDemand():F1}\n";
+        info += $"환경: {region.GetEnvironmentDemand():F1}\n\n";
+        info += "-상위 2개 정책-\n\n";
         info += region.GetTop2Policies();
 
         infoText.text = info;
@@ -94,7 +91,7 @@ public class RegionInfoUI : MonoBehaviour
         // 버튼 텍스트 변경
         if (promoteButton != null)
         {
-            promoteButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Promote in {region.regionName}";
+            promoteButton.GetComponentInChildren<TextMeshProUGUI>().text = $"{region.regionName} 홍보";
         }
     }
 
