@@ -28,8 +28,16 @@ public class PartyBarChart : MonoBehaviour
         UpdateChart(valueA, valueB, valueC, total);
     }
 
+    // 절대값 버전 - float (추가)
+    public void UpdateChart(float valueA, float valueB, float valueC)
+    {
+        float total = valueA + valueB + valueC;
+        UpdateChart(valueA, valueB, valueC, total);
+    }
+
+
     // 공통 로직
-    private void UpdateChart(int valueA, int valueB, int valueC, int total)
+    private void UpdateChart(float valueA, float valueB, float valueC, float total)
     {
         if (total == 0) total = 1;
 

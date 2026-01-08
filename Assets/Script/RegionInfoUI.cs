@@ -41,9 +41,9 @@ public class RegionInfoUI : MonoBehaviour
         panel.SetActive(true);
         currentRegion = null; // 전국 모드
 
-        int totalA = GameManager.Instance.GetTotalPartyASupport();
-        int totalB = GameManager.Instance.GetTotalPartyBSupport();
-        int totalC = GameManager.Instance.GetTotalPartyCSupport();
+        float totalA = GameManager.Instance.GetTotalPartyASupport();
+        float totalB = GameManager.Instance.GetTotalPartyBSupport();
+        float totalC = GameManager.Instance.GetTotalPartyCSupport();
 
         barChart.UpdateChart(totalA, totalB, totalC);
 

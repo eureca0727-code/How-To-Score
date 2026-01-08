@@ -7,20 +7,19 @@ public class MultiSectionPieChart : MonoBehaviour
     public List<Image> sectionImages; // Inspector에서 순서대로 연결
 
     // 3분할용 (정당)
-    public void SetData3(int value1, int value2, int value3)
+    public void SetData3(float value1, float value2, float value3)
     {
-        SetDataMultiple(new int[] { value1, value2, value3 });
+        SetDataMultiple(new float[] { value1, value2, value3 });
     }
-
     // 4분할용 (정책)
     public void SetData4(int value1, int value2, int value3, int value4)
     {
 
-        SetDataMultiple(new int[] { value1, value2, value3, value4 });
+        SetDataMultiple(new float[] { value1, value2, value3, value4 });
     }
 
     // 범용 함수
-    void SetDataMultiple(int[] values)
+    void SetDataMultiple(float[] values)
     {
         // 총합 계산
         int total = 0;

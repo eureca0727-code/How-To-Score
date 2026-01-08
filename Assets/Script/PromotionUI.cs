@@ -9,6 +9,8 @@ public class PromotionUI : MonoBehaviour
 
     [Header("Charts")]
     public MultiSectionPieChart partyChart;        // 갑/을/병 지지도
+    public PartyBarChart partyBarChart;            // 갑/을/병 막대 그래프 (추가)
+
     public MultiSectionPieChart partyA_PolicyChart; // 갑 지지자 정책 수요
     public MultiSectionPieChart partyB_PolicyChart; // 을 지지자 정책 수요
     public MultiSectionPieChart partyC_PolicyChart; // 병 지지자 정책 수요
@@ -54,9 +56,9 @@ public class PromotionUI : MonoBehaviour
         titleText.text = "전국 지지도";
 
         // 1. 전국 갑/을/병 지지도
-        int totalA = GameManager.Instance.GetTotalPartyASupport();
-        int totalB = GameManager.Instance.GetTotalPartyBSupport();
-        int totalC = GameManager.Instance.GetTotalPartyCSupport();
+        float totalA = GameManager.Instance.GetTotalPartyASupport();
+        float totalB = GameManager.Instance.GetTotalPartyBSupport();
+        float totalC = GameManager.Instance.GetTotalPartyCSupport();
         partyChart.SetData3(totalA, totalB, totalC);
 
         // 2. 갑 지지자들의 정책 수요 (전국 평균)
@@ -85,6 +87,8 @@ public class PromotionUI : MonoBehaviour
             partyC_Demand.security,
             partyC_Demand.environment
         );
+        partyBarChart.UpdateChart(totalA, totalB, totalC); // 막대 그래프 업데이트 추가
+
     }
 
     void ShowRegionalData()
@@ -150,6 +154,12 @@ public class PromotionUI : MonoBehaviour
             selectedRegion.partyC.policyDemand.security,
             selectedRegion.partyC.policyDemand.environment
         );
+        partyBarChart.UpdateChartPercent(
+            selectedRegion.partyA.supportRate,
+            selectedRegion.partyB.supportRate,
+            selectedRegion.partyC.supportRate
+        );
+
     }
 
 

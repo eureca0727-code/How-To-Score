@@ -60,7 +60,6 @@ public class GameManager : MonoBehaviour
         {
             region.population = 5;
         }
-
         // 남은 60을 랜덤 배분
         int remaining = 60;
         while (remaining > 0)
@@ -74,34 +73,33 @@ public class GameManager : MonoBehaviour
         }
     }
     // 전체 정당 지지자 수 계산
-    public int GetTotalPartyASupport()
+    public float GetTotalPartyASupport()
     {
-        int total = 0;
+        float total = 0;
         foreach (var region in allRegions)
         {
-            total += (region.population * region.partyA.supportRate) / 100;
+            total += (region.population * region.partyA.supportRate) / 100f;
         }
         return total;
     }
 
-    public int GetTotalPartyBSupport()
+    public float GetTotalPartyBSupport()
     {
-        int total = 0;
+        float total = 0;
         foreach (var region in allRegions)
         {
-            total += (region.population * region.partyB.supportRate) / 100;
+            total += (region.population * region.partyB.supportRate) / 100f;
         }
         return total;
     }
 
-    public int GetTotalPartyCSupport()
+    public float GetTotalPartyCSupport()
     {
-        int total = 0;
+        float total = 0;
         foreach (var region in allRegions)
         {
-            total += (region.population * region.partyC.supportRate) / 100;
+            total += (region.population * region.partyC.supportRate) / 100f;
         }
         return total;
     }
-
 }

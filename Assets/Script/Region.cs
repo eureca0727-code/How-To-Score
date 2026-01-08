@@ -63,12 +63,30 @@ public class Region : MonoBehaviour
 
     void RandomizeSupportRates()
     {
-        // 합이 100이 되도록
-        partyA.supportRate = UnityEngine.Random.Range(0, 101);
-        partyB.supportRate = UnityEngine.Random.Range(0, 101 - partyA.supportRate);
-        partyC.supportRate = 100 - partyA.supportRate - partyB.supportRate;
-    }
+        int minSupport = 15;
 
+        // A~F 지역은 갑당 지지도 상한 40%
+        int maxA = (regionName == "A" || regionName == "B" || regionName == "C" ||
+                    regionName == "D" || regionName == "E" || regionName == "F") ? 40 : 100;
+
+        int remaining = 100 - (minSupport * 3); // 55
+
+        // 갑당의 추가 지지율 (상한 고려)
+        int maxExtraA = Mathf.Min(remaining, maxA - minSupport);
+        int extraA = UnityEngine.Random.Range(0, maxExtraA + 1);
+
+        int remainingAfterA = remaining - extraA;
+
+        // 을당 (남은 범위에서)
+        int maxExtraB = Mathf.Min(remainingAfterA, 100 - minSupport);
+        int extraB = UnityEngine.Random.Range(0, maxExtraB + 1);
+
+        int extraC = remaining - extraA - extraB;
+
+        partyA.supportRate = minSupport + extraA;
+        partyB.supportRate = minSupport + extraB;
+        partyC.supportRate = minSupport + extraC;
+    }
     void OnMouseDown()
     {
         // UI 클릭이 아닐 때만 실행
