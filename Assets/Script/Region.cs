@@ -65,7 +65,7 @@ public class Region : MonoBehaviour
     {
         int minSupport = 15;
 
-        // A~F 지역은 갑당 지지도 상한 40%
+        // A~F 지역은 갑당 지지도 상한 40%, 최저 15%, 그외는 최저 15 최대 70
         int maxA = (regionName == "A" || regionName == "B" || regionName == "C" ||
                     regionName == "D" || regionName == "E" || regionName == "F") ? 40 : 100;
 
