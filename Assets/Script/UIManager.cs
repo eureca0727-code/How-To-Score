@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     [Header("View Panels")]
     public GameObject mapView;
     public GameObject promotionView;
+    public GameObject electionView;
 
     void Awake()
     {
@@ -15,6 +16,17 @@ public class UIManager : MonoBehaviour
         // 초기에는 지도 뷰만 표시
         mapView.SetActive(true);
         promotionView.SetActive(false);
+        electionView.SetActive(false);
+    }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F12))
+        {
+            if (DebugUI.Instance != null)
+            {
+                DebugUI.Instance.gameObject.SetActive(!DebugUI.Instance.gameObject.activeSelf);
+            }
+        }
     }
 
     public void ShowMapView()
@@ -56,4 +68,19 @@ public class UIManager : MonoBehaviour
         // 차트 업데이트
         promotionUI.ShowPromotionPanel();
     }
+
+    public void ShowElectionView()
+    {
+        mapView.SetActive(false);
+        promotionView.SetActive(false);
+        electionView.SetActive(true);
+    }
+
+    public void HideAllPanels()
+    {
+        mapView.SetActive(false);
+        promotionView.SetActive(false);
+        electionView.SetActive(false);
+    }
+
 }

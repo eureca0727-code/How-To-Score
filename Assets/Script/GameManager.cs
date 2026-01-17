@@ -121,4 +121,44 @@ public class GameManager : MonoBehaviour
 
         Debug.Log($"전국 지지도 변경: 갑({amountA:+#;-#;0}), 을({amountB:+#;-#;0}), 병({amountC:+#;-#;0})");
     }
+    // 특정 선거구의 정당별 지지율 계산
+    public (float partyA, float partyB, float partyC) GetDistrictSupport(int districtId)
+    {
+        // 해당 선거구에 속한 지역들 찾기
+        Region[] districtRegions = System.Array.FindAll(allRegions,
+            region => region.districtId == districtId);
+
+        if (districtRegions.Length == 0)
+        {
+            Debug.LogError($"선거구 {districtId}에 지역이 없습니다!");
+            return (0, 0, 0);
+        }
+
+        // 총 인구수
+        int totalPopulation = 0;
+
+        // 각 정당의 지지자 수
+        float totalSupportA = 0;
+        float totalSupportB = 0;
+        float totalSupportC = 0;
+
+        foreach (var region in districtRegions)
+        {
+            totalPopulation += region.population;
+
+            // 각 지역의 정당별 지지자 수 = 인구수 * 지지율 / 100
+            totalSupportA += region.population * region.partyA.supportRate / 100f;
+            totalSupportB += region.population * region.partyB.supportRate / 100f;
+            totalSupportC += region.population * region.partyC.supportRate / 100f;
+        }
+
+        // 선거구 전체 지지율 = 지지자 수 / 총 인구수 * 100
+        float districtSupportA = (totalSupportA / totalPopulation) * 100f;
+        float districtSupportB = (totalSupportB / totalPopulation) * 100f;
+        float districtSupportC = (totalSupportC / totalPopulation) * 100f;
+
+        Debug.Log($"선거구 {districtId}: 갑 {districtSupportA:F1}%, 을 {districtSupportB:F1}%, 병 {districtSupportC:F1}%");
+
+        return (districtSupportA, districtSupportB, districtSupportC);
+    }
 }

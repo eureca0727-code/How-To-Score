@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class PromotionUI : MonoBehaviour
 {
     [Header("UI Elements")]
-    public TextMeshProUGUI titleText;
+    public TextMeshProUGUI titleText;   
 
     [Header("Charts")]
     public MultiSectionPieChart partyChart;        // 갑/을/병 지지도
@@ -22,13 +22,19 @@ public class PromotionUI : MonoBehaviour
 
     [Header("Event System")]
     public GameObject eventPanel;
-    public TextMeshProUGUI eventText;
+    public TextMeshProUGUI supportChangeText; // 지지도 변화율 표시
+    public TextMeshProUGUI eventText; // 이벤트 대사
+    public Button startvoteButton; // 선거 시작 버튼
+
 
     private bool isNationalMode = true;
     private Region selectedRegion = null;
     private QuestData[] allQuests;
     public Button promoteButton;
     private QuestData currentQuest;
+
+    private bool campaignSuccess;
+    private int campaignChangeA, campaignChangeB, campaignChangeC;
 
     void Start()
     {
@@ -37,6 +43,7 @@ public class PromotionUI : MonoBehaviour
         if (yesButton != null) yesButton.onClick.AddListener(OnYesButtonClick);
         if (noButton != null) noButton.onClick.AddListener(OnNoButtonClick);
         if (promoteButton != null) promoteButton.onClick.AddListener(OnPromoteButtonClick);  // 추가
+        if (startvoteButton != null) startvoteButton.onClick.AddListener(OnStartVoteButtonClick); // ← 추가
 
 
         // Quest Panel 초기에는 꺼두기
@@ -164,15 +171,18 @@ public class PromotionUI : MonoBehaviour
     // 특정 지역 선거운동 처리
     private void ProcessRegionalPromotion(bool isSuccess)
     {
+        campaignSuccess = isSuccess;
         if (isSuccess)
         {
             // 성공: 갑 +30, 을/병 -15
+            campaignChangeA = 30; campaignChangeB = -15; campaignChangeC = -15; //eventPanel에 표시할 값 저장
             selectedRegion.ChangeSupportRate(30, -15, -15);
             Debug.Log($"{selectedRegion.regionName} 선거운동 성공!");
         }
         else
         {
             // 실패: 갑 -30, 을/병 +15
+            campaignChangeA = -30; campaignChangeB = 15; campaignChangeC = 15; //eventPanel에 표시할 값 저장
             selectedRegion.ChangeSupportRate(-30, 15, 15);
             Debug.Log($"{selectedRegion.regionName} 선거운동 실패!");
         }
@@ -181,15 +191,19 @@ public class PromotionUI : MonoBehaviour
     // 전국 선거운동 처리
     private void ProcessNationalPromotion(bool isSuccess)
     {
+        campaignSuccess = isSuccess;
         if (isSuccess)
         {
             // 성공: 모든 지역 갑 +6, 을/병 -3
+            campaignChangeA = 6; campaignChangeB = -3; campaignChangeC = -3; //eventPanel에 표시할 값 저장
+
             GameManager.Instance.ChangeAllRegionsSupport(6, -3, -3);
             Debug.Log("전국 선거운동 성공!");
         }
         else
         {
             // 실패: 모든 지역 갑 -6, 을/병 +3
+            campaignChangeA = -6; campaignChangeB = 3; campaignChangeC = 3; //eventPanel에 표시할 값 저장
             GameManager.Instance.ChangeAllRegionsSupport(-6, 3, 3);
             Debug.Log("전국 선거운동 실패!");
         }
@@ -224,6 +238,7 @@ public class PromotionUI : MonoBehaviour
         questPanel.SetActive(false);
         eventPanel.SetActive(true);
         eventText.text = currentQuest.yesResponse;
+        ShowEventResult(campaignSuccess, campaignChangeA, campaignChangeB, campaignChangeC);
     }
 
     void OnNoButtonClick()
@@ -231,6 +246,7 @@ public class PromotionUI : MonoBehaviour
         questPanel.SetActive(false);
         eventPanel.SetActive(true);
         eventText.text = currentQuest.noResponse;
+        ShowEventResult(campaignSuccess, campaignChangeA, campaignChangeB, campaignChangeC);
     }
 
     // Start Promotion 버튼에서 호출
@@ -434,5 +450,16 @@ public class PromotionUI : MonoBehaviour
         gameObject.SetActive(false); // promotionPanel 대신 gameObject
     }
 
+    // 선거운동 결과를 EventPanel에 표시
+    public void ShowEventResult(bool isSuccess, int amountA, int amountB, int amountC)
+    {
+        string result = isSuccess ? "선거운동 성공!" : "선거운동 실패!";
+        supportChangeText.text = $"{result}\n갑당 {amountA:+#;-#;0}%, 을당 {amountB:+#;-#;0}%, 병당 {amountC:+#;-#;0}%";
+    }
+    void OnStartVoteButtonClick()
+    {
+        UIManager.Instance.ShowElectionView();
+        VotingUI.Instance.StartVoting();
+    }
 
 }
