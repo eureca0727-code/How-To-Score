@@ -252,7 +252,9 @@ public class PromotionUI : MonoBehaviour
     // Start Promotion 버튼에서 호출
     public void ShowPromotionPanel()
     {
-        // promotionPanel.SetActive(true); // 이미 UIManager에서 활성화했으니 필요없음
+        // 하위 패널 전부 초기화
+        if (questPanel != null) questPanel.SetActive(false);
+        if (eventPanel != null) eventPanel.SetActive(false);
         UpdateCharts();
     }
 

@@ -8,8 +8,8 @@ public class ResultUI : MonoBehaviour
 {
     [Header("UI")]
     public TextMeshProUGUI titleText;
-    public TextMeshProUGUI resultText; // ← 추가
-    public TextMeshProUGUI statusText; // ← 추가
+    public TextMeshProUGUI resultText;
+    public TextMeshProUGUI statusText;
     public Button nextButton; // → 버튼 (성공 시)
     public Button restartButton; // 처음으로 버튼 (실패 시)
 
@@ -40,14 +40,7 @@ public class ResultUI : MonoBehaviour
         if (restartButton != null) restartButton.onClick.AddListener(OnRestartButtonClick);
 
         // 처음엔 모두 회색
-        foreach (var container in districtContainers)
-        {
-            Image[] childImages = container.GetComponentsInChildren<Image>();
-            foreach (var img in childImages)
-            {
-                img.color = defaultColor;
-            }
-        }
+        ResetDistrictColors();
     }
 
     public void ShowResults()
@@ -64,7 +57,26 @@ public class ResultUI : MonoBehaviour
         if (nextButton != null) nextButton.gameObject.SetActive(false);
         if (restartButton != null) restartButton.gameObject.SetActive(false);
 
+        // District 이미지 색깔 초기화
+        ResetDistrictColors();
+
         StartCoroutine(RevealResults());
+    }
+
+    // District 색깔 초기화
+    void ResetDistrictColors()
+    {
+        foreach (var container in districtContainers)
+        {
+            if (container != null)
+            {
+                Image[] childImages = container.GetComponentsInChildren<Image>();
+                foreach (var img in childImages)
+                {
+                    img.color = defaultColor;
+                }
+            }
+        }
     }
 
     IEnumerator RevealResults()
@@ -130,12 +142,12 @@ public class ResultUI : MonoBehaviour
         if (isSuccess)
         {
             statusText.text = "의석 획득 성공";
-            statusText.color = Color.red; // 성공은 초록색
+            statusText.color = Color.red; 
         }
         else
         {
             statusText.text = "의석 획득 실패";
-            statusText.color = Color.red; // 실패는 빨간색
+            statusText.color = Color.red; 
         }
 
         // 1초 대기 후 버튼 표시

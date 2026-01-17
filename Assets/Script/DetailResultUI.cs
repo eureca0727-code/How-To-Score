@@ -18,11 +18,6 @@ public class DetailResultUI : MonoBehaviour
     {
         Instance = this;
 
-        // 버튼 이벤트 연결
-        if (closeButton != null)
-        {
-            closeButton.onClick.AddListener(OnCloseButtonClick);
-        }
     }
 
     void Start()
