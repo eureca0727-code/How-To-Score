@@ -102,4 +102,23 @@ public class GameManager : MonoBehaviour
         }
         return total;
     }
+
+    // 전국 모든 지역의 지지도를 변경
+    public void ChangeAllRegionsSupport(int amountA, int amountB, int amountC)
+    {
+        // 변화량 합이 0인지 확인
+        if (amountA + amountB + amountC != 0)
+        {
+            Debug.LogError($"전국 지지도 변화량 합이 0이 아닙니다! (갑:{amountA}, 을:{amountB}, 병:{amountC})");
+            return;
+        }
+
+        // 모든 지역에 동일한 변화 적용
+        foreach (var region in allRegions)
+        {
+            region.ChangeSupportRate(amountA, amountB, amountC);
+        }
+
+        Debug.Log($"전국 지지도 변경: 갑({amountA:+#;-#;0}), 을({amountB:+#;-#;0}), 병({amountC:+#;-#;0})");
+    }
 }

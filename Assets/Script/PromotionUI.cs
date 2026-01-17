@@ -141,21 +141,69 @@ public class PromotionUI : MonoBehaviour
         };
     }
 
-    public void OnPromoteButtonClick()  // "홍보 진행하기" 버튼에 연결
+    // "홍보 진행하기" 버튼 클릭 시
+    public void OnPromoteButtonClick()
     {
+        // 90% 성공, 10% 실패
+        bool isSuccess = Random.Range(0, 100) < 90;
+
+        if (isNationalMode) // 전국 선거운동
+        {
+            ProcessNationalPromotion(isSuccess);
+        }
+        else // 특정 지역 선거운동
+        {
+            ProcessRegionalPromotion(isSuccess);
+        }
+
+        // 퀘스트 시작
         questPanel.SetActive(true);
         StartQuest();
     }
 
+    // 특정 지역 선거운동 처리
+    private void ProcessRegionalPromotion(bool isSuccess)
+    {
+        if (isSuccess)
+        {
+            // 성공: 갑 +30, 을/병 -15
+            selectedRegion.ChangeSupportRate(30, -15, -15);
+            Debug.Log($"{selectedRegion.regionName} 선거운동 성공!");
+        }
+        else
+        {
+            // 실패: 갑 -30, 을/병 +15
+            selectedRegion.ChangeSupportRate(-30, 15, 15);
+            Debug.Log($"{selectedRegion.regionName} 선거운동 실패!");
+        }
+    }
+
+    // 전국 선거운동 처리
+    private void ProcessNationalPromotion(bool isSuccess)
+    {
+        if (isSuccess)
+        {
+            // 성공: 모든 지역 갑 +6, 을/병 -3
+            GameManager.Instance.ChangeAllRegionsSupport(6, -3, -3);
+            Debug.Log("전국 선거운동 성공!");
+        }
+        else
+        {
+            // 실패: 모든 지역 갑 -6, 을/병 +3
+            GameManager.Instance.ChangeAllRegionsSupport(-6, 3, 3);
+            Debug.Log("전국 선거운동 실패!");
+        }
+    }
     public void StartQuest()
     {
-        float totalA = GameManager.Instance.GetTotalPartyASupport();
-        int randomIndex;
+        float regionSupportA = selectedRegion.partyA.supportRate;
+        Debug.Log($"지역 {selectedRegion.regionName}의 갑당 지지도: {regionSupportA}%");
 
-        // 갑당 지지도가 50 이상이면 0~14 (전체), 미만이면 5~14 (일반 질문만)
-        if (totalA >= 50)
+        int randomIndex;
+        // 갑당 지지도가 50 이상이면 0~5 (지지자 전용), 미만이면 5~14 (일반 질문만)
+        if (regionSupportA >= 50)
         {
-            randomIndex = Random.Range(0, allQuests.Length); // 0~14
+            randomIndex = Random.Range(0, 5); // 0~4
         }
         else
         {
@@ -385,4 +433,6 @@ public class PromotionUI : MonoBehaviour
     {
         gameObject.SetActive(false); // promotionPanel 대신 gameObject
     }
+
+
 }

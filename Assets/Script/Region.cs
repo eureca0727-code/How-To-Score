@@ -42,7 +42,7 @@ public class Region : MonoBehaviour
     public PartyData partyC; // 병
 
     [Header("District Info")]
-    public int districtId; // 선거구 ID (0=A, 1=B, ...)
+    public int districtId; // 선거구 ID (0=A, 1=B, 2=C)
 
     // 게임 시작 시 1회 초기화
     public void InitializeRegion()
@@ -143,6 +143,26 @@ public class Region : MonoBehaviour
 
         // 이름만 반환 (값 제외)
         return $"{policies[0].name}, {policies[1].name}";
+    }
+
+    // 세 정당의 지지도를 직접 변경 
+public void ChangeSupportRate(int amountA, int amountB, int amountC)
+    {
+        // 변화량 합이 0인지 확인
+        if (amountA + amountB + amountC != 0)
+        {
+            Debug.LogError($"지지도 변화량 합이 0이 아닙니다! (갑:{amountA}, 을:{amountB}, 병:{amountC})");
+            return;
+        }
+
+        partyA.supportRate += amountA;
+        partyB.supportRate += amountB;
+        partyC.supportRate += amountC;
+
+        // 0~100 범위 제한
+        partyA.supportRate = Mathf.Clamp(partyA.supportRate, 0, 100);
+        partyB.supportRate = Mathf.Clamp(partyB.supportRate, 0, 100);
+        partyC.supportRate = Mathf.Clamp(partyC.supportRate, 0, 100);
     }
 
 
