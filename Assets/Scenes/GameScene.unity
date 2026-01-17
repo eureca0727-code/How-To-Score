@@ -6301,7 +6301,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &811711763
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15274,15 +15274,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2067760724}
-  - component: {fileID: 2067760725}
   - component: {fileID: 2067760726}
   m_Layer: 5
-  m_Name: 4. Result View
+  m_Name: 4. Detail Result View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2067760724
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15303,22 +15302,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2067760725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2067760723}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b231ecbc1632f249939c8f878cf60e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DetailResultUI
-  closeButton: {fileID: 0}
-  partyAColor: {r: 1, g: 0, b: 0, a: 0.6}
-  partyBColor: {r: 0, g: 1, b: 0, a: 0.6}
-  partyCColor: {r: 0, g: 0, b: 1, a: 0.6}
 --- !u!114 &2067760726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15332,6 +15315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DetailResultUI
   closeButton: {fileID: 1440697168}
+  closeButtonText: {fileID: 715271908}
   partyAColor: {r: 1, g: 0, b: 0, a: 0.6}
   partyBColor: {r: 0, g: 1, b: 0, a: 0.6}
   partyCColor: {r: 0, g: 0, b: 1, a: 0.6}

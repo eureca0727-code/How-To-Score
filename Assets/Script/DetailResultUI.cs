@@ -6,6 +6,8 @@ public class DetailResultUI : MonoBehaviour
 {
     [Header("UI")]
     public Button closeButton;
+    public TextMeshProUGUI closeButtonText; 
+
 
     [Header("Colors")]
     public Color partyAColor = new Color(1f, 0f, 0f, 0.6f); // 빨강 반투명
@@ -30,10 +32,22 @@ public class DetailResultUI : MonoBehaviour
 
     public void ShowDetailResult()
     {
+        // 버튼 텍스트 변경
+        if (closeButtonText != null)
+        {
+            if (GameManager.Instance.IsGameOver())
+            {
+                closeButtonText.text = "엔딩 보기";
+            }
+            else
+            {
+                closeButtonText.text = "다음 라운드 진행하기";
+            }
+        }
+
         // Map의 각 Region에 색깔 적용
         ApplyWinnerColorsToMap();
     }
-
     void ApplyWinnerColorsToMap()
     {
         Region[] allRegions = GameManager.Instance.mapContainer.GetComponentsInChildren<Region>();
