@@ -6,7 +6,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject mapContainer; // Inspector에서 MapContainer 연결
     private Region[] allRegions;
-    private int currentRound = 1; //아마 10라운드 까지?
+    private int currentRound = 1;
+    private const int MAX_ROUNDS = 5; // 최대 라운드
 
     void Awake()
     {
@@ -44,14 +45,35 @@ public class GameManager : MonoBehaviour
             region.InitializeRegion();
         }
     }
+    public int GetCurrentRound()
+    {
+        return currentRound;
+    }
+
+    public int GetMaxRounds()
+    {
+        return MAX_ROUNDS;
+    }
+
+    public bool IsGameOver()
+    {
+        return currentRound >= MAX_ROUNDS;
+    }
 
     public void StartNewRound()
     {
-        currentRound++;
-
-
-        Debug.Log("라운드 " + currentRound);
+        if (currentRound < MAX_ROUNDS)
+        {
+            currentRound++;
+            Debug.Log($"라운드 {currentRound} 시작!");
+        }
+        else
+        {
+            Debug.Log("게임 종료!");
+            // 최종 결과 화면으로
+        }
     }
+
 
     void DistributePopulation()
     {

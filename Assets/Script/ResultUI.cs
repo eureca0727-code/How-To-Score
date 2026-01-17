@@ -1,23 +1,44 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using UnityEngine.SceneManagement; // 씬 재시작용
 
 public class ResultUI : MonoBehaviour
 {
+    [Header("UI")]
+    public TextMeshProUGUI titleText;
+    public TextMeshProUGUI resultText; // ← 추가
+    public TextMeshProUGUI statusText; // ← 추가
+    public Button nextButton; // → 버튼 (성공 시)
+    public Button restartButton; // 처음으로 버튼 (실패 시)
+
     [Header("District Containers")]
-    public Transform[] districtContainers; // District0~5 GameObject들
+    public Transform[] districtContainers;
 
     [Header("Party Colors")]
-    public Color partyAColor = Color.red;    // 갑당 빨강
-    public Color partyBColor = Color.green;  // 을당 초록
-    public Color partyCColor = Color.blue;   // 병당 파랑
-    public Color defaultColor = Color.gray;  // 기본 회색
+    public Color partyAColor = Color.red;
+    public Color partyBColor = Color.green;
+    public Color partyCColor = Color.blue;
+    public Color defaultColor = Color.gray;
 
     [Header("Settings")]
-    public float revealDelay = 0.5f; // 0.5초 간격
+    public float revealDelay = 0.5f;
 
     void Start()
     {
+        // 처음엔 텍스트 숨기기
+        if (resultText != null) resultText.text = "";
+        if (statusText != null) statusText.text = "";
+
+        // 처음엔 버튼 숨기기
+        if (nextButton != null) nextButton.gameObject.SetActive(false);
+        if (restartButton != null) restartButton.gameObject.SetActive(false);
+
+        // 버튼 클릭 이벤트 연결
+        if (nextButton != null) nextButton.onClick.AddListener(OnNextButtonClick);
+        if (restartButton != null) restartButton.onClick.AddListener(OnRestartButtonClick);
+
         // 처음엔 모두 회색
         foreach (var container in districtContainers)
         {
@@ -31,12 +52,27 @@ public class ResultUI : MonoBehaviour
 
     public void ShowResults()
     {
+        // 타이틀 업데이트
+        int round = GameManager.Instance.GetCurrentRound();
+        titleText.text = $"<{round}회 선거 결과>";
+
+        // 텍스트 초기화
+        resultText.text = "";
+        statusText.text = "";
+
+        // 버튼 초기화
+        if (nextButton != null) nextButton.gameObject.SetActive(false);
+        if (restartButton != null) restartButton.gameObject.SetActive(false);
+
         StartCoroutine(RevealResults());
     }
 
     IEnumerator RevealResults()
     {
+        // 패널 켜진 후 1초 대기
         yield return new WaitForSeconds(1f);
+
+        int partyASeats = 0; // 갑당 의석수 카운트
 
         // 각 선거구 결과 계산 및 표시
         for (int i = 0; i < 6; i++)
@@ -58,6 +94,7 @@ public class ResultUI : MonoBehaviour
             if (support.partyA > support.partyB && support.partyA > support.partyC)
             {
                 winnerColor = partyAColor; // 갑당 승리
+                partyASeats++; // 갑당 의석 +1
             }
             else if (support.partyB > support.partyA && support.partyB > support.partyC)
             {
@@ -81,6 +118,54 @@ public class ResultUI : MonoBehaviour
             yield return new WaitForSeconds(revealDelay);
         }
 
+        // 모든 색깔이 나타난 후
+        resultText.text = $"총 6석 중 {partyASeats}석을 획득하였습니다.";
+
+        // 1초 대기
+        yield return new WaitForSeconds(1f);
+
+        // 성공/실패 판정
+        bool isSuccess = partyASeats > 0; // 1석 이상이면 성공
+
+        if (isSuccess)
+        {
+            statusText.text = "의석 획득 성공";
+            statusText.color = Color.red; // 성공은 초록색
+        }
+        else
+        {
+            statusText.text = "의석 획득 실패";
+            statusText.color = Color.red; // 실패는 빨간색
+        }
+
+        // 1초 대기 후 버튼 표시
+        yield return new WaitForSeconds(1f);
+
+        if (isSuccess)
+        {
+            nextButton.gameObject.SetActive(true); // → 버튼 표시
+        }
+        else
+        {
+            restartButton.gameObject.SetActive(true); // 처음으로 버튼 표시
+        }
+
         Debug.Log("선거 결과 표시 완료!");
+    }
+
+    // → 버튼 클릭 시 (성공)
+    void OnNextButtonClick()
+    {
+        Debug.Log("세부 결과 화면으로 이동");
+
+        // UIManager를 통해 전환
+        UIManager.Instance.ShowDetailResultView();
+    }
+
+    // 처음으로 버튼 클릭 시 (실패)
+    void OnRestartButtonClick()
+    {
+        Debug.Log("게임 첫 화면으로");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

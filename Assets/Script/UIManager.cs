@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour
     public GameObject mapView;
     public GameObject promotionView;
     public GameObject electionView;
+    public GameObject detailResultView; 
+
 
     void Awake()
     {
@@ -17,6 +19,8 @@ public class UIManager : MonoBehaviour
         mapView.SetActive(true);
         promotionView.SetActive(false);
         electionView.SetActive(false);
+        detailResultView.SetActive(false); 
+
     }
     void Update()
     {
@@ -74,6 +78,16 @@ public class UIManager : MonoBehaviour
         mapView.SetActive(false);
         promotionView.SetActive(false);
         electionView.SetActive(true);
+    }
+    public void ShowDetailResultView()
+    {
+        mapView.SetActive(false);
+        promotionView.SetActive(false);
+        electionView.SetActive(false);
+        detailResultView.SetActive(true);
+
+        // DetailResultUI¿« ShowDetailResult »£√‚
+        detailResultView.GetComponent<DetailResultUI>().ShowDetailResult();
     }
 
     public void HideAllPanels()

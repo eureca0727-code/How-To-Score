@@ -63,4 +63,16 @@ public class DistrictManager : MonoBehaviour
             allRegions[i].GetComponent<SpriteRenderer>().color = districtColors[districtId];
         }
     }
+
+    // 선거구 색상 반환(다음 라운드 진행용)
+    public Color GetDistrictColor(int districtId)
+    {
+        if (districtId >= 0 && districtId < districtColors.Length)
+        {
+            return districtColors[districtId];
+        }
+
+        Debug.LogError($"잘못된 districtId: {districtId}");
+        return Color.white;
+    }
 }
