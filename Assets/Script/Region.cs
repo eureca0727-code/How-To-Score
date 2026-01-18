@@ -35,6 +35,8 @@ public class Region : MonoBehaviour
     [Header("Basic Info")]
     public string regionName;
     public int population; // 5~15
+    public string regionDescription;
+
 
     [Header("Party Support")]
     public PartyData partyA; // °©

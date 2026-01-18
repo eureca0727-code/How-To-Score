@@ -801,6 +801,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 185224944}
   m_CullTransparentMesh: 1
+--- !u!1 &186901178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 186901179}
+  - component: {fileID: 186901180}
+  m_Layer: 0
+  m_Name: CardDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &186901179
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186901178}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1083285564}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &186901180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186901178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8a757d46c01aec4583e398918af498c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardDatabase
 --- !u!1 &201403687
 GameObject:
   m_ObjectHideFlags: 0
@@ -2954,6 +2998,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 437878526}
   m_CullTransparentMesh: 1
+--- !u!1 &452927766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 452927768}
+  - component: {fileID: 452927767}
+  m_Layer: 0
+  m_Name: Party C Hand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &452927767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452927766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae180ca940032ef4bb15f347372ba391, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartyCardHand
+  cardsInHand: []
+  partyName: C
+--- !u!4 &452927768
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452927766}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1748474172}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &467132902
 GameObject:
   m_ObjectHideFlags: 0
@@ -3198,6 +3288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Region
   regionName: C
   population: 0
+  regionDescription: "\uC758\uD68C\uAC00 \uC704\uCE58\uD574 \uC788\uB2E4.  "
   partyA:
     supportRate: 0
     policyDemand:
@@ -4173,6 +4264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Region
   regionName: B
   population: 0
+  regionDescription: "\uAD6D\uB9BD\uACF5\uC6D0\uC774 \uC788\uB2E4.  "
   partyA:
     supportRate: 0
     policyDemand:
@@ -4944,6 +5036,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Region
   regionName: I
   population: 0
+  regionDescription: "\uB178\uC778 \uC720\uAD8C\uC790 \uBE44\uC728\uC774 \uB192\uC740
+    \uC9C0\uC5ED\uC774\uB2E4.  "
   partyA:
     supportRate: 0
     policyDemand:
@@ -5411,6 +5505,7 @@ Transform:
   - {fileID: 1615740131}
   - {fileID: 1742278551}
   - {fileID: 1617697147}
+  - {fileID: 1242598223}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &686815365
@@ -6301,7 +6396,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &811711763
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6941,6 +7036,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Region
   regionName: J
   population: 0
+  regionDescription: "\uC720\uB3D9\uC778\uAD6C\uAC00 \uB9CE\uC740 \uC9C0\uC5ED\uC774\uB2E4.  "
   partyA:
     supportRate: 0
     policyDemand:
@@ -8656,6 +8752,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1067347261}
   m_CullTransparentMesh: 1
+--- !u!1 &1083285563
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1083285564}
+  m_Layer: 0
+  m_Name: Card
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1083285564
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083285563}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1654.6, y: 710.88043, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 186901179}
+  - {fileID: 1748474172}
+  - {fileID: 1388309133}
+  - {fileID: 1514733837}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1151172470
 GameObject:
   m_ObjectHideFlags: 0
@@ -8780,6 +8911,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1162773696}
   m_CullTransparentMesh: 1
+--- !u!1 &1165095059
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1165095061}
+  - component: {fileID: 1165095060}
+  m_Layer: 0
+  m_Name: Player Hand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1165095060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165095059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae180ca940032ef4bb15f347372ba391, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartyCardHand
+  cardsInHand: []
+  partyName: 
+--- !u!4 &1165095061
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165095059}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1748474172}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1168602841
 GameObject:
   m_ObjectHideFlags: 0
@@ -8963,6 +9140,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Region
   regionName: D
   population: 0
+  regionDescription: "\uAC70\uB300 \uBC29\uC1A1\uC0AC\uC758 \uBCF8\uC0AC\uAC00 \uC704\uCE58\uD574
+    \uC788\uB2E4.  "
   partyA:
     supportRate: 0
     policyDemand:
@@ -9211,6 +9390,58 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1242598222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1242598223}
+  - component: {fileID: 1242598224}
+  m_Layer: 0
+  m_Name: CardGameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1242598223
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242598222}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 683003831}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1242598224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242598222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a0f8010aa21098498334293196f0b82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardGameManager
+  playerHand: {fileID: 1165095060}
+  partyBHand: {fileID: 1470286347}
+  partyCHand: {fileID: 452927767}
+  currentTurn: 0
+  playerActionCount: 0
+  partyBActionCount: 0
+  partyCActionCount: 0
+  currentRound: 1
 --- !u!1 &1258907287
 GameObject:
   m_ObjectHideFlags: 0
@@ -9355,6 +9586,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Region
   regionName: G
   population: 0
+  regionDescription: "\uCCAD\uB144 \uC720\uAD8C\uC790 \uBE44\uC728\uC774 \uB192\uC740
+    \uC9C0\uC5ED\uC774\uB2E4.  "
   partyA:
     supportRate: 0
     policyDemand:
@@ -10114,6 +10347,53 @@ MeshRenderer:
   m_SortingOrder: 10
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1388309132
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1388309133}
+  - component: {fileID: 1388309134}
+  m_Layer: 0
+  m_Name: Card Distributor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1388309133
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388309132}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1083285564}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1388309134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388309132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2031736c33b924a4d8897effe65f2adb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardDistributor
+  playerHand: {fileID: 1165095060}
+  partyBHand: {fileID: 1470286347}
+  partyCHand: {fileID: 452927767}
 --- !u!1 &1396697506
 GameObject:
   m_ObjectHideFlags: 0
@@ -10851,6 +11131,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1456982637}
   m_CullTransparentMesh: 1
+--- !u!1 &1470286346
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1470286348}
+  - component: {fileID: 1470286347}
+  m_Layer: 0
+  m_Name: Party B Hand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1470286347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470286346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae180ca940032ef4bb15f347372ba391, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartyCardHand
+  cardsInHand: []
+  partyName: B
+--- !u!4 &1470286348
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470286346}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1748474172}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1480012050
 GameObject:
   m_ObjectHideFlags: 0
@@ -11237,6 +11563,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1514318414}
   m_CullTransparentMesh: 1
+--- !u!1 &1514733836
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1514733837}
+  - component: {fileID: 1514733838}
+  m_Layer: 0
+  m_Name: Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1514733837
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514733836}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1083285564}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1514733838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514733836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 145379aa5b94f424f998ffe1e3c5aedc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardSystemTest
 --- !u!1 &1520786593
 GameObject:
   m_ObjectHideFlags: 0
@@ -11423,6 +11793,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Region
   regionName: L
   population: 0
+  regionDescription: "\uAD6D\uACBD\uC9C0\uB300\uC774\uB2E4.  "
   partyA:
     supportRate: 0
     policyDemand:
@@ -12702,6 +13073,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Region
   regionName: A
   population: 0
+  regionDescription: "\uB300\uD615 \uC5B8\uB860\uC758 \uBCF8\uC0AC\uAC00 \uC874\uC7AC\uD55C\uB2E4.  "
   partyA:
     supportRate: 0
     policyDemand:
@@ -12897,6 +13269,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   mapContainer: {fileID: 1598649282}
+--- !u!1 &1748474171
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1748474172}
+  m_Layer: 0
+  m_Name: Hands
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1748474172
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748474171}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1165095061}
+  - {fileID: 1470286348}
+  - {fileID: 452927768}
+  m_Father: {fileID: 1083285564}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1757587830
 GameObject:
   m_ObjectHideFlags: 0
@@ -13004,6 +13410,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Region
   regionName: K
   population: 0
+  regionDescription: "\uB18D\uC5C5 \uC885\uC0AC\uC790\uAC00 \uB9CE\uC740 \uC9C0\uC5ED\uC774\uB2E4. "
   partyA:
     supportRate: 0
     policyDemand:
@@ -13186,6 +13593,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Region
   regionName: F
   population: 0
+  regionDescription: "\uC5EC\uB7EC \uB300\uAE30\uC5C5\uC758 \uBCF8\uC0AC\uAC00 \uC704\uCE58\uD55C
+    \uC9C0\uC5ED\uC774\uB2E4.  "
   partyA:
     supportRate: 0
     policyDemand:
@@ -13706,6 +14115,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Region
   regionName: H
   population: 0
+  regionDescription: "\uACF5\uC601\uBC29\uC1A1 \uBCF8\uC0AC\uAC00 \uC704\uCE58\uD574
+    \uC788\uB2E4.  "
   partyA:
     supportRate: 0
     policyDemand:
@@ -15032,6 +15443,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Region
   regionName: E
   population: 0
+  regionDescription: "\uD070 \uC911\uC559 \uBC95\uC6D0\uC774 \uC788\uC5B4 \uBC95\uC870\uC778\uB4E4\uC774
+    \uB9CE\uC774 \uADFC\uBB34\uD558\uB294 \uC9C0\uC5ED\uC774\uB2E4.  "
   partyA:
     supportRate: 0
     policyDemand:
@@ -15880,3 +16293,4 @@ SceneRoots:
   - {fileID: 18757657}
   - {fileID: 1151172472}
   - {fileID: 683003831}
+  - {fileID: 1083285564}

@@ -77,6 +77,12 @@ public class RegionInfoUI : MonoBehaviour
         );
 
         string info = $"<size=28><b>{region.regionName}</b></size>\n\n";
+        // 지역 특성 문구 추가
+        if (!string.IsNullOrEmpty(region.regionDescription))
+        {
+            info += $"{region.regionDescription}\n\n";
+        }
+
         info += $"인구: {region.population}백만 명\n\n";
         info += "정책 수요도\n(정당지지율 × 수요도)\n";
         info += $"경제: {region.GetEconomyDemand():F1}\n";
