@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class CardDistributor : MonoBehaviour
 {
-    public PartyCardHand playerHand; // °©´ç (ÇÃ·¹ÀÌ¾î)
-    public PartyCardHand partyBHand; // À»´ç
-    public PartyCardHand partyCHand; // º´´ç
+    public PartyCardHand playerHand; // í”Œë ˆì´ì–´
+    public PartyCardHand partyBHand; // ì„
+    public PartyCardHand partyCHand; // ë³‘
 
-    // °¢ Áö¿ªÀÇ Æ¯¼º Ä«µå ¸ÅÇÎ (Áö¿ª¸í -> Ä«µåID)
+    // ê° ì§€ì—­ë³„ íŠ¹ì • ì¹´ë“œ ë§¤í•‘ (ì§€ì—­ëª… -> ì¹´ë“œID)
     private Dictionary<string, string> regionCardMap;
 
     void Awake()
@@ -20,28 +20,28 @@ public class CardDistributor : MonoBehaviour
     {
         regionCardMap = new Dictionary<string, string>
         {
-            { "Áö¿ª A", "M1" }, // ´ëÇü ¾ğ·Ğ -> ¾ğ·Ğ ±â»ç
-            { "Áö¿ª B", "S3" }, // ±¹¸³°ø¿ø -> (È¯°æ °ü·Ã, Æ¯¼ö·Î °¡Á¤)
-            { "Áö¿ª C", "M5" }, // ÀÇÈ¸ -> ÀÇÈ¸ ¹ß¾ğ
-            { "Áö¿ª D", "M2" }, // °Å´ë ¹æ¼Û»ç -> TV ÀÎÅÍºä
-            { "Áö¿ª E", "D2" }, // ¹ı¿ø -> ¹ıÀû ´ëÀÀ
-            { "Áö¿ª F", "A1" }, // ´ë±â¾÷ -> Ä·ÆäÀÎ ½½·Î°Ç
-            { "Áö¿ª G", "M4" }, // Ã»³âÃş -> SNS
-            { "Áö¿ª H", "M2" }, // °ø¿µ¹æ¼Û -> TV ÀÎÅÍºä
-            { "Áö¿ª I", "D1" }, // ³ëÀÎÃş -> °ø½Ä ¼±°Å¿îµ¿ ÀÚ·áÁı
-            { "Áö¿ª J", "A2" }, // À¯µ¿ÀÎ±¸ -> Çö¼ö¸·
-            { "Áö¿ª K", "M3" }, // ³ó¾÷ -> Åä·ĞÈ¸
-            { "Áö¿ª L", "M5" }  // ±¹°æ -> ÀÇÈ¸ ¹ß¾ğ
+            { "ì§€ì—­ A", "M1" }, // ê¸°ì íšŒê²¬ -> ê¸°ì íšŒê²¬
+            { "ì§€ì—­ B", "S3" }, // í™˜ê²½ì „ë§ -> (í™˜ê²½ ì´ìŠˆ, íŠ¹ì •ì  ì´ìŠˆ)
+            { "ì§€ì—­ C", "M5" }, // êµ­íšŒ -> êµ­íšŒ ì¤‘ê³„
+            { "ì§€ì—­ D", "M2" }, // ë¯¼ë‹¨ ì„ ê±°ì‚¬ë¬´ -> TV ì¸í„°ë·°
+            { "ì§€ì—­ E", "D2" }, // ê°ì‚¬ -> ê²½ë ¥ ê²€ì¦
+            { "ì§€ì—­ F", "A1" }, // êµìœ¡ -> ìº í˜ì¸ ë„¤ê±°í‹°ë¸Œ
+            { "ì§€ì—­ G", "M4" }, // ì²­ì†Œë…„ -> SNS
+            { "ì§€ì—­ H", "M2" }, // ì‚°ì—…ì§€êµ¬ -> TV ì¸í„°ë·°
+            { "ì§€ì—­ I", "D1" }, // ì€í‡´ì -> ì •ì±… ê³µì•½ì„œ ìë£Œì§‘
+            { "ì§€ì—­ J", "A2" }, // íŒŸìºìŠ¤íŠ¸ -> ë¹„ë°©ì „
+            { "ì§€ì—­ K", "M3" }, // ìƒì—… -> í† ë¡ íšŒ
+            { "ì§€ì—­ L", "M5" }  // ì˜ë£Œ -> êµ­íšŒ ì¤‘ê³„
         };
     }
 
-    // ¶ó¿îµå ½ÃÀÛ ½Ã »ó´ë Á¤´ç Ä«µå ¹èºĞ
+    // ë¼ìš´ë“œ ì‹œì‘ ì‹œ ì–‘ë‹¹ í–‰ë™ ì¹´ë“œ ë¶„ë°°
     public void DistributeCardsForRound(int currentRound, List<Region> wonRegionsB, List<Region> wonRegionsC)
     {
-        // À»´ç Ä«µå ¹èºĞ
+        // ì„ ì¹´ë“œ ë¶„ë°°
         DistributeCardsForParty(partyBHand, currentRound, wonRegionsB, true);
 
-        // º´´ç Ä«µå ¹èºĞ
+        // ë³‘ ì¹´ë“œ ë¶„ë°°
         DistributeCardsForParty(partyCHand, currentRound, wonRegionsC, false);
     }
 
@@ -50,7 +50,7 @@ public class CardDistributor : MonoBehaviour
         hand.ClearHand();
         List<string> cards = new List<string>();
 
-        // 2~5¶ó¿îµåÀÏ °æ¿ì, ÀÌÀü ÅÏ¿¡ ½Â¸®ÇÑ ¼±°Å±¸ÀÇ Áö¿ª Æ¯¼º Ä«µå Ãß°¡
+        // 2~5ë¼ìš´ë“œ ì‹œ, ì§ì „ ë¼ìš´ë“œì—ì„œ ìŠ¹ë¦¬í•œ ì§€ì—­ë§ˆë‹¤ í•´ë‹¹ íŠ¹ì • ì¹´ë“œ ì¶”ê°€
         if (currentRound >= 2 && wonRegions != null && wonRegions.Count > 0)
         {
             foreach (Region region in wonRegions)
@@ -60,8 +60,8 @@ public class CardDistributor : MonoBehaviour
                     string cardId = regionCardMap[region.regionName];
                     Card card = CardDatabase.Instance.GetCard(cardId);
 
-                    // Çàµ¿Ä«µå(M, A, S, D)¸¸ Ãß°¡
-                    if (card != null)
+                    // í–‰ë™ì¹´ë“œ(M, A, S, D)ë§Œ ì¶”ê°€, ì¤‘ë³µ ì²´í¬
+                    if (card != null && !cards.Contains(cardId))
                     {
                         cards.Add(cardId);
                     }
@@ -69,19 +69,19 @@ public class CardDistributor : MonoBehaviour
             }
         }
 
-        // ¿ì¼±¼øÀ§¿¡ µû¶ó Á¤·Ä ¹× 6Àå Á¦ÇÑ
+        // ìš°ì„ ìˆœìœ„ì— ë”°ë¼ ì •ë ¬ í›„ 6ì¥ ì„ íƒ
         if (cards.Count > 6)
         {
             cards = SortAndLimitCards(cards, isPartyB);
         }
 
-        // 6Àå ¹Ì¸¸ÀÏ °æ¿ì ±âº» Ä«µå Ãß°¡
+        // 6ì¥ ë¯¸ë§Œì¼ ê²½ìš° ê¸°ë³¸ ì¹´ë“œ ì¶”ê°€
         if (cards.Count < 6)
         {
             if (isPartyB)
             {
-                // À»´ç: A1, A2 ¿ì¼±
-                while (cards.Count < 6 && cards.Count < 2)
+                // ì„: A1, A2 ìš°ì„ 
+                while (cards.Count < 6)
                 {
                     if (!cards.Contains("A1"))
                         cards.Add("A1");
@@ -93,8 +93,8 @@ public class CardDistributor : MonoBehaviour
             }
             else
             {
-                // º´´ç: D1, D2 ¿ì¼±
-                while (cards.Count < 6 && cards.Count < 2)
+                // ë³‘: D1, D2 ìš°ì„ 
+                while (cards.Count < 6)
                 {
                     if (!cards.Contains("D1"))
                         cards.Add("D1");
@@ -106,7 +106,7 @@ public class CardDistributor : MonoBehaviour
             }
         }
 
-        // ¿©ÀüÈ÷ 6Àå ¹Ì¸¸ÀÌ¸é M1~M5 ·£´ı Ãß°¡
+        // ê·¸ë˜ë„ 6ì¥ ë¯¸ë§Œì´ë©´ M1~M5 ëœë¤ ì¶”ê°€
         List<string> mCards = new List<string> { "M1", "M2", "M3", "M4", "M5" };
         while (cards.Count < 6)
         {
@@ -114,21 +114,21 @@ public class CardDistributor : MonoBehaviour
             cards.Add(randomM);
         }
 
-        // Ä«µå ¼Õ¿¡ Ãß°¡
+        // ì¹´ë“œ í•¸ë“œì— ì¶”ê°€
         foreach (string cardId in cards)
         {
             hand.AddCard(cardId);
         }
     }
 
-    // ¿ì¼±¼øÀ§¿¡ µû¶ó Ä«µå Á¤·Ä ¹× 6Àå Á¦ÇÑ
+    // ìš°ì„ ìˆœìœ„ì— ë”°ë¼ ì¹´ë“œ ì •ë ¬ í›„ 6ì¥ ì„ íƒ
     List<string> SortAndLimitCards(List<string> cards, bool isPartyB)
     {
         List<string> result = new List<string>();
 
         if (isPartyB)
         {
-            // À»´ç ¿ì¼±¼øÀ§: M > A > S > D
+            // ì„ ìš°ì„ ìˆœìœ„: M > A > S > D
             result.AddRange(cards.Where(c => CardDatabase.Instance.GetCard(c).cardType == CardType.M).OrderBy(c => c));
             result.AddRange(cards.Where(c => CardDatabase.Instance.GetCard(c).cardType == CardType.A).OrderBy(c => c));
             result.AddRange(cards.Where(c => CardDatabase.Instance.GetCard(c).cardType == CardType.S).OrderBy(c => c));
@@ -136,14 +136,14 @@ public class CardDistributor : MonoBehaviour
         }
         else
         {
-            // º´´ç ¿ì¼±¼øÀ§: S > M > D > A
+            // ë³‘ ìš°ì„ ìˆœìœ„: S > M > D > A
             result.AddRange(cards.Where(c => CardDatabase.Instance.GetCard(c).cardType == CardType.S).OrderBy(c => c));
             result.AddRange(cards.Where(c => CardDatabase.Instance.GetCard(c).cardType == CardType.M).OrderBy(c => c));
             result.AddRange(cards.Where(c => CardDatabase.Instance.GetCard(c).cardType == CardType.D).OrderBy(c => c));
             result.AddRange(cards.Where(c => CardDatabase.Instance.GetCard(c).cardType == CardType.A).OrderBy(c => c));
         }
 
-        // 6ÀåÀ¸·Î Á¦ÇÑ
+        // 6ì¥ê¹Œì§€ë§Œ ì„ íƒ
         return result.Take(6).ToList();
     }
 }
