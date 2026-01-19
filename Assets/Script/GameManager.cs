@@ -4,10 +4,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public GameObject mapContainer; // Inspector¿¡¼­ MapContainer ¿¬°á
+    public GameObject mapContainer; // Inspectorì—ì„œ MapContainer ì„¤ì •
     private Region[] allRegions;
     private int currentRound = 1;
-    private const int MAX_ROUNDS = 5; // ÃÖ´ë ¶ó¿îµå
+    private const int MAX_ROUNDS = 5; // ìµœëŒ€ ë¼ìš´ë“œ
 
     void Awake()
     {
@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
         allRegions = mapContainer.GetComponentsInChildren<Region>();
 
-        // ÀÌ¸§¼ø Á¤·Ä(±¸¿ª³ª´©±â¿ëµµ)
+        // ì´ë¦„ë³„ ì •ë ¬(ê°€ë‚˜ë‹¤ë¼ë§ˆë°”ì‚¬ì•„ìì°¨ì¹´íƒ€íŒŒí•˜ ìˆœ)
         System.Array.Sort(allRegions, (a, b) =>
             string.Compare(a.regionName, b.regionName));
     }
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         InitializeGame();
-        // Áö¿ª ÃÊ±âÈ­ ÈÄ UI ¾÷µ¥ÀÌÆ®
+        // ê²Œì„ ì´ˆê¸°í™” í›„ UI ì—…ë°ì´íŠ¸
         if (RegionInfoUI.Instance != null)
         {
             RegionInfoUI.Instance.ShowOverallStats();
@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     {
         DistributePopulation();
 
-        // ¼±°Å±¸ ·£´ı ÇÒ´ç
+        // ì§€ì—­ë³„ ì„ ê±°êµ¬ í• ë‹¹
         DistrictManager.Instance.AssignRandomDistricts(allRegions);
 
 
@@ -65,24 +65,24 @@ public class GameManager : MonoBehaviour
         if (currentRound < MAX_ROUNDS)
         {
             currentRound++;
-            Debug.Log($"¶ó¿îµå {currentRound} ½ÃÀÛ!");
+            Debug.Log($"ë¼ìš´ë“œ {currentRound} ì‹œì‘!");
         }
         else
         {
-            Debug.Log("°ÔÀÓ Á¾·á!");
-            // ÃÖÁ¾ °á°ú È­¸éÀ¸·Î
+            Debug.Log("ê²Œì„ ì¢…ë£Œ!");
+            // ê²Œì„ ì¢…ë£Œ í™”ë©´ìœ¼ë¡œ
         }
     }
 
 
     void DistributePopulation()
     {
-        // °¢ Áö¿ª¿¡ ÃÖ¼Ò 5¾¿
+        // ê° ì§€ì—­ì— ìµœì†Œ 5ëª…
         foreach (var region in allRegions)
         {
             region.population = 5;
         }
-        // ³²Àº 60À» ·£´ı ¹èºĞ
+        // ë‚˜ë¨¸ì§€ 60ëª… ëœë¤ ë¶„ë°°
         int remaining = 60;
         while (remaining > 0)
         {
@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    // ÀüÃ¼ Á¤´ç ÁöÁöÀÚ ¼ö °è»ê
+    // ì „ì²´ ì •ë‹¹ ì§€ì§€ìœ¨ ì´í•© ê³„ì‚°
     public float GetTotalPartyASupport()
     {
         float total = 0;
@@ -125,41 +125,41 @@ public class GameManager : MonoBehaviour
         return total;
     }
 
-    // Àü±¹ ¸ğµç Áö¿ªÀÇ ÁöÁöµµ¸¦ º¯°æ
+    // ëª¨ë“  ì§€ì—­ ì§€ì§€ìœ¨ì„ ë™ì‹œì— ë³€ê²½
     public void ChangeAllRegionsSupport(int amountA, int amountB, int amountC)
     {
-        // º¯È­·® ÇÕÀÌ 0ÀÎÁö È®ÀÎ
+        // ë³€í™”ëŸ‰ í•©ì´ 0ì¸ì§€ í™•ì¸
         if (amountA + amountB + amountC != 0)
         {
-            Debug.LogError($"Àü±¹ ÁöÁöµµ º¯È­·® ÇÕÀÌ 0ÀÌ ¾Æ´Õ´Ï´Ù! (°©:{amountA}, À»:{amountB}, º´:{amountC})");
+            Debug.LogError($"ì§€ì§€ìœ¨ ë³€í™”ëŸ‰ í•©ì´ 0ì´ ì•„ë‹™ë‹ˆë‹¤! (ê°‘:{amountA}, ì„:{amountB}, ë³‘:{amountC})");
             return;
         }
 
-        // ¸ğµç Áö¿ª¿¡ µ¿ÀÏÇÑ º¯È­ Àû¿ë
+        // ëª¨ë“  ì§€ì—­ì— ì§€ì§€ìœ¨ ë³€í™” ì ìš©
         foreach (var region in allRegions)
         {
             region.ChangeSupportRate(amountA, amountB, amountC);
         }
 
-        Debug.Log($"Àü±¹ ÁöÁöµµ º¯°æ: °©({amountA:+#;-#;0}), À»({amountB:+#;-#;0}), º´({amountC:+#;-#;0})");
+        Debug.Log($"ì „ì²´ ì§€ì§€ìœ¨ ë³€ê²½: ê°‘({amountA:+#;-#;0}), ì„({amountB:+#;-#;0}), ë³‘({amountC:+#;-#;0})");
     }
-    // Æ¯Á¤ ¼±°Å±¸ÀÇ Á¤´çº° ÁöÁöÀ² °è»ê
+    // íŠ¹ì • ì„ ê±°êµ¬ì˜ ê°€ì¤‘í‰ê·  ì§€ì§€ìœ¨ ê³„ì‚°
     public (float partyA, float partyB, float partyC) GetDistrictSupport(int districtId)
     {
-        // ÇØ´ç ¼±°Å±¸¿¡ ¼ÓÇÑ Áö¿ªµé Ã£±â
+        // í•´ë‹¹ ì„ ê±°êµ¬ì— ì†í•œ ì§€ì—­ë“¤ ì°¾ê¸°
         Region[] districtRegions = System.Array.FindAll(allRegions,
             region => region.districtId == districtId);
 
         if (districtRegions.Length == 0)
         {
-            Debug.LogError($"¼±°Å±¸ {districtId}¿¡ Áö¿ªÀÌ ¾ø½À´Ï´Ù!");
+            Debug.LogError($"ì„ ê±°êµ¬ {districtId}ì— ì§€ì—­ì´ ì—†ìŠµë‹ˆë‹¤!");
             return (0, 0, 0);
         }
 
-        // ÃÑ ÀÎ±¸¼ö
+        // ì´ ì¸êµ¬ìˆ˜
         int totalPopulation = 0;
 
-        // °¢ Á¤´çÀÇ ÁöÁöÀÚ ¼ö
+        // ê° ì •ë‹¹ì˜ ì§€ì§€ì ìˆ˜
         float totalSupportA = 0;
         float totalSupportB = 0;
         float totalSupportC = 0;
@@ -168,18 +168,18 @@ public class GameManager : MonoBehaviour
         {
             totalPopulation += region.population;
 
-            // °¢ Áö¿ªÀÇ Á¤´çº° ÁöÁöÀÚ ¼ö = ÀÎ±¸¼ö * ÁöÁöÀ² / 100
+            // ê° ì§€ì—­ì˜ ê°€ì¤‘ëœ ì§€ì§€ì ìˆ˜ = ì¸êµ¬ìˆ˜ * ì§€ì§€ìœ¨ / 100
             totalSupportA += region.population * region.partyA.supportRate / 100f;
             totalSupportB += region.population * region.partyB.supportRate / 100f;
             totalSupportC += region.population * region.partyC.supportRate / 100f;
         }
 
-        // ¼±°Å±¸ ÀüÃ¼ ÁöÁöÀ² = ÁöÁöÀÚ ¼ö / ÃÑ ÀÎ±¸¼ö * 100
+        // ì„ ê±°êµ¬ ì „ì²´ ì§€ì§€ìœ¨ = ì§€ì§€ì ìˆ˜ / ì´ ì¸êµ¬ìˆ˜ * 100
         float districtSupportA = (totalSupportA / totalPopulation) * 100f;
         float districtSupportB = (totalSupportB / totalPopulation) * 100f;
         float districtSupportC = (totalSupportC / totalPopulation) * 100f;
 
-        Debug.Log($"¼±°Å±¸ {districtId}: °© {districtSupportA:F1}%, À» {districtSupportB:F1}%, º´ {districtSupportC:F1}%");
+        Debug.Log($"ì„ ê±°êµ¬ {districtId}: ê°‘ {districtSupportA:F1}%, ì„ {districtSupportB:F1}%, ë³‘ {districtSupportC:F1}%");
 
         return (districtSupportA, districtSupportB, districtSupportC);
     }
