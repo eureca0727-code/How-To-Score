@@ -18,7 +18,7 @@ public class CardDistributor : MonoBehaviour
 
     void InitializeRegionCardMap()
     {
-        regionCardMap = new Dictionary<string, string>
+        regionCardMap = new Dictionary<string, string> //특정 지역이 카드 획득 없을시 리스트에서 지울것
         {
             { "지역 A", "M1" }, // 기자 회견 -> 기자 회견
             { "지역 B", "S3" }, // 환경전망 -> (환경 이슈, 특정적 이슈)
