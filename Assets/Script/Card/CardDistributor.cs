@@ -137,7 +137,7 @@ public class CardDistributor : MonoBehaviour
         Debug.Log("플레이어 카드 수집 시작");
     }
 
-    // 홍보 선택 카드 추가 (1장)
+    // 홍보 선택 카드 추가 (1장 또는 0장)
     public void AddPromotionCard(bool isNational, Region selectedRegion)
     {
         if (isNational)
@@ -158,8 +158,8 @@ public class CardDistributor : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning($"지역 '{selectedRegion?.regionName}'의 카드를 찾을 수 없습니다. 랜덤 카드로 대체");
-                pendingPlayerCards.Add(GetRandomActionCard());
+                // 카드 매핑이 없는 지역: 카드를 얻지 못함
+                Debug.Log($"지역 '{selectedRegion?.regionName}'은 카드를 제공하지 않습니다.");
             }
         }
     }
