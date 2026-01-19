@@ -1,14 +1,14 @@
 using System;
 using UnityEngine;
 
-// Á¤Ã¥ ¼ö¿ä µ¥ÀÌÅÍ
+// ì •ì±… ìˆ˜ìš” í´ë˜ìŠ¤
 [Serializable]
 public class PolicyDemand
 {
-    public int economy;    // °æÁ¦
-    public int welfare;    // º¹Áö
-    public int security;   // ¾Èº¸
-    public int environment; // È¯°æ
+    public int economy;    // ê²½ì œ
+    public int welfare;    // ë³µì§€
+    public int security;   // ì•ˆë³´
+    public int environment; // í™˜ê²½
 
 
     public void RandomizeDemands()
@@ -20,16 +20,16 @@ public class PolicyDemand
     }
 }
 
-// Á¤´çº° µ¥ÀÌÅÍ
+// ì •ë‹¹ë³„ ë°ì´í„°
 [Serializable]
 public class PartyData
 {
-    public int supportRate;        // ÁöÁöÀ² (%)
-    public PolicyDemand policyDemand; // Á¤Ã¥ ¼ö¿ä
+    public int supportRate;        // ì§€ì§€ìœ¨ (%)
+    public PolicyDemand policyDemand; // ì •ì±… ìˆ˜ìš”
 
 }
 
-// Áö¿ª µ¥ÀÌÅÍ
+// ì§€ì—­ í´ë˜ìŠ¤
 public class Region : MonoBehaviour
 {
     [Header("Basic Info")]
@@ -39,22 +39,22 @@ public class Region : MonoBehaviour
 
 
     [Header("Party Support")]
-    public PartyData partyA; // °©
-    public PartyData partyB; // À»
-    public PartyData partyC; // º´
+    public PartyData partyA; // ê°‘
+    public PartyData partyB; // ì„
+    public PartyData partyC; // ë³‘
 
     [Header("District Info")]
-    public int districtId; // ¼±°Å±¸ ID (0=A, 1=B, 2=C)
+    public int districtId; // ì„ ê±°êµ¬ ID (0=A, 1=B, 2=C)
 
-    // °ÔÀÓ ½ÃÀÛ ½Ã 1È¸ ÃÊ±âÈ­
+    // ê²Œì„ ì‹œì‘ ì‹œ 1íšŒ ì´ˆê¸°í™”
     public void InitializeRegion()
     {
-        // ÀÎ±¸´Â GameManager¿¡¼­ ÃÑÇÕ 120 ¸ÂÃç¼­ ÇÒ´ç
+        // ì¸êµ¬ìˆ˜ GameManagerì—ì„œ ì´í•© 120 ë§ì¶°ì„œ í• ë‹¹
 
-        // ÁöÁöÀ² ·£´ı »ı¼º (ÇÕ 100)
+        // ì§€ì§€ìœ¨ ëœë¤ ì„¤ì • (ì´ 100)
         RandomizeSupportRates();
 
-        // Á¤Ã¥ ¼ö¿ä ·£´ı »ı¼º
+        // ì •ì±… ìˆ˜ìš” ëœë¤ ìƒì„±
         partyA.policyDemand.RandomizeDemands();
         partyB.policyDemand.RandomizeDemands();
         partyC.policyDemand.RandomizeDemands();
@@ -67,19 +67,19 @@ public class Region : MonoBehaviour
     {
         int minSupport = 15;
 
-        // A~F Áö¿ªÀº °©´ç ÁöÁöµµ »óÇÑ 40%, ÃÖÀú 15%, ±×¿Ü´Â ÃÖÀú 15 ÃÖ´ë 70
+        // A~F ì§€ì—­ì€ ê°‘ì˜ ì§€ì§€ìœ¨ ìµœëŒ€ 40%, ë‚˜ë¨¸ì§€ 15%, ê·¸ì™¸ëŠ” ìµœì†Œ 15 ìµœëŒ€ 70
         int maxA = (regionName == "A" || regionName == "B" || regionName == "C" ||
                     regionName == "D" || regionName == "E" || regionName == "F") ? 40 : 100;
 
         int remaining = 100 - (minSupport * 3); // 55
 
-        // °©´çÀÇ Ãß°¡ ÁöÁöÀ² (»óÇÑ °í·Á)
+        // ê°‘ì—ê²Œ ì¶”ê°€ ì§€ì§€ìœ¨ (ì œí•œ ì ìš©)
         int maxExtraA = Mathf.Min(remaining, maxA - minSupport);
         int extraA = UnityEngine.Random.Range(0, maxExtraA + 1);
 
         int remainingAfterA = remaining - extraA;
 
-        // À»´ç (³²Àº ¹üÀ§¿¡¼­)
+        // ì„ì—ê²Œ (ìµœëŒ€ ì œí•œì—†ìŒ)
         int maxExtraB = Mathf.Min(remainingAfterA, 100 - minSupport);
         int extraB = UnityEngine.Random.Range(0, maxExtraB + 1);
 
@@ -91,7 +91,7 @@ public class Region : MonoBehaviour
     }
     void OnMouseDown()
     {
-        // UI Å¬¸¯ÀÌ ¾Æ´Ò ¶§¸¸ ½ÇÇà
+        // UI í´ë¦­ì´ ì•„ë‹Œ ê²½ìš° ì²˜ë¦¬
         if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
         {
             return;
@@ -100,28 +100,28 @@ public class Region : MonoBehaviour
         RegionInfoUI.Instance.ShowRegionInfo(this);
     }
 
-    // °¢ Á¤Ã¥ÀÇ ÀüÃ¼ ¼ö¿äµµ °è»ê
+    // ê° ì •ì±…ì˜ ì „ì²´ ì„ í˜¸ë„ ê³„ì‚°
     public float GetEconomyDemand()
     {
         return (partyA.policyDemand.economy * partyA.supportRate +
                 partyB.policyDemand.economy * partyB.supportRate +
                 partyC.policyDemand.economy * partyC.supportRate) / 100f;
     }
-    
+
     public float GetWelfareDemand()
     {
         return (partyA.policyDemand.welfare * partyA.supportRate +
                 partyB.policyDemand.welfare * partyB.supportRate +
                 partyC.policyDemand.welfare * partyC.supportRate) / 100f;
     }
-    
+
     public float GetSecurityDemand()
     {
         return (partyA.policyDemand.security * partyA.supportRate +
                 partyB.policyDemand.security * partyB.supportRate +
                 partyC.policyDemand.security * partyC.supportRate) / 100f;
     }
-    
+
     public float GetEnvironmentDemand()
     {
         return (partyA.policyDemand.environment * partyA.supportRate +
@@ -129,31 +129,31 @@ public class Region : MonoBehaviour
                 partyC.policyDemand.environment * partyC.supportRate) / 100f;
     }
 
-    // »óÀ§ 2°³ Á¤Ã¥ ºĞ¾ß Ã£±â
+    // ê°€ì¥ 2ê°œ ì •ì±… ìš°ì„  ì°¾ê¸°
     public string GetTop2Policies()
     {
         var policies = new System.Collections.Generic.List<(string name, float demand)>
     {
-        ("°æÁ¦", GetEconomyDemand()),
-        ("º¹Áö", GetWelfareDemand()),
-        ("¾Èº¸", GetSecurityDemand()),
-        ("È¯°æ", GetEnvironmentDemand())
+        ("ê²½ì œ", GetEconomyDemand()),
+        ("ë³µì§€", GetWelfareDemand()),
+        ("ì•ˆë³´", GetSecurityDemand()),
+        ("í™˜ê²½", GetEnvironmentDemand())
     };
 
-        // ¼ö¿äµµ ³ôÀº ¼øÀ¸·Î Á¤·Ä
+        // ì„ í˜¸ë„ ë†’ì€ ìˆœì„œë¡œ ì •ë ¬
         policies.Sort((a, b) => b.demand.CompareTo(a.demand));
 
-        // ÀÌ¸§¸¸ ¹İÈ¯ (°ª Á¦¿Ü)
+        // ì´ë¦„ë§Œ ë°˜í™˜ (ìƒìœ„ 2ê°œ)
         return $"{policies[0].name}, {policies[1].name}";
     }
 
-    // ¼¼ Á¤´çÀÇ ÁöÁöµµ¸¦ Á÷Á¢ º¯°æ 
+    // ê° ì •ë‹¹ì˜ ì§€ì§€ìœ¨ì„ ë™ì‹œì— ë³€ê²½
 public void ChangeSupportRate(int amountA, int amountB, int amountC)
     {
-        // º¯È­·® ÇÕÀÌ 0ÀÎÁö È®ÀÎ
+        // ë³€í™”ëŸ‰ í•©ì´ 0ì¸ì§€ í™•ì¸
         if (amountA + amountB + amountC != 0)
         {
-            Debug.LogError($"ÁöÁöµµ º¯È­·® ÇÕÀÌ 0ÀÌ ¾Æ´Õ´Ï´Ù! (°©:{amountA}, À»:{amountB}, º´:{amountC})");
+            Debug.LogError($"ì§€ì§€ìœ¨ ë³€í™”ëŸ‰ í•©ì´ 0ì´ ì•„ë‹™ë‹ˆë‹¤! (ê°‘:{amountA}, ì„:{amountB}, ë³‘:{amountC})");
             return;
         }
 
@@ -161,7 +161,7 @@ public void ChangeSupportRate(int amountA, int amountB, int amountC)
         partyB.supportRate += amountB;
         partyC.supportRate += amountC;
 
-        // 0~100 ¹üÀ§ Á¦ÇÑ
+        // 0~100 ë²”ìœ„ ì œí•œ
         partyA.supportRate = Mathf.Clamp(partyA.supportRate, 0, 100);
         partyB.supportRate = Mathf.Clamp(partyB.supportRate, 0, 100);
         partyC.supportRate = Mathf.Clamp(partyC.supportRate, 0, 100);

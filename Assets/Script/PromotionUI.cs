@@ -8,11 +8,11 @@ public class PromotionUI : MonoBehaviour
     public TextMeshProUGUI titleText;   
 
     [Header("Charts")]
-    public MultiSectionPieChart partyChart;        // °©/À»/º´ ÁöÁöµµ
-    public PartyBarChart partyBarChart;            // °©/À»/º´ ¸·´ë ±×·¡ÇÁ (Ãß°¡)
-    public MultiSectionPieChart partyA_PolicyChart; // °© ÁöÁöÀÚ Á¤Ã¥ ¼ö¿ä
-    public MultiSectionPieChart partyB_PolicyChart; // À» ÁöÁöÀÚ Á¤Ã¥ ¼ö¿ä
-    public MultiSectionPieChart partyC_PolicyChart; // º´ ÁöÁöÀÚ Á¤Ã¥ ¼ö¿ä
+    public MultiSectionPieChart partyChart;        // ï¿½ï¿½/ï¿½ï¿½/ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public PartyBarChart partyBarChart;            // ï¿½ï¿½/ï¿½ï¿½/ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ (ï¿½ß°ï¿½)
+    public MultiSectionPieChart partyA_PolicyChart; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¥ ï¿½ï¿½ï¿½ï¿½
+    public MultiSectionPieChart partyB_PolicyChart; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¥ ï¿½ï¿½ï¿½ï¿½
+    public MultiSectionPieChart partyC_PolicyChart; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¥ ï¿½ï¿½ï¿½ï¿½
 
     [Header("Quest System")]
     public GameObject questPanel;
@@ -22,9 +22,9 @@ public class PromotionUI : MonoBehaviour
 
     [Header("Event System")]
     public GameObject eventPanel;
-    public TextMeshProUGUI supportChangeText; // ÁöÁöµµ º¯È­À² Ç¥½Ã
-    public TextMeshProUGUI eventText; // ÀÌº¥Æ® ´ë»ç
-    public Button startvoteButton; // ¼±°Å ½ÃÀÛ ¹öÆ°
+    public TextMeshProUGUI supportChangeText; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È­ï¿½ï¿½ Ç¥ï¿½ï¿½
+    public TextMeshProUGUI eventText; // ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½
+    public Button startvoteButton; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
 
 
     private bool isNationalMode = true;
@@ -42,11 +42,11 @@ public class PromotionUI : MonoBehaviour
 
         if (yesButton != null) yesButton.onClick.AddListener(OnYesButtonClick);
         if (noButton != null) noButton.onClick.AddListener(OnNoButtonClick);
-        if (promoteButton != null) promoteButton.onClick.AddListener(OnPromoteButtonClick);  // Ãß°¡
-        if (startvoteButton != null) startvoteButton.onClick.AddListener(OnStartVoteButtonClick); // ¡ç Ãß°¡
+        if (promoteButton != null) promoteButton.onClick.AddListener(OnPromoteButtonClick);  // ï¿½ß°ï¿½
+        if (startvoteButton != null) startvoteButton.onClick.AddListener(OnStartVoteButtonClick); // ï¿½ï¿½ ï¿½ß°ï¿½
 
 
-        // Quest Panel ÃÊ±â¿¡´Â ²¨µÎ±â
+        // Quest Panel ï¿½Ê±â¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½Î±ï¿½
         if (questPanel != null) questPanel.SetActive(false);
         if (eventPanel != null) eventPanel.SetActive(false);
     }
@@ -57,164 +57,164 @@ public class PromotionUI : MonoBehaviour
         {
         new QuestData
         {
-            question = "ÇÙ½É ÁöÁöÃşÀ» À§ÇÑ °­°æÇÑ °³Çõ¾ÈÀ» ¹ßÇ¥ÇÏ½Ã°Ú½À´Ï±î?",
-            yesResponse = "ÁöÁöÃşÀÇ °áÁıÀ¸·Î ÁöÁöµµ°¡ Å©°Ô »ó½ÂÇß´Ù.",
-            noResponse = "¿Â°ÇÇÑ ÅÂµµ¸¦ À¯ÁöÇÏ¿© Çö»óÀ» À¯ÁöÇß´Ù."
+            question = "ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½Ï½Ã°Ú½ï¿½ï¿½Ï±ï¿½?",
+            yesResponse = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ß´ï¿½.",
+            noResponse = "ï¿½Â°ï¿½ï¿½ï¿½ ï¿½Âµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß´ï¿½."
         },
         new QuestData
         {
-            question = "Áö¿ª À¯Áöµé°úÀÇ ¹ĞÂø Çàº¸¸¦ ÅëÇØ Á¶Á÷·ÂÀ» °­È­ÇÏ½Ã°Ú½À´Ï±î?",
-            yesResponse = "Áö¿ª Á¶Á÷À» Àå¾ÇÇÏ¿© ¼±°Å±¸ Á¤º¸¸¦ È®º¸Çß´Ù.",
-            noResponse = "Á¶Á÷ °ü¸® ¼ÒÈ¦·Î ÀÏºÎ ÁöÁöÀÚ°¡ ÀÌÅ»Çß´Ù."
+            question = "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½àº¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È­ï¿½Ï½Ã°Ú½ï¿½ï¿½Ï±ï¿½?",
+            yesResponse = "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½Å±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ß´ï¿½.",
+            noResponse = "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¦ï¿½ï¿½ ï¿½Ïºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½Å»ï¿½ß´ï¿½."
         },
         new QuestData
         {
-            question = "´çÀÇ ÇÙ½É °ø¾àÀ» ÀçÈ®ÀÎÇÏ´Â ´ë±Ô¸ğ ÁıÈ¸¸¦ °³ÃÖÇÏ½Ã°Ú½À´Ï±î?",
-            yesResponse = "ÁıÈ¸ ¼º°øÀ¸·Î ¼±°Å¿îµ¿ ÁÖµµ±ÇÀ» Àâ¾Ò´Ù.",
-            noResponse = "Á¶¿ëÇÑ Çàº¸¸¦ ÅÃÇÏ¸ç »ó´ë °ø°İ¿¡ ´ëºñÇß´Ù."
+            question = "ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È®ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ô¸ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï½Ã°Ú½ï¿½ï¿½Ï±ï¿½?",
+            yesResponse = "ï¿½ï¿½È¸ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Å¿îµ¿ ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ò´ï¿½.",
+            noResponse = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½àº¸ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½İ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ß´ï¿½."
         },
         new QuestData
         {
-            question = "Å¸ Á¤´çÀÇ ½ÇÁ¤À» ºñÆÇÇÏ´Â °­·ÂÇÑ ³×°ÅÆ¼ºê °ø¼¼¸¦ ½ÃÀÛÇÒ±î¿ä?",
-            yesResponse = "»ó´ë Á¤´çÀÇ ½Å·Úµµ¸¦ ±ğ¾Æ³»¸®´Â µ¥ ¼º°øÇß´Ù.",
-            noResponse = "½Å»çÀûÀÎ ´ëÀÀÀ¸·Î ÁßµµÃşÀÇ È£°¨À» ¾ò¾ú´Ù."
+            question = "Å¸ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×°ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò±ï¿½ï¿½?",
+            yesResponse = "ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å·Úµï¿½ï¿½ï¿½ ï¿½ï¿½Æ³ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß´ï¿½.",
+            noResponse = "ï¿½Å»ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ßµï¿½ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½."
         },
         new QuestData
         {
-            question = "ÁöÁö Áö¿ªÀÇ ¿À·£ ¼÷¿ø »ç¾÷ÀÎ ·£µå¸¶Å© °Ç¼³À» ¾à¼ÓÇÏ½Ã°Ú½À´Ï±î?",
-            yesResponse = "Áö¿ª °³¹ß ±â´ë·Î ¾ĞµµÀûÀÎ ÁöÁö¸¦ ¾ò¾ú´Ù.",
-            noResponse = "°ø¾à ºÎÀç¿¡ ½Ç¸ÁÇÑ ÁÖ¹ÎµéÀÌ µîÀ» µ¹·È´Ù."
+            question = "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½å¸¶Å© ï¿½Ç¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï½Ã°Ú½ï¿½ï¿½Ï±ï¿½?",
+            yesResponse = "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ğµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½.",
+            noResponse = "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ç¿¡ ï¿½Ç¸ï¿½ï¿½ï¿½ ï¿½Ö¹Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½È´ï¿½."
         },
         new QuestData
         {
-            question = "Ã»³âÃşÀ» °Ü³ÉÇÑ ¸ÂÃãÇü ÀÏÀÚ¸® °ø¾àÀ» ¹ßÇ¥ÇÏ½Ã°Ú½À´Ï±î?",
-            yesResponse = "Ã»³âµéÀÇ ¿­·ÄÇÑ ÁöÁö·Î ÁöÁöµµ°¡ »ó½ÂÇß´Ù.",
-            noResponse = "º°´Ù¸¥ ¹İÀÀ ¾øÀÌ ÀÏ»óÀÌ À¯ÁöµÇ¾ú´Ù."
+            question = "Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ü³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½Ï½Ã°Ú½ï¿½ï¿½Ï±ï¿½?",
+            yesResponse = "Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ß´ï¿½.",
+            noResponse = "ï¿½ï¿½ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½."
         },
         new QuestData
         {
-            question = "Å¸ Á¤´ç ÈÄº¸ÀÇ Á¤Ã¥Àû ÇãÁ¡À» ÁöÀûÇÏ´Â Åä·ĞÈ¸¸¦ Á¦¾ÈÇÒ±î¿ä?",
-            yesResponse = "Åä·Ğ Á¦¾ÈÀ» ÅëÇØ °ø¼¼ÀûÀÎ À§Ä¡¸¦ ¼±Á¡Çß´Ù.",
-            noResponse = "³»½ÇÀ» ´ÙÁö¸ç »ó´ëÀÇ °ø¼¼¿¡ ´ëºñÇß´Ù."
+            question = "Å¸ ï¿½ï¿½ï¿½ï¿½ ï¿½Äºï¿½ï¿½ï¿½ ï¿½ï¿½Ã¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò±ï¿½ï¿½?",
+            yesResponse = "ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß´ï¿½.",
+            noResponse = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ß´ï¿½."
         },
         new QuestData
         {
-            question = "È¯°æ ´ÜÃ¼ÀÇ Åº¼Ò¼¼ µµÀÔ ¿ä±¸¸¦ Àü°İ ¼ö¿ëÇÏ½Ã°Ú½À´Ï±î?",
-            yesResponse = "È¯°æ Áß½Ã Çàº¸·Î »õ·Î¿î ÁöÁöÃşÀ» È®º¸Çß´Ù.",
-            noResponse = "È¯°æ Á¤Ã¥ ºÎÀç·Î ½Ã¹Î ´ÜÃ¼ÀÇ ºñÆÇÀ» ¹Ş¾Ò´Ù."
+            question = "È¯ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ Åºï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ä±¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï½Ã°Ú½ï¿½ï¿½Ï±ï¿½?",
+            yesResponse = "È¯ï¿½ï¿½ ï¿½ß½ï¿½ ï¿½àº¸ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ß´ï¿½.",
+            noResponse = "È¯ï¿½ï¿½ ï¿½ï¿½Ã¥ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¹ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¾Ò´ï¿½."
         },
         new QuestData
         {
-            question = "º¹Áö ¿¹»ê È®´ë¸¦ À§ÇØ ¼¼±İ ÀÎ»óÀÌ ÇÊ¿äÇÏ´Ù´Â Áø½ÇÀ» ¹àÈ÷°Ú½À´Ï±î?",
-            yesResponse = "Á¤Á÷ÇÑ ÅÂµµ¿¡ ÁöÁöÀ²ÀÌ ¿Ã¶úÀ¸³ª ¹İ¹ßµµ »ı°å´Ù.",
-            noResponse = "¹Î°¨ÇÑ ÀÌ½´¸¦ ÇÇÇØ °¡¸ç ¾ÈÁ¤À» ÅÃÇß´Ù."
+            question = "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ë¸¦ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î»ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Ï´Ù´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½ï¿½Ï±ï¿½?",
+            yesResponse = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Âµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½İ¹ßµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½.",
+            noResponse = "ï¿½Î°ï¿½ï¿½ï¿½ ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß´ï¿½."
         },
         new QuestData
         {
-            question = "Áö¿ª ÀüÅë ½ÃÀåÀ» ¹æ¹®ÇÏ¿© ¼Ò»ó°øÀÎ Áö¿øÃ¥À» ¾à¼ÓÇÏ½Ã°Ú½À´Ï±î?",
-            yesResponse = "¹Î»ı Çàº¸°¡ ÁÁÀº Æò°¡¸¦ ¹Ş¾Æ ÁöÁöÀ²ÀÌ ¿Ã¶ú´Ù.",
-            noResponse = "ÇöÀå ¹æ¹® ¾øÀÌ ¼­·ù»ó Á¤Ã¥¿¡ ÁıÁßÇß´Ù."
+            question = "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½æ¹®ï¿½Ï¿ï¿½ ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï½Ã°Ú½ï¿½ï¿½Ï±ï¿½?",
+            yesResponse = "ï¿½Î»ï¿½ ï¿½àº¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ò°¡¸ï¿½ ï¿½Ş¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¶ï¿½ï¿½ï¿½.",
+            noResponse = "ï¿½ï¿½ï¿½ï¿½ ï¿½æ¹® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß´ï¿½."
         },
         new QuestData
         {
-            question = "±ººÎ´ë ¹æ¹®À» ÅëÇØ °­·ÂÇÑ ¾Èº¸ Á¤Ã¥À» °­Á¶ÇÏ½Ã°Ú½À´Ï±î?",
-            yesResponse = "¾Èº¸ ÀÇÁö°¡ °­Á¶µÇ¸ç ÀÌ¸¦ ¼±È£ÇÏ´Â ÁöÁöÃşÀÌ °áÁıÇß´Ù.",
-            noResponse = "¾Èº¸ ÀÌ½´¿¡¼­ ´Ù¼Ò ¼Ò±ØÀûÀÎ ÀÎ»óÀ» ³²°å´Ù."
+            question = "ï¿½ï¿½ï¿½Î´ï¿½ ï¿½æ¹®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Èºï¿½ ï¿½ï¿½Ã¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï½Ã°Ú½ï¿½ï¿½Ï±ï¿½?",
+            yesResponse = "ï¿½Èºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½È£ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß´ï¿½.",
+            noResponse = "ï¿½Èºï¿½ ï¿½Ì½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¼ï¿½ ï¿½Ò±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½."
         },
         new QuestData
         {
-            question = "´ç ³» ½ºÄµµé ÀÇÈ¤¿¡ ´ëÇØ ´ç´ëÇ¥°¡ Á÷Á¢ »ç°úÇØ¾ß ÇÒ±î¿ä?",
-            yesResponse = "ºü¸¥ »ç°ú·Î ¿©·ĞÀÇ ¾ÇÈ­¸¦ ¸·¾Æ³Â´Ù.",
-            noResponse = "¼²ºÎ¸£°Ô ´ëÃ³ÇÏÁö ¾Ê°í Ã¶ÀúÇÏ°Ô Áø»óÀ» Á¶»çÇÏ¸ç ¿ª°øÀ» ÁØºñÇß´Ù."
+            question = "ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Äµï¿½ï¿½ ï¿½ï¿½È¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½Ò±ï¿½ï¿½?",
+            yesResponse = "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½Æ³Â´ï¿½.",
+            noResponse = "ï¿½ï¿½ï¿½Î¸ï¿½ï¿½ï¿½ ï¿½ï¿½Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ Ã¶ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½ï¿½ß´ï¿½."
         },
         new QuestData
         {
-            question = "ÀÎ±â ¿¬¿¹ÀÎÀÇ Áö¿ø À¯¼¼ ¿äÃ»À» ¹Ş¾ÆµéÀÌ°Ú½À´Ï±î?",
-            yesResponse = "´ëÁßÀû ÀÎÁöµµ¸¦ ²ø¾î¿Ã¸± ¼ö ÀÖ´Â ±âÈ¸°¡ »ı°å´Ù.",
-            noResponse = "Á¤Ä¡Àû Àü¹®¼ºÀ» °­Á¶ÇÏ¸ç ¿Ü¿¬ È®ÀåÀ» ¹Ì·ğ´Ù."
+            question = "ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½Ş¾Æµï¿½ï¿½Ì°Ú½ï¿½ï¿½Ï±ï¿½?",
+            yesResponse = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¸ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½.",
+            noResponse = "ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Ü¿ï¿½ È®ï¿½ï¿½ï¿½ï¿½ ï¿½Ì·ï¿½ï¿½."
         },
         new QuestData
         {
-            question = "³ë³âÃşÀ» À§ÇÑ ¿¬±İ ÀÎ»ó ¾ÈÀ» ±ä±Ş °ø¾àÀ¸·Î ³»°Å½Ã°Ú½À´Ï±î?",
-            yesResponse = "³ë³âÃşÀÇ ¾ĞµµÀûÀÎ ÁöÁö¸¦ ÀÌ²ø¾î³Â´Ù.",
-            noResponse = "°æÀï Á¤´çÀÌ ÇØ´ç ÁöÁöÃşÀ» °ø·«ÇÏ´Â °ÍÀ» Çã¿ëÇß´Ù."
+            question = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Å½Ã°Ú½ï¿½ï¿½Ï±ï¿½?",
+            yesResponse = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ğµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì²ï¿½ï¿½ï¿½Â´ï¿½.",
+            noResponse = "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ß´ï¿½."
         },
         new QuestData
         {
-            question = "¿ì¸® Á¤´çÀÇ »óÂ¡»öÀ» °­Á¶ÇÏ´Â Àü±¹ ´ÜÀ§ Ä·ÆäÀÎÀ» ¹úÀÏ±î¿ä?",
-            yesResponse = "ºê·£µå ÀÌ¹ÌÁö°¡ °­È­µÇ¸ç À¯¿ëÇÑ Ä«µå¸¦ ¾ò¾ú´Ù.",
-            noResponse = "½Ç¸®ÀûÀÎ Ä·ÆäÀÎÀ¸·Î ÀüÈ¯ÇÏ¿© Ä«µå¸¦ È®º¸Çß´Ù."
+            question = "ï¿½ì¸® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½ï¿½?",
+            yesResponse = "ï¿½ê·£ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È­ï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½.",
+            noResponse = "ï¿½Ç¸ï¿½ï¿½ï¿½ï¿½ï¿½ Ä·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï¿ï¿½ Ä«ï¿½å¸¦ È®ï¿½ï¿½ï¿½ß´ï¿½."
         }
         };
     }
 
-    // "È«º¸ ÁøÇàÇÏ±â" ¹öÆ° Å¬¸¯ ½Ã
+    // "È«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½" ï¿½ï¿½Æ° Å¬ï¿½ï¿½ ï¿½ï¿½
     public void OnPromoteButtonClick()
     {
-        // 90% ¼º°ø, 10% ½ÇÆĞ
+        // 90% ï¿½ï¿½ï¿½ï¿½, 10% ï¿½ï¿½ï¿½ï¿½
         bool isSuccess = Random.Range(0, 100) < 90;
 
-        if (isNationalMode) // Àü±¹ ¼±°Å¿îµ¿
+        if (isNationalMode) // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Å¿îµ¿
         {
             ProcessNationalPromotion(isSuccess);
         }
-        else // Æ¯Á¤ Áö¿ª ¼±°Å¿îµ¿
+        else // Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Å¿îµ¿
         {
             ProcessRegionalPromotion(isSuccess);
         }
 
-        // Äù½ºÆ® ½ÃÀÛ
+        // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         questPanel.SetActive(true);
         StartQuest();
     }
 
-    // Æ¯Á¤ Áö¿ª ¼±°Å¿îµ¿ Ã³¸®
+    // Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Å¿îµ¿ Ã³ï¿½ï¿½
     private void ProcessRegionalPromotion(bool isSuccess)
     {
         campaignSuccess = isSuccess;
         if (isSuccess)
         {
-            // ¼º°ø: °© +30, À»/º´ -15
-            campaignChangeA = 30; campaignChangeB = -15; campaignChangeC = -15; //eventPanel¿¡ Ç¥½ÃÇÒ °ª ÀúÀå
+            // ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ +30, ï¿½ï¿½/ï¿½ï¿½ -15
+            campaignChangeA = 30; campaignChangeB = -15; campaignChangeC = -15; //eventPanelï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             selectedRegion.ChangeSupportRate(30, -15, -15);
-            Debug.Log($"{selectedRegion.regionName} ¼±°Å¿îµ¿ ¼º°ø!");
+            Debug.Log($"{selectedRegion.regionName} ï¿½ï¿½ï¿½Å¿îµ¿ ï¿½ï¿½ï¿½ï¿½!");
         }
         else
         {
-            // ½ÇÆĞ: °© -30, À»/º´ +15
-            campaignChangeA = -30; campaignChangeB = 15; campaignChangeC = 15; //eventPanel¿¡ Ç¥½ÃÇÒ °ª ÀúÀå
+            // ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ -30, ï¿½ï¿½/ï¿½ï¿½ +15
+            campaignChangeA = -30; campaignChangeB = 15; campaignChangeC = 15; //eventPanelï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             selectedRegion.ChangeSupportRate(-30, 15, 15);
-            Debug.Log($"{selectedRegion.regionName} ¼±°Å¿îµ¿ ½ÇÆĞ!");
+            Debug.Log($"{selectedRegion.regionName} ï¿½ï¿½ï¿½Å¿îµ¿ ï¿½ï¿½ï¿½ï¿½!");
         }
     }
 
-    // Àü±¹ ¼±°Å¿îµ¿ Ã³¸®
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Å¿îµ¿ Ã³ï¿½ï¿½
     private void ProcessNationalPromotion(bool isSuccess)
     {
         campaignSuccess = isSuccess;
         if (isSuccess)
         {
-            // ¼º°ø: ¸ğµç Áö¿ª °© +6, À»/º´ -3
-            campaignChangeA = 6; campaignChangeB = -3; campaignChangeC = -3; //eventPanel¿¡ Ç¥½ÃÇÒ °ª ÀúÀå
+            // ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ +6, ï¿½ï¿½/ï¿½ï¿½ -3
+            campaignChangeA = 6; campaignChangeB = -3; campaignChangeC = -3; //eventPanelï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
             GameManager.Instance.ChangeAllRegionsSupport(6, -3, -3);
-            Debug.Log("Àü±¹ ¼±°Å¿îµ¿ ¼º°ø!");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Å¿îµ¿ ï¿½ï¿½ï¿½ï¿½!");
         }
         else
         {
-            // ½ÇÆĞ: ¸ğµç Áö¿ª °© -6, À»/º´ +3
-            campaignChangeA = -6; campaignChangeB = 3; campaignChangeC = 3; //eventPanel¿¡ Ç¥½ÃÇÒ °ª ÀúÀå
+            // ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ -6, ï¿½ï¿½/ï¿½ï¿½ +3
+            campaignChangeA = -6; campaignChangeB = 3; campaignChangeC = 3; //eventPanelï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             GameManager.Instance.ChangeAllRegionsSupport(-6, 3, 3);
-            Debug.Log("Àü±¹ ¼±°Å¿îµ¿ ½ÇÆĞ!");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Å¿îµ¿ ï¿½ï¿½ï¿½ï¿½!");
         }
     }
     public void StartQuest()
     {
         float regionSupportA = selectedRegion.partyA.supportRate;
-        Debug.Log($"Áö¿ª {selectedRegion.regionName}ÀÇ °©´ç ÁöÁöµµ: {regionSupportA}%");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½ {selectedRegion.regionName}ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: {regionSupportA}%");
 
         int randomIndex;
-        // °©´ç ÁöÁöµµ°¡ 50 ÀÌ»óÀÌ¸é 0~5 (ÁöÁöÀÚ Àü¿ë), ¹Ì¸¸ÀÌ¸é 5~14 (ÀÏ¹İ Áú¹®¸¸)
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 50 ï¿½Ì»ï¿½ï¿½Ì¸ï¿½ 0~5 (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½), ï¿½Ì¸ï¿½ï¿½Ì¸ï¿½ 5~14 (ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
         if (regionSupportA >= 50)
         {
             randomIndex = Random.Range(0, 5); // 0~4
@@ -249,23 +249,23 @@ public class PromotionUI : MonoBehaviour
         ShowEventResult(campaignSuccess, campaignChangeA, campaignChangeB, campaignChangeC);
     }
 
-    // Start Promotion ¹öÆ°¿¡¼­ È£Ãâ
+    // Start Promotion ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½
     public void ShowPromotionPanel()
     {
-        // ÇÏÀ§ ÆĞ³Î ÀüºÎ ÃÊ±âÈ­
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ğ³ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
         if (questPanel != null) questPanel.SetActive(false);
         if (eventPanel != null) eventPanel.SetActive(false);
         UpdateCharts();
     }
 
-    // Àü±¹ ¸ğµå·Î ¼³Á¤ 
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
     public void SetNationalMode()
     {
         isNationalMode = true;
         selectedRegion = null;
     }
 
-    // Áö¿ª ¸ğµå·Î ¼³Á¤ 
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
     public void SetRegionalMode(Region region)
     {
         isNationalMode = false;
@@ -286,15 +286,15 @@ public class PromotionUI : MonoBehaviour
 
     void ShowNationalData()
     {
-        titleText.text = "Àü±¹ ÁöÁöµµ";
+        titleText.text = "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
 
-        // 1. Àü±¹ °©/À»/º´ ÁöÁöµµ
+        // 1. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½/ï¿½ï¿½/ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         float totalA = GameManager.Instance.GetTotalPartyASupport();
         float totalB = GameManager.Instance.GetTotalPartyBSupport();
         float totalC = GameManager.Instance.GetTotalPartyCSupport();
         partyChart.SetData3(totalA, totalB, totalC);
 
-        // 2. °© ÁöÁöÀÚµéÀÇ Á¤Ã¥ ¼ö¿ä (Àü±¹ Æò±Õ)
+        // 2. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ ï¿½ï¿½Ã¥ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½)
         var partyA_Demand = CalculateNationalPolicyDemand("A");
         partyA_PolicyChart.SetData4(
             partyA_Demand.economy,
@@ -303,7 +303,7 @@ public class PromotionUI : MonoBehaviour
             partyA_Demand.environment
         );
 
-        // 3. À» ÁöÁöÀÚµéÀÇ Á¤Ã¥ ¼ö¿ä
+        // 3. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ ï¿½ï¿½Ã¥ ï¿½ï¿½ï¿½ï¿½
         var partyB_Demand = CalculateNationalPolicyDemand("B");
         partyB_PolicyChart.SetData4(
             partyB_Demand.economy,
@@ -312,7 +312,7 @@ public class PromotionUI : MonoBehaviour
             partyB_Demand.environment
         );
 
-        // 4. º´ ÁöÁöÀÚµéÀÇ Á¤Ã¥ ¼ö¿ä
+        // 4. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ ï¿½ï¿½Ã¥ ï¿½ï¿½ï¿½ï¿½
         var partyC_Demand = CalculateNationalPolicyDemand("C");
         partyC_PolicyChart.SetData4(
             partyC_Demand.economy,
@@ -320,24 +320,24 @@ public class PromotionUI : MonoBehaviour
             partyC_Demand.security,
             partyC_Demand.environment
         );
-        partyBarChart.UpdateChart(totalA, totalB, totalC); // ¸·´ë ±×·¡ÇÁ ¾÷µ¥ÀÌÆ® Ãß°¡
+        partyBarChart.UpdateChart(totalA, totalB, totalC); // ï¿½ï¿½ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ß°ï¿½
     }
 
     void ShowRegionalData()
     {
         if (selectedRegion == null)
         {
-            Debug.LogError("¼±ÅÃµÈ Áö¿ªÀÌ ¾ø½À´Ï´Ù!");
+            Debug.LogError("ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½!");
             return;
         }
 
-        titleText.text = $"{selectedRegion.regionName} ÁöÁöµµ";
+        titleText.text = $"{selectedRegion.regionName} ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
 
-        // 1. ÇØ´ç Áö¿ª °©/À»/º´ ÁöÁöµµ , debug ·Î±× ³ªÁß¿¡ Áö¿ï°Í
-        Debug.Log($"=== {selectedRegion.regionName} ÁöÁöµµ ===");
-        Debug.Log($"°©: {selectedRegion.partyA.supportRate}%");
-        Debug.Log($"À»: {selectedRegion.partyB.supportRate}%");
-        Debug.Log($"º´: {selectedRegion.partyC.supportRate}%");
+        // 1. ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½/ï¿½ï¿½/ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ , debug ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+        Debug.Log($"=== {selectedRegion.regionName} ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ===");
+        Debug.Log($"ï¿½ï¿½: {selectedRegion.partyA.supportRate}%");
+        Debug.Log($"ï¿½ï¿½: {selectedRegion.partyB.supportRate}%");
+        Debug.Log($"ï¿½ï¿½: {selectedRegion.partyC.supportRate}%");
 
         partyChart.SetData3(
             selectedRegion.partyA.supportRate,
@@ -345,12 +345,12 @@ public class PromotionUI : MonoBehaviour
             selectedRegion.partyC.supportRate
         );
 
-        // 2. °© Á¤Ã¥ ¼ö¿ä
-        Debug.Log($"=== °© ÁöÁöÀÚ Á¤Ã¥ ¼ö¿ä ===");
-        Debug.Log($"°æÁ¦: {selectedRegion.partyA.policyDemand.economy}");
-        Debug.Log($"º¹Áö: {selectedRegion.partyA.policyDemand.welfare}");
-        Debug.Log($"¾Èº¸: {selectedRegion.partyA.policyDemand.security}");
-        Debug.Log($"È¯°æ: {selectedRegion.partyA.policyDemand.environment}");
+        // 2. ï¿½ï¿½ ï¿½ï¿½Ã¥ ï¿½ï¿½ï¿½ï¿½
+        Debug.Log($"=== ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¥ ï¿½ï¿½ï¿½ï¿½ ===");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½: {selectedRegion.partyA.policyDemand.economy}");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½: {selectedRegion.partyA.policyDemand.welfare}");
+        Debug.Log($"ï¿½Èºï¿½: {selectedRegion.partyA.policyDemand.security}");
+        Debug.Log($"È¯ï¿½ï¿½: {selectedRegion.partyA.policyDemand.environment}");
 
         partyA_PolicyChart.SetData4(
             selectedRegion.partyA.policyDemand.economy,
@@ -359,12 +359,12 @@ public class PromotionUI : MonoBehaviour
             selectedRegion.partyA.policyDemand.environment
         );
 
-        // 3. À» Á¤Ã¥ ¼ö¿ä
-        Debug.Log($"=== À» ÁöÁöÀÚ Á¤Ã¥ ¼ö¿ä ===");
-        Debug.Log($"°æÁ¦: {selectedRegion.partyB.policyDemand.economy}");
-        Debug.Log($"º¹Áö: {selectedRegion.partyB.policyDemand.welfare}");
-        Debug.Log($"¾Èº¸: {selectedRegion.partyB.policyDemand.security}");
-        Debug.Log($"È¯°æ: {selectedRegion.partyB.policyDemand.environment}");
+        // 3. ï¿½ï¿½ ï¿½ï¿½Ã¥ ï¿½ï¿½ï¿½ï¿½
+        Debug.Log($"=== ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¥ ï¿½ï¿½ï¿½ï¿½ ===");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½: {selectedRegion.partyB.policyDemand.economy}");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½: {selectedRegion.partyB.policyDemand.welfare}");
+        Debug.Log($"ï¿½Èºï¿½: {selectedRegion.partyB.policyDemand.security}");
+        Debug.Log($"È¯ï¿½ï¿½: {selectedRegion.partyB.policyDemand.environment}");
 
         partyB_PolicyChart.SetData4(
             selectedRegion.partyB.policyDemand.economy,
@@ -373,12 +373,12 @@ public class PromotionUI : MonoBehaviour
             selectedRegion.partyB.policyDemand.environment
         );
 
-        // 4. º´ Á¤Ã¥ ¼ö¿ä
-        Debug.Log($"=== º´ ÁöÁöÀÚ Á¤Ã¥ ¼ö¿ä ===");
-        Debug.Log($"°æÁ¦: {selectedRegion.partyC.policyDemand.economy}");
-        Debug.Log($"º¹Áö: {selectedRegion.partyC.policyDemand.welfare}");
-        Debug.Log($"¾Èº¸: {selectedRegion.partyC.policyDemand.security}");
-        Debug.Log($"È¯°æ: {selectedRegion.partyC.policyDemand.environment}");
+        // 4. ï¿½ï¿½ ï¿½ï¿½Ã¥ ï¿½ï¿½ï¿½ï¿½
+        Debug.Log($"=== ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¥ ï¿½ï¿½ï¿½ï¿½ ===");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½: {selectedRegion.partyC.policyDemand.economy}");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½: {selectedRegion.partyC.policyDemand.welfare}");
+        Debug.Log($"ï¿½Èºï¿½: {selectedRegion.partyC.policyDemand.security}");
+        Debug.Log($"È¯ï¿½ï¿½: {selectedRegion.partyC.policyDemand.environment}");
 
         partyC_PolicyChart.SetData4(
             selectedRegion.partyC.policyDemand.economy,
@@ -393,7 +393,7 @@ public class PromotionUI : MonoBehaviour
         );
     }
 
-    // Àü±¹ Á¤´çº° Á¤Ã¥ ¼ö¿ä Æò±Õ °è»ê
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½çº° ï¿½ï¿½Ã¥ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     PolicyDemand CalculateNationalPolicyDemand(string party)
     {
         Region[] allRegions = GameManager.Instance.mapContainer.GetComponentsInChildren<Region>();
@@ -449,17 +449,35 @@ public class PromotionUI : MonoBehaviour
 
     public void ClosePromotionPanel()
     {
-        gameObject.SetActive(false); // promotionPanel ´ë½Å gameObject
+        gameObject.SetActive(false); // promotionPanel ï¿½ï¿½ï¿½ gameObject
     }
 
-    // ¼±°Å¿îµ¿ °á°ú¸¦ EventPanel¿¡ Ç¥½Ã
+    // ï¿½ï¿½ï¿½Å¿îµ¿ ï¿½ï¿½ï¿½ï¿½ï¿½ EventPanelï¿½ï¿½ Ç¥ï¿½ï¿½
     public void ShowEventResult(bool isSuccess, int amountA, int amountB, int amountC)
     {
-        string result = isSuccess ? "¼±°Å¿îµ¿ ¼º°ø!" : "¼±°Å¿îµ¿ ½ÇÆĞ!";
-        supportChangeText.text = $"{result}\n°©´ç {amountA:+#;-#;0}%, À»´ç {amountB:+#;-#;0}%, º´´ç {amountC:+#;-#;0}%";
+        string result = isSuccess ? "ï¿½ï¿½ï¿½Å¿îµ¿ ï¿½ï¿½ï¿½ï¿½!" : "ï¿½ï¿½ï¿½Å¿îµ¿ ï¿½ï¿½ï¿½ï¿½!";
+        supportChangeText.text = $"{result}\nï¿½ï¿½ï¿½ï¿½ {amountA:+#;-#;0}%, ï¿½ï¿½ï¿½ï¿½ {amountB:+#;-#;0}%, ï¿½ï¿½ï¿½ï¿½ {amountC:+#;-#;0}%";
     }
     void OnStartVoteButtonClick()
     {
+        // ì¹´ë“œ ë¶„ë°° ë¡œì§
+        CardDistributor distributor = FindObjectOfType<CardDistributor>();
+        if (distributor != null)
+        {
+            // 1. í™ë³´ ì„ íƒ ì¹´ë“œ ì¶”ê°€ (1ì¥)
+            distributor.AddPromotionCard(isNationalMode, selectedRegion);
+
+            // 2. ì„ ê±° ìš´ë™ ê²°ê³¼ ì¹´ë“œ ì¶”ê°€ (2-3ì¥)
+            distributor.AddCampaignResultCards(campaignSuccess);
+
+            Debug.Log($"[PromotionUI] ì¹´ë“œ ë¶„ë°° ì™„ë£Œ - ì„ íƒ: {(isNationalMode ? "ì „êµ­" : selectedRegion?.regionName)}, ê²°ê³¼: {(campaignSuccess ? "ì„±ê³µ" : "ì‹¤íŒ¨")}");
+        }
+        else
+        {
+            Debug.LogError("CardDistributorë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤!");
+        }
+
+        // ê¸°ì¡´ ë¡œì§
         UIManager.Instance.ShowElectionView();
         VotingUI.Instance.StartVoting();
     }
