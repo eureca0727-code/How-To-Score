@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement; // ¾À Àç½ÃÀÛ¿ë
+using UnityEngine.SceneManagement; // ì”¬ ì¬ì‹œì‘ìš©
 
 public class ResultUI : MonoBehaviour
 {
@@ -10,8 +10,8 @@ public class ResultUI : MonoBehaviour
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI resultText;
     public TextMeshProUGUI statusText;
-    public Button nextButton; // ¡æ ¹öÆ° (¼º°ø ½Ã)
-    public Button restartButton; // Ã³À½À¸·Î ¹öÆ° (½ÇÆĞ ½Ã)
+    public Button nextButton; // â†’ ë²„íŠ¼ (ì„±ê³µ ì‹œ)
+    public Button restartButton; // ì²˜ìŒìœ¼ë¡œ ë²„íŠ¼ (ì‹¤íŒ¨ ì‹œ)
 
     [Header("District Containers")]
     public Transform[] districtContainers;
@@ -27,43 +27,43 @@ public class ResultUI : MonoBehaviour
 
     void Start()
     {
-        // Ã³À½¿£ ÅØ½ºÆ® ¼û±â±â
+        // ì²˜ìŒì—” í…ìŠ¤íŠ¸ ìˆ¨ê¸°ê¸°
         if (resultText != null) resultText.text = "";
         if (statusText != null) statusText.text = "";
 
-        // Ã³À½¿£ ¹öÆ° ¼û±â±â
+        // ì²˜ìŒì—” ë²„íŠ¼ ìˆ¨ê¸°ê¸°
         if (nextButton != null) nextButton.gameObject.SetActive(false);
         if (restartButton != null) restartButton.gameObject.SetActive(false);
 
-        // ¹öÆ° Å¬¸¯ ÀÌº¥Æ® ¿¬°á
+        // ë²„íŠ¼ í´ë¦­ ì´ë²¤íŠ¸ ì—°ê²°
         if (nextButton != null) nextButton.onClick.AddListener(OnNextButtonClick);
         if (restartButton != null) restartButton.onClick.AddListener(OnRestartButtonClick);
 
-        // Ã³À½¿£ ¸ğµÎ È¸»ö
+        // ì²˜ìŒì—” ëª¨ë‘ íšŒìƒ‰
         ResetDistrictColors();
     }
 
     public void ShowResults()
     {
-        // Å¸ÀÌÆ² ¾÷µ¥ÀÌÆ®
+        // íƒ€ì´í‹€ ì—…ë°ì´íŠ¸
         int round = GameManager.Instance.GetCurrentRound();
-        titleText.text = $"<{round}È¸ ¼±°Å °á°ú>";
+        titleText.text = $"<{round}íšŒ ì„ ê±° ê²°ê³¼>";
 
-        // ÅØ½ºÆ® ÃÊ±âÈ­
+        // í…ìŠ¤íŠ¸ ì´ˆê¸°í™”
         resultText.text = "";
         statusText.text = "";
 
-        // ¹öÆ° ÃÊ±âÈ­
+        // ë²„íŠ¼ ì´ˆê¸°í™”
         if (nextButton != null) nextButton.gameObject.SetActive(false);
         if (restartButton != null) restartButton.gameObject.SetActive(false);
 
-        // District ÀÌ¹ÌÁö »ö±ò ÃÊ±âÈ­
+        // District ì´ë¯¸ì§€ ìƒ‰ê¹” ì´ˆê¸°í™”
         ResetDistrictColors();
 
         StartCoroutine(RevealResults());
     }
 
-    // District »ö±ò ÃÊ±âÈ­
+    // District ìƒ‰ê¹” ì´ˆê¸°í™”
     void ResetDistrictColors()
     {
         foreach (var container in districtContainers)
@@ -81,103 +81,121 @@ public class ResultUI : MonoBehaviour
 
     IEnumerator RevealResults()
     {
-        // ÆĞ³Î ÄÑÁø ÈÄ 1ÃÊ ´ë±â
+        // íŒ¨ë„ ì¼œì§„ í›„ 1ì´ˆ ëŒ€ê¸°
         yield return new WaitForSeconds(1f);
 
-        int partyASeats = 0; // °©´ç ÀÇ¼®¼ö Ä«¿îÆ®
+        int partyASeats = 0; // ê°‘ë‹¹ ì˜ì„ìˆ˜ ì¹´ìš´íŠ¸
 
-        // °¢ ¼±°Å±¸ °á°ú °è»ê ¹× Ç¥½Ã
+        // ê° ì„ ê±°êµ¬ ê²°ê³¼ ê³„ì‚° ë° í‘œì‹œ
         for (int i = 0; i < 6; i++)
         {
-            Debug.Log($"District {i} Ã³¸® ½ÃÀÛ");
+            Debug.Log($"District {i} ì²˜ë¦¬ ì‹œì‘");
 
             if (districtContainers[i] == null)
             {
-                Debug.LogError($"District {i}°¡ nullÀÔ´Ï´Ù!");
+                Debug.LogError($"District {i}ê°€ nullì…ë‹ˆë‹¤!");
                 continue;
             }
 
-            // ¼±°Å±¸ iÀÇ ´ç¼±ÀÚ °è»ê
+            // ì„ ê±°êµ¬ iì˜ ë‹¹ì„ ì ê³„ì‚°
             var support = GameManager.Instance.GetDistrictSupport(i);
 
-            // ÃÖ´ë ÁöÁöÀ² Ã£±â
+            // ìµœëŒ€ ì§€ì§€ìœ¨ ì°¾ê¸°
             Color winnerColor = defaultColor;
 
             if (support.partyA > support.partyB && support.partyA > support.partyC)
             {
-                winnerColor = partyAColor; // °©´ç ½Â¸®
-                partyASeats++; // °©´ç ÀÇ¼® +1
+                winnerColor = partyAColor; // ê°‘ë‹¹ ìŠ¹ë¦¬
+                partyASeats++; // ê°‘ë‹¹ ì˜ì„ +1
             }
             else if (support.partyB > support.partyA && support.partyB > support.partyC)
             {
-                winnerColor = partyBColor; // À»´ç ½Â¸®
+                winnerColor = partyBColor; // ì„ë‹¹ ìŠ¹ë¦¬
             }
             else
             {
-                winnerColor = partyCColor; // º´´ç ½Â¸®
+                winnerColor = partyCColor; // ë³‘ë‹¹ ìŠ¹ë¦¬
             }
 
-            // District i ¾ÈÀÇ ¸ğµç Image(Triangle, Circle) »ö±ò º¯°æ
+            // District i ì•ˆì˜ ëª¨ë“  Image(Triangle, Circle) ìƒ‰ê¹” ë³€ê²½
             Image[] childImages = districtContainers[i].GetComponentsInChildren<Image>();
             foreach (var img in childImages)
             {
                 img.color = winnerColor;
             }
 
-            Debug.Log($"¼±°Å±¸ {i}: °©={support.partyA:F1}% À»={support.partyB:F1}% º´={support.partyC:F1}% ¡æ ´ç¼±: {winnerColor}");
+            Debug.Log($"ì„ ê±°êµ¬ {i}: ê°‘={support.partyA:F1}% ì„={support.partyB:F1}% ë³‘={support.partyC:F1}% â†’ ë‹¹ì„ : {winnerColor}");
 
-            // 0.5ÃÊ ´ë±â
+            // 0.5ì´ˆ ëŒ€ê¸°
             yield return new WaitForSeconds(revealDelay);
         }
 
-        // ¸ğµç »ö±òÀÌ ³ªÅ¸³­ ÈÄ
-        resultText.text = $"ÃÑ 6¼® Áß {partyASeats}¼®À» È¹µæÇÏ¿´½À´Ï´Ù.";
+        // ëª¨ë“  ìƒ‰ê¹”ì´ ë‚˜íƒ€ë‚œ í›„
+        resultText.text = $"ì´ 6ì„ ì¤‘ {partyASeats}ì„ì„ íšë“í•˜ì˜€ìŠµë‹ˆë‹¤.";
 
-        // 1ÃÊ ´ë±â
+        // 1ì´ˆ ëŒ€ê¸°
         yield return new WaitForSeconds(1f);
 
-        // ¼º°ø/½ÇÆĞ ÆÇÁ¤
-        bool isSuccess = partyASeats > 0; // 1¼® ÀÌ»óÀÌ¸é ¼º°ø
+        // ===== ì˜ì„ ê²°ê³¼ ì¹´ë“œ ë¶„ë°° (ìƒˆë¡œ ì¶”ê°€) =====
+        CardDistributor distributor = FindObjectOfType<CardDistributor>();
+        if (distributor != null)
+        {
+            // 3. ì˜ì„ ê²°ê³¼ ì¹´ë“œ ì¶”ê°€ (0-2ì¥)
+            distributor.AddSeatRewardCards(partyASeats);
+
+            // 4. ìµœì¢… ì¹´ë“œ í™•ì •
+            distributor.FinalizePlayerCards();
+
+            Debug.Log($"[ResultUI] ì¹´ë“œ ë¶„ë°° ì™„ë£Œ - {partyASeats}ì„");
+        }
+        else
+        {
+            Debug.LogError("CardDistributorë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤!");
+        }
+        // ===== ì—¬ê¸°ê¹Œì§€ ì¶”ê°€ =====
+
+        // ì„±ê³µ/ì‹¤íŒ¨ íŒì •
+        bool isSuccess = partyASeats > 0; // 1ì„ ì´ìƒì´ë©´ ì„±ê³µ
 
         if (isSuccess)
         {
-            statusText.text = "ÀÇ¼® È¹µæ ¼º°ø";
+            statusText.text = "ì˜ì„ íšë“ ì„±ê³µ";
             statusText.color = Color.red; 
         }
         else
         {
-            statusText.text = "ÀÇ¼® È¹µæ ½ÇÆĞ";
+            statusText.text = "ì˜ì„ íšë“ ì‹¤íŒ¨";
             statusText.color = Color.red; 
         }
 
-        // 1ÃÊ ´ë±â ÈÄ ¹öÆ° Ç¥½Ã
+        // 1ì´ˆ ëŒ€ê¸° í›„ ë²„íŠ¼ í‘œì‹œ
         yield return new WaitForSeconds(1f);
 
         if (isSuccess)
         {
-            nextButton.gameObject.SetActive(true); // ¡æ ¹öÆ° Ç¥½Ã
+            nextButton.gameObject.SetActive(true); // â†’ ë²„íŠ¼ í‘œì‹œ
         }
         else
         {
-            restartButton.gameObject.SetActive(true); // Ã³À½À¸·Î ¹öÆ° Ç¥½Ã
+            restartButton.gameObject.SetActive(true); // ì²˜ìŒìœ¼ë¡œ ë²„íŠ¼ í‘œì‹œ
         }
 
-        Debug.Log("¼±°Å °á°ú Ç¥½Ã ¿Ï·á!");
+        Debug.Log("ì„ ê±° ê²°ê³¼ í‘œì‹œ ì™„ë£Œ!");
     }
 
-    // ¡æ ¹öÆ° Å¬¸¯ ½Ã (¼º°ø)
+    // â†’ ë²„íŠ¼ í´ë¦­ ì‹œ (ì„±ê³µ)
     void OnNextButtonClick()
     {
-        Debug.Log("¼¼ºÎ °á°ú È­¸éÀ¸·Î ÀÌµ¿");
+        Debug.Log("ì„¸ë¶€ ê²°ê³¼ í™”ë©´ìœ¼ë¡œ ì´ë™");
 
-        // UIManager¸¦ ÅëÇØ ÀüÈ¯
+        // UIManagerë¥¼ í†µí•´ ì „í™˜
         UIManager.Instance.ShowDetailResultView();
     }
 
-    // Ã³À½À¸·Î ¹öÆ° Å¬¸¯ ½Ã (½ÇÆĞ)
+    // ì²˜ìŒìœ¼ë¡œ ë²„íŠ¼ í´ë¦­ ì‹œ (ì‹¤íŒ¨)
     void OnRestartButtonClick()
     {
-        Debug.Log("°ÔÀÓ Ã¹ È­¸éÀ¸·Î");
+        Debug.Log("ê²Œì„ ì²« í™”ë©´ìœ¼ë¡œ");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
