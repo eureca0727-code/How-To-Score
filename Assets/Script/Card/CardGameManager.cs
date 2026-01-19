@@ -6,30 +6,30 @@ public class CardGameManager : MonoBehaviour
 {
     public static CardGameManager Instance { get; private set; }
 
-    // Á¤´ç ¼ÕÆĞ ÂüÁ¶
-    public PartyCardHand playerHand; // °©´ç
-    public PartyCardHand partyBHand; // À»´ç
-    public PartyCardHand partyCHand; // º´´ç
+    // ê° ì •ë‹¹ í•¸ë“œ ì°¸ì¡°
+    public PartyCardHand playerHand; // í”Œë ˆì´ì–´
+    public PartyCardHand partyBHand; // ì„
+    public PartyCardHand partyCHand; // ë³‘
 
-    // ÅÏ °ü¸®
+    // í„´ ê´€ë¦¬
     public enum Party { Player, PartyB, PartyC }
     public Party currentTurn;
-    private bool isClockwise = true; // true: °©¡æÀ»¡æº´, false: º´¡æÀ»¡æ°©
+    private bool isClockwise = true; // true: ì‹œê³„ë°©í–¥, false: ë°˜ì‹œê³„ë°©í–¥
 
-    // °ø°İ »óÅÂ
+    // ê³µê²© ìƒíƒœ
     private bool isUnderAttack = false;
     private string attackCardId = null;
     private Party attacker;
 
-    // Æ¯¼ö È¿°ú
-    private bool isAmplified = false; // S3 °ø°İ ÁõÆø È¿°ú
+    // íŠ¹ìˆ˜ íš¨ê³¼
+    private bool isAmplified = false; // S3 ì¹´ë“œ ì¦í­ íš¨ê³¼
 
-    // ÅÏ Ä«¿îÆ® (Á¾·á Á¶°Ç)
+    // í„´ ì¹´ìš´íŠ¸ (ë¼ìš´ë“œ ì¢…ë£Œ)
     public int playerActionCount = 0;
     public int partyBActionCount = 0;
     public int partyCActionCount = 0;
 
-    // ÇöÀç ¶ó¿îµå
+    // ë¼ìš´ë“œ ë²ˆí˜¸
     public int currentRound = 1;
 
     void Awake()
@@ -44,32 +44,32 @@ public class CardGameManager : MonoBehaviour
         }
     }
 
-    // ¶ó¿îµå ½ÃÀÛ (¼±°ø ·£´ı °áÁ¤)
+    // ë¼ìš´ë“œ ì‹œì‘ (ë¼ìš´ë“œ ì‹œì‘ ì²˜ë¦¬)
     public void StartRound()
     {
-        // ÅÏ Ä«¿îÆ® ÃÊ±âÈ­
+        // í„´ ì¹´ìš´íŠ¸ ì´ˆê¸°í™”
         playerActionCount = 0;
         partyBActionCount = 0;
         partyCActionCount = 0;
 
-        // °ø°İ »óÅÂ ÃÊ±âÈ­
+        // ê³µê²© ìƒíƒœ ì´ˆê¸°í™”
         isUnderAttack = false;
         attackCardId = null;
         isAmplified = false;
 
-        // ·£´ı ¼±°ø °áÁ¤
+        // ì‹œì‘ ì •ë‹¹ ê²°ì •
         int random = Random.Range(0, 3);
         currentTurn = (Party)random;
 
-        Debug.Log($"¶ó¿îµå {currentRound} ½ÃÀÛ! ¼±°ø: {GetPartyName(currentTurn)}");
+        Debug.Log($"ë¼ìš´ë“œ {currentRound} ì‹œì‘! ì„ ê³µ: {GetPartyName(currentTurn)}");
     }
 
-    // ´ÙÀ½ ÅÏÀ¸·Î ÁøÇà
+    // ë‹¤ìŒ ì°¨ë¡€ë¡œ ì´ë™
     public void NextTurn()
     {
         if (isClockwise)
         {
-            // °© ¡æ À» ¡æ º´
+            // ê°‘ -> ì„ -> ë³‘ -> ê°‘
             if (currentTurn == Party.Player)
                 currentTurn = Party.PartyB;
             else if (currentTurn == Party.PartyB)
@@ -79,7 +79,7 @@ public class CardGameManager : MonoBehaviour
         }
         else
         {
-            // º´ ¡æ À» ¡æ °©
+            // ê°‘ -> ë³‘ -> ì„ -> ê°‘
             if (currentTurn == Party.Player)
                 currentTurn = Party.PartyC;
             else if (currentTurn == Party.PartyC)
@@ -89,14 +89,14 @@ public class CardGameManager : MonoBehaviour
         }
     }
 
-    // ¼ø¼­ ¹İÀü (S2 Ä«µå È¿°ú)
+    // ìˆœì„œ ë°˜ì „ (S2 ì¹´ë“œ íš¨ê³¼)
     public void ReverseOrder()
     {
         isClockwise = !isClockwise;
-        Debug.Log($"¼ø¼­°¡ ¹İÀüµÇ¾ú½À´Ï´Ù! ÇöÀç ¹æÇâ: {(isClockwise ? "°©¡æÀ»¡æº´" : "º´¡æÀ»¡æ°©")}");
+        Debug.Log($"ìˆœì„œê°€ ë°˜ì „ë˜ì—ˆìŠµë‹ˆë‹¤! í˜„ì¬ ë°©í–¥: {(isClockwise ? "ì‹œê³„ë°©í–¥" : "ë°˜ì‹œê³„ë°©í–¥")}");
     }
 
-    // °ø°İ Ä«µå Á¦½Ã
+    // ê³µê²© ì¹´ë“œ ì œì‹œ
     public void PlayAttackCard(string cardId, Party attackingParty)
     {
         isUnderAttack = true;
@@ -104,33 +104,33 @@ public class CardGameManager : MonoBehaviour
         attacker = attackingParty;
 
         Card card = CardDatabase.Instance.GetCard(cardId);
-        Debug.Log($"{GetPartyName(attackingParty)}ÀÌ(°¡) {card.cardName} °ø°İ!");
+        Debug.Log($"{GetPartyName(attackingParty)}ì´(ê°€) {card.cardName} ê³µê²©!");
     }
 
-    // ¹æ¾î Ä«µå Á¦½Ã (¿ÏÀü ¹æ¾î ¼º°ø ¿©ºÎ ¹İÈ¯)
+    // ë°©ì–´ ì¹´ë“œ ì œì‹œ (ë°©ì–´ ì„±ê³µ ì—¬ë¶€ ë°˜í™˜)
     public bool PlayDefenseCard(string defenseCardId)
     {
         if (!isUnderAttack || attackCardId == null)
         {
-            Debug.LogWarning("ÇöÀç °ø°İ¹Ş°í ÀÖÁö ¾Ê½À´Ï´Ù.");
+            Debug.LogWarning("í˜„ì¬ ê³µê²©ë°›ê³  ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
             return false;
         }
 
         Card attackCard = CardDatabase.Instance.GetCard(attackCardId);
         Card defenseCard = CardDatabase.Instance.GetCard(defenseCardId);
 
-        // ¿ÏÀü ¹æ¾î ¼º°ø
+        // ì „ì²´ ë°©ì–´ ì„±ê³µ
         if (attackCard.fullDefenseCards.Contains(defenseCardId))
         {
-            Debug.Log($"{defenseCard.cardName}(À¸)·Î ¿ÏÀü ¹æ¾î ¼º°ø!");
+            Debug.Log($"{defenseCard.cardName}ìœ¼ë¡œ ì™„ì „ ë°©ì–´ ì„±ê³µ!");
             ClearAttackState();
             return true;
         }
 
-        // ÀÏºÎ ¹æ¾î ¼º°ø
+        // ë¶€ë¶„ ë°©ì–´ ì„±ê³µ
         if (attackCard.partialDefenseCards.Contains(defenseCardId))
         {
-            Debug.Log($"{defenseCard.cardName}(À¸)·Î ÀÏºÎ ¹æ¾î ¼º°ø!");
+            Debug.Log($"{defenseCard.cardName}ìœ¼ë¡œ ë¶€ë¶„ ë°©ì–´ ì„±ê³µ!");
             int damage = attackCard.attackValue / 3;
             if (isAmplified) damage *= 2;
 
@@ -142,6 +142,7 @@ public class CardGameManager : MonoBehaviour
         Debug.LogWarning("ë°©ì–´ ì‹¤íŒ¨! ì „ì²´ ë°ë¯¸ì§€ë¥¼ ë°›ìŠµë‹ˆë‹¤.");
         ApplyFullDamage();
         return false;
+    }
 
     // í†µí•© ì¹´ë“œ ì‚¬ìš© í•¨ìˆ˜ (Mì¹´ë“œ ìë™ ì „í™˜ ì²˜ë¦¬)
     public void PlayCard(string cardId)
@@ -222,6 +223,7 @@ public class CardGameManager : MonoBehaviour
 
         // ì‚¬ìš©í•œ ì¹´ë“œëŠ” í•¸ë“œì—ì„œ ì œê±°
         GetCurrentHand().RemoveCard(cardId);
+    }
 
     // AI í„´ ì‹¤í–‰ (ì„/ë³‘ ì „ìš©)
     public void ExecuteAITurn()
@@ -259,19 +261,17 @@ public class CardGameManager : MonoBehaviour
             NextTurn();
         }
     }
-    }
-    }
 
-    // S1: °ø°İ ³Ñ±â±â
+    // S1: ê³µê²© ë„˜ê¸°ê¸°
     public void PassAttack()
     {
         if (!isUnderAttack)
         {
-            Debug.LogWarning("ÇöÀç °ø°İ¹Ş°í ÀÖÁö ¾Ê½À´Ï´Ù.");
+            Debug.LogWarning("í˜„ì¬ ê³µê²©ë°›ê³  ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
             return;
         }
 
-        Debug.Log($"{GetPartyName(currentTurn)}ÀÌ(°¡) °ø°İÀ» ´ÙÀ½ Á¤´ç¿¡°Ô ³Ñ°å½À´Ï´Ù!");
+        Debug.Log($"{GetPartyName(currentTurn)}ì´(ê°€) ê³µê²©ì„ ë‹¤ìŒ ìˆœì„œì—ê²Œ ë„˜ê¹ë‹ˆë‹¤!");
 
         // ë‹¤ìŒ í„´ìœ¼ë¡œ ì´ë™ (ê³µê²© ìƒíƒœëŠ” ìœ ì§€)
         NextTurn();
@@ -279,14 +279,14 @@ public class CardGameManager : MonoBehaviour
         Debug.Log($"ê³µê²©ì´ {GetPartyName(currentTurn)}ì—ê²Œ ë„˜ì–´ê°”ìŠµë‹ˆë‹¤!");
     }
 
-    // S3: °ø°İ ÁõÆø
+    // S3: ê³µê²© ì¦í­
     public void AmplifyNextAttack()
     {
         isAmplified = true;
-        Debug.Log("´ÙÀ½ °ø°İÀÌ 2¹è·Î ÁõÆøµË´Ï´Ù!");
+        Debug.Log("ë‹¤ìŒ ê³µê²©ì´ 2ë°°ë¡œ ì¦í­ë©ë‹ˆë‹¤!");
     }
 
-    // ¹æ¾î ½ÇÆĞ ½Ã ÇÇÇØ Àû¿ë
+    // ë°©ì–´ ì‹¤íŒ¨ ì‹œ ì „ì²´ ë°ë¯¸ì§€
     public void ApplyFullDamage()
     {
         if (!isUnderAttack || attackCardId == null)
@@ -300,7 +300,7 @@ public class CardGameManager : MonoBehaviour
         ClearAttackState();
     }
 
-    // ÁöÁöÀ² º¯µ¿ Àû¿ë
+    // ë°ë¯¸ì§€ ì ìš© ë¡œì§
     void ApplyDamage(Party defender, int damage, int attackerGain)
     {
         // ê° ì •ë‹¹ì˜ ì§€ì§€ìœ¨ ë³€í™”ëŸ‰ ê³„ì‚°
@@ -334,30 +334,30 @@ public class CardGameManager : MonoBehaviour
         Debug.Log($"ì§€ì§€ìœ¨ ë³€ê²½: ê°‘({changeA:+#;-#;0}), ì„({changeB:+#;-#;0}), ë³‘({changeC:+#;-#;0})");
     }
 
-    // °ø°İ »óÅÂ ÃÊ±âÈ­
+    // ê³µê²© ìƒíƒœ ì´ˆê¸°í™”
     void ClearAttackState()
     {
         isUnderAttack = false;
         attackCardId = null;
-        isAmplified = false; // ¹æ¾î ¼º°ø ½Ã¿¡µµ ÁõÆø È¿°ú ¼Ò¸ê
+        isAmplified = false; // ë°©ì–´ ì„±ê³µ ë˜ëŠ” ì¦í­ íš¨ê³¼ ì†Œë©¸
     }
 
-    // ÅÏ Æ÷±â
+    // í„´ í¬ê¸°
     public void PassTurn()
     {
         IncrementActionCount(currentTurn);
 
-        // °ø°İ¹Ş°í ÀÖ´Â »óÅÂ¿¡¼­ ÅÏ Æ÷±â ½Ã ÀüÃ¼ ÇÇÇØ
+        // ê³µê²©ë°›ê³  ìˆëŠ” ìƒíƒœì—ì„œ í„´ í¬ê¸° ì‹œ ì „ì²´ ë°ë¯¸ì§€
         if (isUnderAttack)
         {
             ApplyFullDamage();
         }
 
-        Debug.Log($"{GetPartyName(currentTurn)}ÀÌ(°¡) ÅÏÀ» Æ÷±âÇß½À´Ï´Ù.");
+        Debug.Log($"{GetPartyName(currentTurn)}ì´(ê°€) í„´ì„ í¬ê¸°í–ˆìŠµë‹ˆë‹¤.");
         // NextTurn()ì€ í˜¸ì¶œí•˜ëŠ” ìª½ì—ì„œ ì²˜ë¦¬ (ExecuteAITurn ë“±)
     }
 
-    // Çàµ¿ Ä«¿îÆ® Áõ°¡
+    // í–‰ë™ ì¹´ìš´íŠ¸ ì¦ê°€
     public void IncrementActionCount(Party party)
     {
         switch (party)
@@ -374,13 +374,13 @@ public class CardGameManager : MonoBehaviour
         }
     }
 
-    // Á¾·á Á¶°Ç Ã¼Å©
+    // ë¼ìš´ë“œ ì¢…ë£Œ ì²´í¬
     public bool IsRoundEnd()
     {
         return playerActionCount >= 3 && partyBActionCount >= 3 && partyCActionCount >= 3;
     }
 
-    // ÇïÆÛ ¸Ş¼­µåµé
+    // í—¬í¼ ë©”ì†Œë“œë“¤
     // í˜„ì¬ í„´ì˜ ì¹´ë“œ í•¸ë“œ ë°˜í™˜
     public PartyCardHand GetCurrentHand()
     {
@@ -401,10 +401,10 @@ public class CardGameManager : MonoBehaviour
     {
         switch (party)
         {
-            case Party.Player: return "°©";
-            case Party.PartyB: return "À»";
-            case Party.PartyC: return "º´";
-            default: return "¾Ë ¼ö ¾øÀ½";
+            case Party.Player: return "ê°‘";
+            case Party.PartyB: return "ì„";
+            case Party.PartyC: return "ë³‘";
+            default: return "ì•Œ ìˆ˜ ì—†ìŒ";
         }
     }
 
