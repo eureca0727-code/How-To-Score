@@ -8,11 +8,11 @@ public class PromotionUI : MonoBehaviour
     public TextMeshProUGUI titleText;   
 
     [Header("Charts")]
-    public MultiSectionPieChart partyChart;        // ��/��/�� ������
-    public PartyBarChart partyBarChart;            // ��/��/�� ���� �׷��� (�߰�)
-    public MultiSectionPieChart partyA_PolicyChart; // �� ������ ��å ����
-    public MultiSectionPieChart partyB_PolicyChart; // �� ������ ��å ����
-    public MultiSectionPieChart partyC_PolicyChart; // �� ������ ��å ����
+    public MultiSectionPieChart partyChart;        // 갑/을/병 지지율
+    public PartyBarChart partyBarChart;            // 갑/을/병 막대 그래프 (추가)
+    public MultiSectionPieChart partyA_PolicyChart; // 갑 정당의 정책 선호
+    public MultiSectionPieChart partyB_PolicyChart; // 을 정당의 정책 선호
+    public MultiSectionPieChart partyC_PolicyChart; // 병 정당의 정책 선호
 
     [Header("Quest System")]
     public GameObject questPanel;
@@ -22,9 +22,9 @@ public class PromotionUI : MonoBehaviour
 
     [Header("Event System")]
     public GameObject eventPanel;
-    public TextMeshProUGUI supportChangeText; // ������ ��ȭ�� ǥ��
-    public TextMeshProUGUI eventText; // �̺�Ʈ ���
-    public Button startvoteButton; // ���� ���� ��ư
+    public TextMeshProUGUI supportChangeText; // 지지율 변화량 표시
+    public TextMeshProUGUI eventText; // 이벤트 내용
+    public Button startvoteButton; // 투표 시작 버튼
 
 
     private bool isNationalMode = true;
@@ -42,11 +42,11 @@ public class PromotionUI : MonoBehaviour
 
         if (yesButton != null) yesButton.onClick.AddListener(OnYesButtonClick);
         if (noButton != null) noButton.onClick.AddListener(OnNoButtonClick);
-        if (promoteButton != null) promoteButton.onClick.AddListener(OnPromoteButtonClick);  // �߰�
-        if (startvoteButton != null) startvoteButton.onClick.AddListener(OnStartVoteButtonClick); // �� �߰�
+        if (promoteButton != null) promoteButton.onClick.AddListener(OnPromoteButtonClick);
+        if (startvoteButton != null) startvoteButton.onClick.AddListener(OnStartVoteButtonClick);
 
 
-        // Quest Panel �ʱ⿡�� ���α�
+        // Quest Panel 초기에는 숨김
         if (questPanel != null) questPanel.SetActive(false);
         if (eventPanel != null) eventPanel.SetActive(false);
     }
@@ -148,62 +148,62 @@ public class PromotionUI : MonoBehaviour
         };
     }
 
-    // "ȫ�� �����ϱ�" ��ư Ŭ�� ��
+    // "홍보 시작하기" 버튼 클릭 시
     public void OnPromoteButtonClick()
     {
-        // 90% ����, 10% ����
+        // 90% 성공, 10% 실패
         bool isSuccess = Random.Range(0, 100) < 90;
 
-        if (isNationalMode) // ���� ���ſ
+        if (isNationalMode) // 전국 선거운동
         {
             ProcessNationalPromotion(isSuccess);
         }
-        else // Ư�� ���� ���ſ
+        else // 특정 지역 선거운동
         {
             ProcessRegionalPromotion(isSuccess);
         }
 
-        // ����Ʈ ����
+        // 퀘스트 시작
         questPanel.SetActive(true);
         StartQuest();
     }
 
-    // Ư�� ���� ���ſ ó��
+    // 특정 지역 선거운동 ó��
     private void ProcessRegionalPromotion(bool isSuccess)
     {
         campaignSuccess = isSuccess;
         if (isSuccess)
         {
-            // ����: �� +30, ��/�� -15
-            campaignChangeA = 30; campaignChangeB = -15; campaignChangeC = -15; //eventPanel�� ǥ���� �� ����
+            // 성공: 갑 +30, 을/병 -15
+            campaignChangeA = 30; campaignChangeB = -15; campaignChangeC = -15; 
             selectedRegion.ChangeSupportRate(30, -15, -15);
             Debug.Log($"{selectedRegion.regionName} ���ſ ����!");
         }
         else
         {
-            // ����: �� -30, ��/�� +15
-            campaignChangeA = -30; campaignChangeB = 15; campaignChangeC = 15; //eventPanel�� ǥ���� �� ����
+            // 실패: 갑 -30, 을/병 +15
+            campaignChangeA = -30; campaignChangeB = 15; campaignChangeC = 15; 
             selectedRegion.ChangeSupportRate(-30, 15, 15);
             Debug.Log($"{selectedRegion.regionName} ���ſ ����!");
         }
     }
 
-    // ���� ���ſ ó��
+    // 전국 선거운동 ó��
     private void ProcessNationalPromotion(bool isSuccess)
     {
         campaignSuccess = isSuccess;
         if (isSuccess)
         {
-            // ����: ��� ���� �� +6, ��/�� -3
-            campaignChangeA = 6; campaignChangeB = -3; campaignChangeC = -3; //eventPanel�� ǥ���� �� ����
+            // 성공: 모든 지역 갑 +6, 을/병 -3
+            campaignChangeA = 6; campaignChangeB = -3; campaignChangeC = -3; 
 
             GameManager.Instance.ChangeAllRegionsSupport(6, -3, -3);
             Debug.Log("���� ���ſ ����!");
         }
         else
         {
-            // ����: ��� ���� �� -6, ��/�� +3
-            campaignChangeA = -6; campaignChangeB = 3; campaignChangeC = 3; //eventPanel�� ǥ���� �� ����
+            // 실패: 모든 지역 갑 -6, 을/병 +3
+            campaignChangeA = -6; campaignChangeB = 3; campaignChangeC = 3; 
             GameManager.Instance.ChangeAllRegionsSupport(-6, 3, 3);
             Debug.Log("���� ���ſ ����!");
         }
@@ -249,23 +249,23 @@ public class PromotionUI : MonoBehaviour
         ShowEventResult(campaignSuccess, campaignChangeA, campaignChangeB, campaignChangeC);
     }
 
-    // Start Promotion ��ư���� ȣ��
+    // Start Promotion 버튼에서 호출
     public void ShowPromotionPanel()
     {
-        // ���� �г� ���� �ʱ�ȭ
+        // 차트 패널 상태 초기화
         if (questPanel != null) questPanel.SetActive(false);
         if (eventPanel != null) eventPanel.SetActive(false);
         UpdateCharts();
     }
 
-    // ���� ���� ���� 
+    // 지역 모드 설정 
     public void SetNationalMode()
     {
         isNationalMode = true;
         selectedRegion = null;
     }
 
-    // ���� ���� ���� 
+    // 지역 모드 설정 
     public void SetRegionalMode(Region region)
     {
         isNationalMode = false;
@@ -288,13 +288,13 @@ public class PromotionUI : MonoBehaviour
     {
         titleText.text = "���� ������";
 
-        // 1. ���� ��/��/�� ������
+        // 1. 전국 갑/을/병 지지율
         float totalA = GameManager.Instance.GetTotalPartyASupport();
         float totalB = GameManager.Instance.GetTotalPartyBSupport();
         float totalC = GameManager.Instance.GetTotalPartyCSupport();
         partyChart.SetData3(totalA, totalB, totalC);
 
-        // 2. �� �����ڵ��� ��å ���� (���� ���)
+        // 2. 갑 지지자들의 정책 선호 (전국 평균)
         var partyA_Demand = CalculateNationalPolicyDemand("A");
         partyA_PolicyChart.SetData4(
             partyA_Demand.economy,
@@ -303,7 +303,7 @@ public class PromotionUI : MonoBehaviour
             partyA_Demand.environment
         );
 
-        // 3. �� �����ڵ��� ��å ����
+        // 3. 을 지지자들의 정책 선호
         var partyB_Demand = CalculateNationalPolicyDemand("B");
         partyB_PolicyChart.SetData4(
             partyB_Demand.economy,
@@ -312,7 +312,7 @@ public class PromotionUI : MonoBehaviour
             partyB_Demand.environment
         );
 
-        // 4. �� �����ڵ��� ��å ����
+        // 4. 병 지지자들의 정책 선호
         var partyC_Demand = CalculateNationalPolicyDemand("C");
         partyC_PolicyChart.SetData4(
             partyC_Demand.economy,
@@ -320,7 +320,7 @@ public class PromotionUI : MonoBehaviour
             partyC_Demand.security,
             partyC_Demand.environment
         );
-        partyBarChart.UpdateChart(totalA, totalB, totalC); // ���� �׷��� ������Ʈ �߰�
+        partyBarChart.UpdateChart(totalA, totalB, totalC); // 막대 그래프 업데이트 추가
     }
 
     void ShowRegionalData()
@@ -333,7 +333,7 @@ public class PromotionUI : MonoBehaviour
 
         titleText.text = $"{selectedRegion.regionName} ������";
 
-        // 1. �ش� ���� ��/��/�� ������ , debug �α� ���߿� �����
+        // 1. 해당 지역 갑/을/병 지지율
         Debug.Log($"=== {selectedRegion.regionName} ������ ===");
         Debug.Log($"��: {selectedRegion.partyA.supportRate}%");
         Debug.Log($"��: {selectedRegion.partyB.supportRate}%");
@@ -345,7 +345,7 @@ public class PromotionUI : MonoBehaviour
             selectedRegion.partyC.supportRate
         );
 
-        // 2. �� ��å ����
+        // 2. 갑 정책 선호
         Debug.Log($"=== �� ������ ��å ���� ===");
         Debug.Log($"����: {selectedRegion.partyA.policyDemand.economy}");
         Debug.Log($"����: {selectedRegion.partyA.policyDemand.welfare}");
@@ -359,7 +359,7 @@ public class PromotionUI : MonoBehaviour
             selectedRegion.partyA.policyDemand.environment
         );
 
-        // 3. �� ��å ����
+        // 3. 을 정책 선호
         Debug.Log($"=== �� ������ ��å ���� ===");
         Debug.Log($"����: {selectedRegion.partyB.policyDemand.economy}");
         Debug.Log($"����: {selectedRegion.partyB.policyDemand.welfare}");
@@ -373,7 +373,7 @@ public class PromotionUI : MonoBehaviour
             selectedRegion.partyB.policyDemand.environment
         );
 
-        // 4. �� ��å ����
+        // 4. 병 정책 선호
         Debug.Log($"=== �� ������ ��å ���� ===");
         Debug.Log($"����: {selectedRegion.partyC.policyDemand.economy}");
         Debug.Log($"����: {selectedRegion.partyC.policyDemand.welfare}");
@@ -393,7 +393,7 @@ public class PromotionUI : MonoBehaviour
         );
     }
 
-    // ���� ���纰 ��å ���� ��� ���
+    // 지역 지지자별 정책 선호 계산 함수
     PolicyDemand CalculateNationalPolicyDemand(string party)
     {
         Region[] allRegions = GameManager.Instance.mapContainer.GetComponentsInChildren<Region>();
@@ -449,7 +449,7 @@ public class PromotionUI : MonoBehaviour
 
     public void ClosePromotionPanel()
     {
-        gameObject.SetActive(false); // promotionPanel ��� gameObject
+        gameObject.SetActive(false); // promotionPanel 자체 gameObject
     }
 
     // ���ſ ����� EventPanel�� ǥ��
