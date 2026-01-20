@@ -16,12 +16,12 @@ public class UIManager : MonoBehaviour
     {
         Instance = this;
 
-        // �ʱ⿡�� ���� �丸 ǥ��
+        // 초기에는 맵 뷰만 표시
         mapView.SetActive(true);
         promotionView.SetActive(false);
         cardBattleView.SetActive(false);
         electionView.SetActive(false);
-        detailResultView.SetActive(false); 
+        detailResultView.SetActive(false);
 
     }
     void Update()
@@ -41,19 +41,19 @@ public class UIManager : MonoBehaviour
         promotionView.SetActive(false);
     }
 
-    // ���� ȫ��
+    // 전국 홍보
     public void ShowPromotionView()
     {
         ShowPromotionView(null);
     }
 
-    // Ư�� ���� ȫ��
+    // 특정 지역 홍보
     public void ShowPromotionView(Region targetRegion)
     {
         mapView.SetActive(false);
         promotionView.SetActive(true);
 
-        // PromotionUI ã��
+        // PromotionUI 찾기
         PromotionUI promotionUI = promotionView.GetComponent<PromotionUI>();
         if (promotionUI == null)
         {
@@ -62,16 +62,16 @@ public class UIManager : MonoBehaviour
 
         if (targetRegion != null)
         {
-            Debug.Log($"{targetRegion.regionName} ���� ȫ�� ����");
+            Debug.Log($"{targetRegion.regionName} 지역 홍보 시작");
             promotionUI.SetRegionalMode(targetRegion);
         }
         else
         {
-            Debug.Log("���� ȫ�� ����");
+            Debug.Log("전국 홍보 시작");
             promotionUI.SetNationalMode();
         }
 
-        // ��Ʈ ������Ʈ
+        // 차트 업데이트
         promotionUI.ShowPromotionPanel();
     }
 
@@ -105,7 +105,7 @@ public class UIManager : MonoBehaviour
         electionView.SetActive(false);
         detailResultView.SetActive(true);
 
-        // DetailResultUI�� ShowDetailResult ȣ��
+        // DetailResultUI의 ShowDetailResult 호출
         detailResultView.GetComponent<DetailResultUI>().ShowDetailResult();
     }
 
