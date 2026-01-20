@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class PromotionUI : MonoBehaviour
 {
     [Header("UI Elements")]
-    public TextMeshProUGUI titleText;   
+    public TextMeshProUGUI titleText;
 
     [Header("Charts")]
     public MultiSectionPieChart partyChart;        // 갑/을/병 지지율
@@ -57,93 +57,93 @@ public class PromotionUI : MonoBehaviour
         {
         new QuestData
         {
-            question = "�ٽ� �������� ���� ������ �������� ��ǥ�Ͻðڽ��ϱ�?",
-            yesResponse = "�������� �������� �������� ũ�� ����ߴ�.",
-            noResponse = "�°��� �µ��� �����Ͽ� ������ �����ߴ�."
+            question = "다시 대통령에 출마 의사를 공개적으로 발표하시겠습니까?",
+            yesResponse = "명확한 비전으로 대중들의 큰 지지 받았다.",
+            noResponse = "적당한 모호함 유지하여 논란을 피했다."
         },
         new QuestData
         {
-            question = "���� ��������� ���� �ຸ�� ���� �������� ��ȭ�Ͻðڽ��ϱ�?",
-            yesResponse = "���� ������ ����Ͽ� ���ű� ������ Ȯ���ߴ�.",
-            noResponse = "���� ���� ��Ȧ�� �Ϻ� �����ڰ� ��Ż�ߴ�."
+            question = "최근 물가상승에 대한 책임을 직접 대중들에게 설명하시겠습니까?",
+            yesResponse = "정면 돌파로 신뢰감을 보여줬다.",
+            noResponse = "관료 차원 문제로 일부 유권자가 실망했다."
         },
         new QuestData
         {
-            question = "���� �ٽ� ������ ��Ȯ���ϴ� ��Ը� ��ȸ�� �����Ͻðڽ��ϱ�?",
-            yesResponse = "��ȸ �������� ���ſ �ֵ����� ��Ҵ�.",
-            noResponse = "������ �ຸ�� ���ϸ� ��� ���ݿ� ����ߴ�."
+            question = "노령 다시 위기에 대응하는 대담한 연금 개혁을 추진하시겠습니까?",
+            yesResponse = "연금 개혁으로 선거운동 주도권을 잡았다.",
+            noResponse = "보수적 책임을 비판받아 일부 노년층에 실망했다."
         },
         new QuestData
         {
-            question = "Ÿ ������ ������ �����ϴ� ������ �װ�Ƽ�� ������ �����ұ��?",
-            yesResponse = "��� ������ �ŷڵ��� ��Ƴ����� �� �����ߴ�.",
-            noResponse = "�Ż����� �������� �ߵ����� ȣ���� �����."
+            question = "타 정당의 후보를 비난하는 정치적 네거티브 광고를 시작할까요?",
+            yesResponse = "네거티브 광고로 타 후보들의 약점 부각시켰다.",
+            noResponse = "품격있는 선거로 중도층의 호감을 얻었다."
         },
         new QuestData
         {
-            question = "���� ������ ���� ���� ����� ���帶ũ �Ǽ��� ����Ͻðڽ��ϱ�?",
-            yesResponse = "���� ���� ���� �е����� ������ �����.",
-            noResponse = "���� ���翡 �Ǹ��� �ֹε��� ���� ���ȴ�."
+            question = "노동 운동에 적극 협력 자세를 랜드마크 정책을 발표하시겠습니까?",
+            yesResponse = "노조 협력 동맹 파트너로 확고한 얻었다.",
+            noResponse = "경영 친화에 집중해 재계로부터 지원 끌어냈다."
         },
         new QuestData
         {
-            question = "û������ �ܳ��� ������ ���ڸ� ������ ��ǥ�Ͻðڽ��ϱ�?",
-            yesResponse = "û����� ������ ������ �������� ����ߴ�.",
-            noResponse = "���ٸ� ���� ���� �ϻ��� �����Ǿ���."
+            question = "청년들에게 단호한 군복무 혜택을 보장해 발표하시겠습니까?",
+            yesResponse = "청년층의 마음을 얻어서 지지층을 확보했다.",
+            noResponse = "재원마련 우려 속에서 일부층에 혼란되었다."
         },
         new QuestData
         {
-            question = "Ÿ ���� �ĺ��� ��å�� ������ �����ϴ� ���ȸ�� �����ұ��?",
-            yesResponse = "��� ������ ���� �������� ��ġ�� �����ߴ�.",
-            noResponse = "������ ������ ����� ������ ����ߴ�."
+            question = "타 당의 스캔들 정책을 비판을 강조하는 토론회를 진행할까요?",
+            yesResponse = "네거티브 전략의 여파 공격에서 우위를 점했다.",
+            noResponse = "건설적 대안을 제시해 공정선거 호평을 받았다."
         },
         new QuestData
         {
-            question = "ȯ�� ��ü�� ź�Ҽ� ���� �䱸�� ���� �����Ͻðڽ��ϱ�?",
-            yesResponse = "ȯ�� �߽� �ຸ�� ���ο� �������� Ȯ���ߴ�.",
-            noResponse = "ȯ�� ��å ����� �ù� ��ü�� ������ �޾Ҵ�."
+            question = "환경 단체와 탄소중립 사업 요구에 적극 동참하시겠습니까?",
+            yesResponse = "환경 중심 책임에 새로운 이미지를 확보했다.",
+            noResponse = "환경 정책 유보로 일부 단체와 논란을 받았다."
         },
         new QuestData
         {
-            question = "���� ���� Ȯ�븦 ���� ���� �λ��� �ʿ��ϴٴ� ������ �����ڽ��ϱ�?",
-            yesResponse = "������ �µ��� �������� �ö����� �ݹߵ� �����.",
-            noResponse = "�ΰ��� �̽��� ���� ���� ������ ���ߴ�."
+            question = "세금 인상 확대를 위해 빈부 인식을 강조하는 발표를 준비하시겠습니까?",
+            yesResponse = "복지국 모토로 저소득층 확대에서 지지받았다.",
+            noResponse = "인기영 이슈로 부자 세금 인상을 회피했다."
         },
         new QuestData
         {
-            question = "���� ���� ������ �湮�Ͽ� �һ���� ����å�� ����Ͻðڽ��ϱ�?",
-            yesResponse = "�λ� �ຸ�� ���� �򰡸� �޾� �������� �ö���.",
-            noResponse = "���� �湮 ���� ������ ��å�� �����ߴ�."
+            question = "현지 농업 지역을 방문하여 직접들어 복지정책을 홍보하시겠습니까?",
+            yesResponse = "현장 책임에 있는 평가를 받아 지역민을 얻었다.",
+            noResponse = "전략 방문 없이 농촌과 도시에 불평을 받았다."
         },
         new QuestData
         {
-            question = "���δ� �湮�� ���� ������ �Ⱥ� ��å�� �����Ͻðڽ��ϱ�?",
-            yesResponse = "�Ⱥ� ������ �����Ǹ� �̸� ��ȣ�ϴ� �������� �����ߴ�.",
-            noResponse = "�Ⱥ� �̽����� �ټ� �ұ����� �λ��� �����."
+            question = "해외투자 방문을 통해 외국인 투자유치 정책을 추진하시겠습니까?",
+            yesResponse = "투자유치 강조되면 이를 선호하는 기업인을 확보했다.",
+            noResponse = "투자유치 이슈로 다소 국수주의자 인식을 받았다."
         },
         new QuestData
         {
-            question = "�� �� ��ĵ�� ��Ȥ�� ���� ���ǥ�� ���� ����ؾ� �ұ��?",
-            yesResponse = "���� ����� ������ ��ȭ�� ���Ƴ´�.",
-            noResponse = "���θ��� ��ó���� �ʰ� ö���ϰ� ������ �����ϸ� ������ �غ��ߴ�."
+            question = "큰 혼 스캔들 혐의에 정면 대응해야 할까요?",
+            yesResponse = "강력 대응로 논란의 소화를 꺾어냈다.",
+            noResponse = "무대응과 회피로 인해 철저하고 대응로 일부로 판단받았다."
         },
         new QuestData
         {
-            question = "�α� �������� ���� ���� ��û�� �޾Ƶ��̰ڽ��ϱ�?",
-            yesResponse = "������ �������� ����ø� �� �ִ� ��ȸ�� �����.",
-            noResponse = "��ġ�� �������� �����ϸ� �ܿ� Ȯ���� �̷��."
+            question = "로컬 커뮤니티와 대화 토론 제안을 받아들이겠습니까?",
+            yesResponse = "시민과 소통하여 신뢰를 쌓을 수 있는 연결을 얻었다.",
+            noResponse = "정치적 리스크로 기피하면 언론 확산에 이미지 손실."
         },
         new QuestData
         {
-            question = "������� ���� ���� �λ� ���� ��� �������� ���Žðڽ��ϱ�?",
-            yesResponse = "������� �е����� ������ �̲���´�.",
-            noResponse = "���� ������ �ش� �������� �����ϴ� ���� ����ߴ�."
+            question = "교육개혁 패키지 정책 현장 설명 포럼을 추진하시겠습니까?",
+            yesResponse = "개혁적 파트너들이 교육에 이끌어냈다.",
+            noResponse = "부담 우려로 학교 그룹으로 반대하는 이슈 확산됐다."
         },
         new QuestData
         {
-            question = "�츮 ������ ��¡���� �����ϴ� ���� ���� ķ������ ���ϱ��?",
-            yesResponse = "�귣�� �̹����� ��ȭ�Ǹ� ������ ī�带 �����.",
-            noResponse = "�Ǹ����� ķ�������� ��ȯ�Ͽ� ī�带 Ȯ���ߴ�."
+            question = "우리 정당의 장점을 강조하는 대형 미디어 캠페인을 시작할까요?",
+            yesResponse = "브랜드 이미지가 강화되며 긍정적 카드를 보았다.",
+            noResponse = "지나치게 캠페인으로 진환하여 카드를 확장했다."
         }
         };
     }
@@ -154,11 +154,11 @@ public class PromotionUI : MonoBehaviour
         // 90% 성공, 10% 실패
         bool isSuccess = Random.Range(0, 100) < 90;
 
-        if (isNationalMode) // 전국 선거운동
+        if (isNationalMode) // 전국 선거운동
         {
             ProcessNationalPromotion(isSuccess);
         }
-        else // 특정 지역 선거운동
+        else // 특정 지역 선거운동
         {
             ProcessRegionalPromotion(isSuccess);
         }
@@ -168,85 +168,68 @@ public class PromotionUI : MonoBehaviour
         StartQuest();
     }
 
-    // 특정 지역 선거운동 ó��
+    // 특정 지역 선거운동 처리
     private void ProcessRegionalPromotion(bool isSuccess)
     {
         campaignSuccess = isSuccess;
         if (isSuccess)
         {
             // 성공: 갑 +30, 을/병 -15
-            campaignChangeA = 30; campaignChangeB = -15; campaignChangeC = -15; 
+            campaignChangeA = 30; campaignChangeB = -15; campaignChangeC = -15;
             selectedRegion.ChangeSupportRate(30, -15, -15);
-            Debug.Log($"{selectedRegion.regionName} ���ſ ����!");
+            Debug.Log($"{selectedRegion.regionName} 선거운동 성공!");
         }
         else
         {
             // 실패: 갑 -30, 을/병 +15
-            campaignChangeA = -30; campaignChangeB = 15; campaignChangeC = 15; 
+            campaignChangeA = -30; campaignChangeB = 15; campaignChangeC = 15;
             selectedRegion.ChangeSupportRate(-30, 15, 15);
-            Debug.Log($"{selectedRegion.regionName} ���ſ ����!");
+            Debug.Log($"{selectedRegion.regionName} 선거운동 실패!");
         }
     }
 
-    // 전국 선거운동 ó��
+    // 전국 선거운동 처리
     private void ProcessNationalPromotion(bool isSuccess)
     {
         campaignSuccess = isSuccess;
         if (isSuccess)
         {
             // 성공: 모든 지역 갑 +6, 을/병 -3
-            campaignChangeA = 6; campaignChangeB = -3; campaignChangeC = -3; 
-
+            campaignChangeA = 6; campaignChangeB = -3; campaignChangeC = -3;
             GameManager.Instance.ChangeAllRegionsSupport(6, -3, -3);
-            Debug.Log("���� ���ſ ����!");
+            Debug.Log("전국 선거운동 성공!");
         }
         else
         {
             // 실패: 모든 지역 갑 -6, 을/병 +3
-            campaignChangeA = -6; campaignChangeB = 3; campaignChangeC = 3; 
+            campaignChangeA = -6; campaignChangeB = 3; campaignChangeC = 3;
             GameManager.Instance.ChangeAllRegionsSupport(-6, 3, 3);
-            Debug.Log("���� ���ſ ����!");
+            Debug.Log("전국 선거운동 실패!");
         }
     }
-    public void StartQuest()
+
+    // 선거 지지도 자연 증가
+    public float regionalSupportBonus = 0;
+    public float nationalSupportBonus = 0;
+
+    void StartQuest()
     {
-        float regionSupportA = selectedRegion.partyA.supportRate;
-        Debug.Log($"���� {selectedRegion.regionName}�� ���� ������: {regionSupportA}%");
-
-        int randomIndex;
-        // ���� �������� 50 �̻��̸� 0~5 (������ ����), �̸��̸� 5~14 (�Ϲ� ������)
-        if (regionSupportA >= 50)
-        {
-            randomIndex = Random.Range(0, 5); // 0~4
-        }
-        else
-        {
-            randomIndex = Random.Range(5, allQuests.Length); // 5~14
-        }
-
-        currentQuest = allQuests[randomIndex];
-        ShowQuest(randomIndex);
-    }
-
-    void ShowQuest(int index)
-    {
+        currentQuest = allQuests[Random.Range(0, allQuests.Length)];
         questionText.text = currentQuest.question;
     }
 
     void OnYesButtonClick()
     {
+        eventText.text = currentQuest.yesResponse;
         questPanel.SetActive(false);
         eventPanel.SetActive(true);
-        eventText.text = currentQuest.yesResponse;
-        ShowEventResult(campaignSuccess, campaignChangeA, campaignChangeB, campaignChangeC);
     }
 
     void OnNoButtonClick()
     {
+        eventText.text = currentQuest.noResponse;
         questPanel.SetActive(false);
         eventPanel.SetActive(true);
-        eventText.text = currentQuest.noResponse;
-        ShowEventResult(campaignSuccess, campaignChangeA, campaignChangeB, campaignChangeC);
     }
 
     // Start Promotion 버튼에서 호출
@@ -255,196 +238,145 @@ public class PromotionUI : MonoBehaviour
         // 차트 패널 상태 초기화
         if (questPanel != null) questPanel.SetActive(false);
         if (eventPanel != null) eventPanel.SetActive(false);
-        UpdateCharts();
+        UpdateChartsForMode();
     }
 
-    // 지역 모드 설정 
+    // 전국 모드 설정
     public void SetNationalMode()
     {
         isNationalMode = true;
         selectedRegion = null;
     }
 
-    // 지역 모드 설정 
+    // 지역 모드 설정
     public void SetRegionalMode(Region region)
     {
         isNationalMode = false;
         selectedRegion = region;
     }
 
-    void UpdateCharts()
+    void UpdateChartsForMode()
     {
         if (isNationalMode)
         {
-            ShowNationalData();
+            UpdateChartsForNational();
         }
         else
         {
-            ShowRegionalData();
+            UpdateChartsForRegion(selectedRegion);
         }
     }
 
-    void ShowNationalData()
+    void UpdateChartsForNational()
     {
-        titleText.text = "���� ������";
-
         // 1. 전국 갑/을/병 지지율
-        float totalA = GameManager.Instance.GetTotalPartyASupport();
-        float totalB = GameManager.Instance.GetTotalPartyBSupport();
-        float totalC = GameManager.Instance.GetTotalPartyCSupport();
-        partyChart.SetData3(totalA, totalB, totalC);
+        float totalA = GameManager.Instance.GetNationalSupportRateA();
+        float totalB = GameManager.Instance.GetNationalSupportRateB();
+        float totalC = GameManager.Instance.GetNationalSupportRateC();
+
+        partyChart.UpdateChart(totalA, totalB, totalC);
 
         // 2. 갑 지지자들의 정책 선호 (전국 평균)
-        var partyA_Demand = CalculateNationalPolicyDemand("A");
-        partyA_PolicyChart.SetData4(
-            partyA_Demand.economy,
-            partyA_Demand.welfare,
-            partyA_Demand.security,
-            partyA_Demand.environment
-        );
+        var policyA = GameManager.Instance.GetNationalPolicyDemandForPartyA();
+        if (partyA_PolicyChart != null && policyA != null)
+        {
+            partyA_PolicyChart.UpdateChart(policyA.Economy, policyA.Education, policyA.Welfare, policyA.Environment, policyA.Industry);
+        }
 
         // 3. 을 지지자들의 정책 선호
-        var partyB_Demand = CalculateNationalPolicyDemand("B");
-        partyB_PolicyChart.SetData4(
-            partyB_Demand.economy,
-            partyB_Demand.welfare,
-            partyB_Demand.security,
-            partyB_Demand.environment
-        );
+        var policyB = GameManager.Instance.GetNationalPolicyDemandForPartyB();
+        if (partyB_PolicyChart != null && policyB != null)
+        {
+            partyB_PolicyChart.UpdateChart(policyB.Economy, policyB.Education, policyB.Welfare, policyB.Environment, policyB.Industry);
+        }
 
         // 4. 병 지지자들의 정책 선호
-        var partyC_Demand = CalculateNationalPolicyDemand("C");
-        partyC_PolicyChart.SetData4(
-            partyC_Demand.economy,
-            partyC_Demand.welfare,
-            partyC_Demand.security,
-            partyC_Demand.environment
-        );
+        var policyC = GameManager.Instance.GetNationalPolicyDemandForPartyC();
+        if (partyC_PolicyChart != null && policyC != null)
+        {
+            partyC_PolicyChart.UpdateChart(policyC.Economy, policyC.Education, policyC.Welfare, policyC.Environment, policyC.Industry);
+        }
+
         partyBarChart.UpdateChart(totalA, totalB, totalC); // 막대 그래프 업데이트 추가
     }
 
-    void ShowRegionalData()
+    void UpdateChartsForRegion(Region region)
     {
-        if (selectedRegion == null)
+        if (region == null)
         {
-            Debug.LogError("���õ� ������ �����ϴ�!");
+            Debug.LogError("UpdateChartsForRegion: region is null!");
             return;
         }
 
-        titleText.text = $"{selectedRegion.regionName} ������";
-
         // 1. 해당 지역 갑/을/병 지지율
-        Debug.Log($"=== {selectedRegion.regionName} ������ ===");
-        Debug.Log($"��: {selectedRegion.partyA.supportRate}%");
-        Debug.Log($"��: {selectedRegion.partyB.supportRate}%");
-        Debug.Log($"��: {selectedRegion.partyC.supportRate}%");
+        float rateA = region.partyA.supportRate;
+        float rateB = region.partyB.supportRate;
+        float rateC = region.partyC.supportRate;
 
-        partyChart.SetData3(
-            selectedRegion.partyA.supportRate,
-            selectedRegion.partyB.supportRate,
-            selectedRegion.partyC.supportRate
-        );
+        if (partyChart != null)
+        {
+            partyChart.UpdateChart(rateA, rateB, rateC);
+        }
 
         // 2. 갑 정책 선호
-        Debug.Log($"=== �� ������ ��å ���� ===");
-        Debug.Log($"����: {selectedRegion.partyA.policyDemand.economy}");
-        Debug.Log($"����: {selectedRegion.partyA.policyDemand.welfare}");
-        Debug.Log($"�Ⱥ�: {selectedRegion.partyA.policyDemand.security}");
-        Debug.Log($"ȯ��: {selectedRegion.partyA.policyDemand.environment}");
-
-        partyA_PolicyChart.SetData4(
-            selectedRegion.partyA.policyDemand.economy,
-            selectedRegion.partyA.policyDemand.welfare,
-            selectedRegion.partyA.policyDemand.security,
-            selectedRegion.partyA.policyDemand.environment
-        );
+        var policyA = CalculatePolicyDemandForSupporter(region, rateA);
+        if (partyA_PolicyChart != null)
+        {
+            partyA_PolicyChart.UpdateChart(
+                policyA.Economy,
+                policyA.Education,
+                policyA.Welfare,
+                policyA.Environment,
+                policyA.Industry
+            );
+        }
 
         // 3. 을 정책 선호
-        Debug.Log($"=== �� ������ ��å ���� ===");
-        Debug.Log($"����: {selectedRegion.partyB.policyDemand.economy}");
-        Debug.Log($"����: {selectedRegion.partyB.policyDemand.welfare}");
-        Debug.Log($"�Ⱥ�: {selectedRegion.partyB.policyDemand.security}");
-        Debug.Log($"ȯ��: {selectedRegion.partyB.policyDemand.environment}");
-
-        partyB_PolicyChart.SetData4(
-            selectedRegion.partyB.policyDemand.economy,
-            selectedRegion.partyB.policyDemand.welfare,
-            selectedRegion.partyB.policyDemand.security,
-            selectedRegion.partyB.policyDemand.environment
-        );
+        var policyB = CalculatePolicyDemandForSupporter(region, rateB);
+        if (partyB_PolicyChart != null)
+        {
+            partyB_PolicyChart.UpdateChart(
+                policyB.Economy,
+                policyB.Education,
+                policyB.Welfare,
+                policyB.Environment,
+                policyB.Industry
+            );
+        }
 
         // 4. 병 정책 선호
-        Debug.Log($"=== �� ������ ��å ���� ===");
-        Debug.Log($"����: {selectedRegion.partyC.policyDemand.economy}");
-        Debug.Log($"����: {selectedRegion.partyC.policyDemand.welfare}");
-        Debug.Log($"�Ⱥ�: {selectedRegion.partyC.policyDemand.security}");
-        Debug.Log($"ȯ��: {selectedRegion.partyC.policyDemand.environment}");
+        var policyC = CalculatePolicyDemandForSupporter(region, rateC);
+        if (partyC_PolicyChart != null)
+        {
+            partyC_PolicyChart.UpdateChart(
+                policyC.Economy,
+                policyC.Education,
+                policyC.Welfare,
+                policyC.Environment,
+                policyC.Industry
+            );
+        }
 
-        partyC_PolicyChart.SetData4(
-            selectedRegion.partyC.policyDemand.economy,
-            selectedRegion.partyC.policyDemand.welfare,
-            selectedRegion.partyC.policyDemand.security,
-            selectedRegion.partyC.policyDemand.environment
-        );
-        partyBarChart.UpdateChartPercent(
-            selectedRegion.partyA.supportRate,
-            selectedRegion.partyB.supportRate,
-            selectedRegion.partyC.supportRate
-        );
+        partyBarChart.UpdateChart(rateA, rateB, rateC);
     }
 
     // 지역 지지자별 정책 선호 계산 함수
-    PolicyDemand CalculateNationalPolicyDemand(string party)
+    PolicyDemand CalculatePolicyDemandForSupporter(Region region, float supportRate)
     {
-        Region[] allRegions = GameManager.Instance.mapContainer.GetComponentsInChildren<Region>();
+        PolicyDemand baseDemand = region.policyDemand;
 
-        int totalEconomy = 0;
-        int totalWelfare = 0;
-        int totalSecurity = 0;
-        int totalEnvironment = 0;
-        int totalSupport = 0;
+        float weight = supportRate / 100f;
 
-        foreach (var region in allRegions)
+        PolicyDemand result = new PolicyDemand
         {
-            int support = 0;
-            PolicyDemand demand = null;
+            Economy = baseDemand.Economy * weight,
+            Education = baseDemand.Education * weight,
+            Welfare = baseDemand.Welfare * weight,
+            Environment = baseDemand.Environment * weight,
+            Industry = baseDemand.Industry * weight
+        };
 
-            switch (party)
-            {
-                case "A":
-                    support = (region.population * region.partyA.supportRate) / 100;
-                    demand = region.partyA.policyDemand;
-                    break;
-                case "B":
-                    support = (region.population * region.partyB.supportRate) / 100;
-                    demand = region.partyB.policyDemand;
-                    break;
-                case "C":
-                    support = (region.population * region.partyC.supportRate) / 100;
-                    demand = region.partyC.policyDemand;
-                    break;
-            }
-
-            if (support > 0 && demand != null)
-            {
-                totalEconomy += demand.economy * support;
-                totalWelfare += demand.welfare * support;
-                totalSecurity += demand.security * support;
-                totalEnvironment += demand.environment * support;
-                totalSupport += support;
-            }
-        }
-
-        PolicyDemand avgDemand = new PolicyDemand();
-        if (totalSupport > 0)
-        {
-            avgDemand.economy = totalEconomy / totalSupport;
-            avgDemand.welfare = totalWelfare / totalSupport;
-            avgDemand.security = totalSecurity / totalSupport;
-            avgDemand.environment = totalEnvironment / totalSupport;
-        }
-
-        return avgDemand;
+        return result;
     }
 
     public void ClosePromotionPanel()
@@ -452,11 +384,11 @@ public class PromotionUI : MonoBehaviour
         gameObject.SetActive(false); // promotionPanel 자체 gameObject
     }
 
-    // ���ſ ����� EventPanel�� ǥ��
+    // 선거운동 결과를 EventPanel에 표시
     public void ShowEventResult(bool isSuccess, int amountA, int amountB, int amountC)
     {
-        string result = isSuccess ? "���ſ ����!" : "���ſ ����!";
-        supportChangeText.text = $"{result}\n���� {amountA:+#;-#;0}%, ���� {amountB:+#;-#;0}%, ���� {amountC:+#;-#;0}%";
+        string result = isSuccess ? "선거운동 성공!" : "선거운동 실패!";
+        supportChangeText.text = $"{result}\n갑당 {amountA:+#;-#;0}%, 을당 {amountB:+#;-#;0}%, 병당 {amountC:+#;-#;0}%";
     }
     void OnStartVoteButtonClick()
     {
@@ -489,4 +421,12 @@ public class PromotionUI : MonoBehaviour
         // VotingUI는 CardBattleUI 종료 후 자동으로 호출됨
     }
 
+}
+
+[System.Serializable]
+public class QuestData
+{
+    public string question;
+    public string yesResponse;
+    public string noResponse;
 }
