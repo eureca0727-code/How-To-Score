@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     [Header("View Panels")]
     public GameObject mapView;
     public GameObject promotionView;
+    public GameObject cardBattleView;
     public GameObject electionView;
     public GameObject detailResultView; 
 
@@ -15,9 +16,10 @@ public class UIManager : MonoBehaviour
     {
         Instance = this;
 
-        // ÃÊ±â¿¡´Â Áöµµ ºä¸¸ Ç¥½Ã
+        // ï¿½Ê±â¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ä¸¸ Ç¥ï¿½ï¿½
         mapView.SetActive(true);
         promotionView.SetActive(false);
+        cardBattleView.SetActive(false);
         electionView.SetActive(false);
         detailResultView.SetActive(false); 
 
@@ -39,19 +41,19 @@ public class UIManager : MonoBehaviour
         promotionView.SetActive(false);
     }
 
-    // Àü±¹ È«º¸
+    // ï¿½ï¿½ï¿½ï¿½ È«ï¿½ï¿½
     public void ShowPromotionView()
     {
         ShowPromotionView(null);
     }
 
-    // Æ¯Á¤ Áö¿ª È«º¸
+    // Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È«ï¿½ï¿½
     public void ShowPromotionView(Region targetRegion)
     {
         mapView.SetActive(false);
         promotionView.SetActive(true);
 
-        // PromotionUI Ã£±â
+        // PromotionUI Ã£ï¿½ï¿½
         PromotionUI promotionUI = promotionView.GetComponent<PromotionUI>();
         if (promotionUI == null)
         {
@@ -60,23 +62,40 @@ public class UIManager : MonoBehaviour
 
         if (targetRegion != null)
         {
-            Debug.Log($"{targetRegion.regionName} Áö¿ª È«º¸ ½ÃÀÛ");
+            Debug.Log($"{targetRegion.regionName} ï¿½ï¿½ï¿½ï¿½ È«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
             promotionUI.SetRegionalMode(targetRegion);
         }
         else
         {
-            Debug.Log("Àü±¹ È«º¸ ½ÃÀÛ");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ È«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
             promotionUI.SetNationalMode();
         }
 
-        // Â÷Æ® ¾÷µ¥ÀÌÆ®
+        // ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
         promotionUI.ShowPromotionPanel();
+    }
+
+    public void ShowCardBattleView()
+    {
+        mapView.SetActive(false);
+        promotionView.SetActive(false);
+        cardBattleView.SetActive(true);
+        electionView.SetActive(false);
+        detailResultView.SetActive(false);
+
+        // CardBattleUI ì‹œìž‘
+        CardBattleUI battleUI = cardBattleView.GetComponent<CardBattleUI>();
+        if (battleUI != null)
+        {
+            battleUI.StartBattle();
+        }
     }
 
     public void ShowElectionView()
     {
         mapView.SetActive(false);
         promotionView.SetActive(false);
+        cardBattleView.SetActive(false);
         electionView.SetActive(true);
     }
     public void ShowDetailResultView()
@@ -86,7 +105,7 @@ public class UIManager : MonoBehaviour
         electionView.SetActive(false);
         detailResultView.SetActive(true);
 
-        // DetailResultUIÀÇ ShowDetailResult È£Ãâ
+        // DetailResultUIï¿½ï¿½ ShowDetailResult È£ï¿½ï¿½
         detailResultView.GetComponent<DetailResultUI>().ShowDetailResult();
     }
 

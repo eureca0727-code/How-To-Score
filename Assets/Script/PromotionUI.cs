@@ -464,11 +464,17 @@ public class PromotionUI : MonoBehaviour
         CardDistributor distributor = FindObjectOfType<CardDistributor>();
         if (distributor != null)
         {
-            // 1. 홍보 선택 카드 추가 (1장)
+            // 0. 플레이어 카드 수집 초기화
+            distributor.InitializePlayerCardCollection();
+
+            // 1. 홍보 선택 카드 추가 (0-1장)
             distributor.AddPromotionCard(isNationalMode, selectedRegion);
 
             // 2. 선거 운동 결과 카드 추가 (2-3장)
             distributor.AddCampaignResultCards(campaignSuccess);
+
+            // 3. 최종 카드 확정 (playerHand에 추가)
+            distributor.FinalizePlayerCards();
 
             Debug.Log($"[PromotionUI] 카드 분배 완료 - 선택: {(isNationalMode ? "전국" : selectedRegion?.regionName)}, 결과: {(campaignSuccess ? "성공" : "실패")}");
         }
@@ -477,9 +483,10 @@ public class PromotionUI : MonoBehaviour
             Debug.LogError("CardDistributor를 찾을 수 없습니다!");
         }
 
-        // 기존 로직
-        UIManager.Instance.ShowElectionView();
-        VotingUI.Instance.StartVoting();
+        // 카드 배틀 UI로 전환
+        UIManager.Instance.ShowCardBattleView();
+
+        // VotingUI는 CardBattleUI 종료 후 자동으로 호출됨
     }
 
 }
