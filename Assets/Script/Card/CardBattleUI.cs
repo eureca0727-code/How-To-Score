@@ -332,7 +332,7 @@ public class CardBattleUI : MonoBehaviour
             var currentTurn = CardGameManager.Instance.currentTurn;
             string defenderName = CardGameManager.Instance.GetPartyName(currentTurn);
 
-            attackStatusText.text = $"⚠ {defenderName}이(가) {attackCard.cardName}(으)로 공격받는 중!";
+            attackStatusText.text = $" {defenderName}이(가) {attackCard.cardName}(으)로 공격받는 중!";
             attackStatusText.color = Color.red;
         }
         else
@@ -519,7 +519,7 @@ public class CardBattleUI : MonoBehaviour
     }
 
     // 행동 로그 초기화
-    void ClearActionLog()
+    void ClearActionLog()   
     {
         foreach (GameObject log in actionLogEntries)
         {

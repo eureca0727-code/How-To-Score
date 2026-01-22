@@ -261,4 +261,23 @@ public class CardDistributor : MonoBehaviour
         // 6장까지만 선택
         return result.Take(6).ToList();
     }
+    public void AddSpecificCard(string cardId)
+    {
+        if (string.IsNullOrEmpty(cardId))
+        {
+            Debug.LogWarning("AddSpecificCard: cardId가 비어있습니다!");
+            return;
+        }
+
+        Card card = CardDatabase.Instance.GetCard(cardId);
+        if (card != null)
+        {
+            pendingPlayerCards.Add(cardId);
+            Debug.Log($"특정 카드 추가: {cardId} ({card.cardName})");
+        }
+        else
+        {
+            Debug.LogError($"카드 {cardId}를 찾을 수 없습니다!");
+        }
+    }
 }

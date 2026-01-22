@@ -33,8 +33,8 @@ public class PromotionUI : MonoBehaviour
     public Button promoteButton;
     private QuestData currentQuest;
 
-    private bool campaignSuccess;
-    private int campaignChangeA, campaignChangeB, campaignChangeC;
+    private string questCardReward = ""; // 획득한 카드 ID
+
 
     void Start()
     {
@@ -50,163 +50,262 @@ public class PromotionUI : MonoBehaviour
         if (questPanel != null) questPanel.SetActive(false);
         if (eventPanel != null) eventPanel.SetActive(false);
     }
-
     void InitializeQuests()
     {
         allQuests = new QuestData[]
         {
-        new QuestData
-        {
-            question = "다시 대통령에 출마 의사를 공개적으로 발표하시겠습니까?",
-            yesResponse = "명확한 비전으로 대중들의 큰 지지 받았다.",
-            noResponse = "적당한 모호함 유지하여 논란을 피했다."
-        },
-        new QuestData
-        {
-            question = "최근 물가상승에 대한 책임을 직접 대중들에게 설명하시겠습니까?",
-            yesResponse = "정면 돌파로 신뢰감을 보여줬다.",
-            noResponse = "관료 차원 문제로 일부 유권자가 실망했다."
-        },
-        new QuestData
-        {
-            question = "노령 다시 위기에 대응하는 대담한 연금 개혁을 추진하시겠습니까?",
-            yesResponse = "연금 개혁으로 선거운동 주도권을 잡았다.",
-            noResponse = "보수적 책임을 비판받아 일부 노년층에 실망했다."
-        },
-        new QuestData
-        {
-            question = "타 정당의 후보를 비난하는 정치적 네거티브 광고를 시작할까요?",
-            yesResponse = "네거티브 광고로 타 후보들의 약점 부각시켰다.",
-            noResponse = "품격있는 선거로 중도층의 호감을 얻었다."
-        },
-        new QuestData
-        {
-            question = "노동 운동에 적극 협력 자세를 랜드마크 정책을 발표하시겠습니까?",
-            yesResponse = "노조 협력 동맹 파트너로 확고한 얻었다.",
-            noResponse = "경영 친화에 집중해 재계로부터 지원 끌어냈다."
-        },
-        new QuestData
-        {
-            question = "청년들에게 단호한 군복무 혜택을 보장해 발표하시겠습니까?",
-            yesResponse = "청년층의 마음을 얻어서 지지층을 확보했다.",
-            noResponse = "재원마련 우려 속에서 일부층에 혼란되었다."
-        },
-        new QuestData
-        {
-            question = "타 당의 스캔들 정책을 비판을 강조하는 토론회를 진행할까요?",
-            yesResponse = "네거티브 전략의 여파 공격에서 우위를 점했다.",
-            noResponse = "건설적 대안을 제시해 공정선거 호평을 받았다."
-        },
-        new QuestData
-        {
-            question = "환경 단체와 탄소중립 사업 요구에 적극 동참하시겠습니까?",
-            yesResponse = "환경 중심 책임에 새로운 이미지를 확보했다.",
-            noResponse = "환경 정책 유보로 일부 단체와 논란을 받았다."
-        },
-        new QuestData
-        {
-            question = "세금 인상 확대를 위해 빈부 인식을 강조하는 발표를 준비하시겠습니까?",
-            yesResponse = "복지국 모토로 저소득층 확대에서 지지받았다.",
-            noResponse = "인기영 이슈로 부자 세금 인상을 회피했다."
-        },
-        new QuestData
-        {
-            question = "현지 농업 지역을 방문하여 직접들어 복지정책을 홍보하시겠습니까?",
-            yesResponse = "현장 책임에 있는 평가를 받아 지역민을 얻었다.",
-            noResponse = "전략 방문 없이 농촌과 도시에 불평을 받았다."
-        },
-        new QuestData
-        {
-            question = "해외투자 방문을 통해 외국인 투자유치 정책을 추진하시겠습니까?",
-            yesResponse = "투자유치 강조되면 이를 선호하는 기업인을 확보했다.",
-            noResponse = "투자유치 이슈로 다소 국수주의자 인식을 받았다."
-        },
-        new QuestData
-        {
-            question = "큰 혼 스캔들 혐의에 정면 대응해야 할까요?",
-            yesResponse = "강력 대응로 논란의 소화를 꺾어냈다.",
-            noResponse = "무대응과 회피로 인해 철저하고 대응로 일부로 판단받았다."
-        },
-        new QuestData
-        {
-            question = "로컬 커뮤니티와 대화 토론 제안을 받아들이겠습니까?",
-            yesResponse = "시민과 소통하여 신뢰를 쌓을 수 있는 연결을 얻었다.",
-            noResponse = "정치적 리스크로 기피하면 언론 확산에 이미지 손실."
-        },
-        new QuestData
-        {
-            question = "교육개혁 패키지 정책 현장 설명 포럼을 추진하시겠습니까?",
-            yesResponse = "개혁적 파트너들이 교육에 이끌어냈다.",
-            noResponse = "부담 우려로 학교 그룹으로 반대하는 이슈 확산됐다."
-        },
-        new QuestData
-        {
-            question = "우리 정당의 장점을 강조하는 대형 미디어 캠페인을 시작할까요?",
-            yesResponse = "브랜드 이미지가 강화되며 긍정적 카드를 보았다.",
-            noResponse = "지나치게 캠페인으로 진환하여 카드를 확장했다."
-        }
+            // Quest 1
+            new QuestData
+            {
+                question = "핵심 지지층을 위한 강경한 개혁안을 발표하시겠습니까?",
+                yesResponse = "지지층의 결집으로 지지도가 크게 상승했다.",
+                yesRewardType = RewardType.Support,
+                yesCardId = "",
+                yesSupportChangeA = 20, yesSupportChangeB = -10, yesSupportChangeC = -10,
+                noResponse = "온건한 태도를 유지하여 현상을 유지했다.",
+                noRewardType = RewardType.None,
+                noCardId = "",
+                noSupportChangeA = 0, noSupportChangeB = 0, noSupportChangeC = 0,
+                hasFail = false,
+                failSupportChangeA = 0, failSupportChangeB = 0, failSupportChangeC = 0
+            },
+            
+            // Quest 2
+            new QuestData
+            {
+                question = "지역 유지들과의 밀착 행보를 통해 조직력을 강화하시겠습니까?",
+                yesResponse = "지역 조직을 장악하여 선거구 정보를 확보했다.",
+                yesRewardType = RewardType.Card,
+                yesCardId = "S1",
+                yesSupportChangeA = 0, yesSupportChangeB = 0, yesSupportChangeC = 0,
+                noResponse = "조직 관리 소홀로 일부 지지자가 이탈했다.",
+                noRewardType = RewardType.None,
+                noCardId = "",
+                noSupportChangeA = 0, noSupportChangeB = 0, noSupportChangeC = 0,
+                hasFail = true,
+                failSupportChangeA = -10, failSupportChangeB = 5, failSupportChangeC = 5
+            },
+            
+            // Quest 3
+            new QuestData
+            {
+                question = "당의 핵심 공약을 재확인하는 대규모 집회를 개최하시겠습니까?",
+                yesResponse = "집회 성공으로 선거운동 주도권을 잡았다.",
+                yesRewardType = RewardType.Card,
+                yesCardId = "M1",
+                yesSupportChangeA = 0, yesSupportChangeB = 0, yesSupportChangeC = 0,
+                noResponse = "조용한 행보를 택하며 상대 공격에 대비했다.",
+                noRewardType = RewardType.Card,
+                noCardId = "D1",
+                noSupportChangeA = 0, noSupportChangeB = 0, noSupportChangeC = 0,
+                hasFail = false,
+                failSupportChangeA = 0, failSupportChangeB = 0, failSupportChangeC = 0
+            },
+            
+            // Quest 4
+            new QuestData
+            {
+                question = "타 정당의 실정을 비판하는 강력한 네거티브 공세를 시작할까요?",
+                yesResponse = "상대 정당의 신뢰도를 깎아내리는 데 성공했다.",
+                yesRewardType = RewardType.Support,
+                yesCardId = "",
+                yesSupportChangeA = 10, yesSupportChangeB = -5, yesSupportChangeC = -5,
+                noResponse = "신사적인 대응으로 중도층의 호감을 얻었다.",
+                noRewardType = RewardType.Support,
+                noCardId = "",
+                noSupportChangeA = 5, noSupportChangeB = -2, noSupportChangeC = -3,
+                hasFail = false,
+                failSupportChangeA = 0, failSupportChangeB = 0, failSupportChangeC = 0
+            },
+            
+            // Quest 5
+            new QuestData
+            {
+                question = "지지 지역의 오랜 숙원 사업인 랜드마크 건설을 약속하시겠습니까?",
+                yesResponse = "지역 개발 기대로 압도적인 지지를 얻었다.",
+                yesRewardType = RewardType.Support,
+                yesCardId = "S3",
+                yesSupportChangeA = 10, yesSupportChangeB = -5, yesSupportChangeC = -5,
+                noResponse = "공약 부재에 실망한 주민들이 등을 돌렸다.",
+                noRewardType = RewardType.None,
+                noCardId = "",
+                noSupportChangeA = 0, noSupportChangeB = 0, noSupportChangeC = 0,
+                hasFail = true,
+                failSupportChangeA = -10, failSupportChangeB = 5, failSupportChangeC = 5
+            },
+            
+            // Quest 6
+            new QuestData
+            {
+                question = "청년층을 겨냥한 맞춤형 일자리 공약을 발표하시겠습니까?",
+                yesResponse = "청년들의 열렬한 지지로 지지도가 상승했다.",
+                yesRewardType = RewardType.Support,
+                yesCardId = "",
+                yesSupportChangeA = 15, yesSupportChangeB = -7, yesSupportChangeC = -8,
+                noResponse = "별다른 반응 없이 일상이 유지되었다.",
+                noRewardType = RewardType.None,
+                noCardId = "",
+                noSupportChangeA = 0, noSupportChangeB = 0, noSupportChangeC = 0,
+                hasFail = false,
+                failSupportChangeA = 0, failSupportChangeB = 0, failSupportChangeC = 0
+            },
+            
+            // Quest 7
+            new QuestData
+            {
+                question = "타 정당 후보의 정책적 허점을 지적하는 토론회를 제안할까요?",
+                yesResponse = "토론 제안을 통해 공세적인 위치를 선점했다.",
+                yesRewardType = RewardType.Card,
+                yesCardId = "A1",
+                yesSupportChangeA = 0, yesSupportChangeB = 0, yesSupportChangeC = 0,
+                noResponse = "내실을 다지며 상대의 공세에 대비했다.",
+                noRewardType = RewardType.Card,
+                noCardId = "D2",
+                noSupportChangeA = 0, noSupportChangeB = 0, noSupportChangeC = 0,
+                hasFail = false,
+                failSupportChangeA = 0, failSupportChangeB = 0, failSupportChangeC = 0
+            },
+            
+            // Quest 8
+            new QuestData
+            {
+                question = "환경 단체의 탄소세 도입 요구를 전격 수용하시겠습니까?",
+                yesResponse = "환경 중시 행보로 새로운 지지층을 확보했다.",
+                yesRewardType = RewardType.Support,
+                yesCardId = "",
+                yesSupportChangeA = 10, yesSupportChangeB = -5, yesSupportChangeC = -5,
+                noResponse = "환경 정책 부재로 시민 단체의 비판을 받았다.",
+                noRewardType = RewardType.None,
+                noCardId = "",
+                noSupportChangeA = 0, noSupportChangeB = 0, noSupportChangeC = 0,
+                hasFail = true,
+                failSupportChangeA = -5, failSupportChangeB = 5, failSupportChangeC = 0
+            },
+            
+            // Quest 9
+            new QuestData
+            {
+                question = "복지 예산 확대를 위해 세금 인상이 필요하다는 진실을 밝히겠습니까?",
+                yesResponse = "정직한 태도에 지지율이 올랐으나 반발도 생겼다.",
+                yesRewardType = RewardType.Support,
+                yesCardId = "",
+                yesSupportChangeA = 5, yesSupportChangeB = 5, yesSupportChangeC = -10,
+                noResponse = "민감한 이슈를 피해 가며 안정을 택했다.",
+                noRewardType = RewardType.None,
+                noCardId = "",
+                noSupportChangeA = 0, noSupportChangeB = 0, noSupportChangeC = 0,
+                hasFail = false,
+                failSupportChangeA = 0, failSupportChangeB = 0, failSupportChangeC = 0
+            },
+            
+            // Quest 10
+            new QuestData
+            {
+                question = "지역 전통 시장을 방문하여 소상공인 지원책을 약속하시겠습니까?",
+                yesResponse = "민생 행보가 좋은 평가를 받아 지지율이 올랐다.",
+                yesRewardType = RewardType.Support,
+                yesCardId = "M2",
+                yesSupportChangeA = 10, yesSupportChangeB = -10, yesSupportChangeC = 0,
+                noResponse = "현장 방문 없이 서류상 정책에 집중했다.",
+                noRewardType = RewardType.None,
+                noCardId = "",
+                noSupportChangeA = 0, noSupportChangeB = 0, noSupportChangeC = 0,
+                hasFail = false,
+                failSupportChangeA = 0, failSupportChangeB = 0, failSupportChangeC = 0
+            },
+            
+            // Quest 11
+            new QuestData
+            {
+                question = "군부대 방문을 통해 강력한 안보 정책을 강조하시겠습니까?",
+                yesResponse = "안보 의지가 강조되며 이를 선호하는 지지층이 결집했다.",
+                yesRewardType = RewardType.Support,
+                yesCardId = "",
+                yesSupportChangeA = 12, yesSupportChangeB = 0, yesSupportChangeC = -12,
+                noResponse = "안보 이슈에서 다소 소극적인 인상을 남겼다.",
+                noRewardType = RewardType.None,
+                noCardId = "",
+                noSupportChangeA = 0, noSupportChangeB = 0, noSupportChangeC = 0,
+                hasFail = false,
+                failSupportChangeA = 0, failSupportChangeB = 0, failSupportChangeC = 0
+            },
+            
+            // Quest 12
+            new QuestData
+            {
+                question = "당 내 스캔들 의혹에 대해 당대표가 직접 사과해야 할까요?",
+                yesResponse = "빠른 사과로 여론의 악화를 막아냈다.",
+                yesRewardType = RewardType.Support,
+                yesCardId = "",
+                yesSupportChangeA = 10, yesSupportChangeB = -10, yesSupportChangeC = 0,
+                noResponse = "섣부르게 대처하지 않고 철저하게 진상을 조사하며 역공을 준비했다.",
+                noRewardType = RewardType.Card,
+                noCardId = "D1",
+                noSupportChangeA = -10, noSupportChangeB = 10, noSupportChangeC = 0,
+                hasFail = false,
+                failSupportChangeA = 0, failSupportChangeB = 0, failSupportChangeC = 0
+            },
+            
+            // Quest 13
+            new QuestData
+            {
+                question = "인기 연예인의 지원 유세 요청을 받아들이겠습니까?",
+                yesResponse = "대중적 인지도를 끌어올릴 수 있는 기회가 생겼다.",
+                yesRewardType = RewardType.Card,
+                yesCardId = "S2",
+                yesSupportChangeA = 0, yesSupportChangeB = 0, yesSupportChangeC = 0,
+                noResponse = "정치적 전문성을 강조하며 외연 확장을 미뤘다.",
+                noRewardType = RewardType.None,
+                noCardId = "",
+                noSupportChangeA = 0, noSupportChangeB = 0, noSupportChangeC = 0,
+                hasFail = false,
+                failSupportChangeA = 0, failSupportChangeB = 0, failSupportChangeC = 0
+            },
+            
+            // Quest 14
+            new QuestData
+            {
+                question = "노년층을 위한 연금 인상 안을 긴급 공약으로 내거시겠습니까?",
+                yesResponse = "노년층의 압도적인 지지를 이끌어냈다.",
+                yesRewardType = RewardType.Support,
+                yesCardId = "",
+                yesSupportChangeA = 10, yesSupportChangeB = -5, yesSupportChangeC = -5,
+                noResponse = "경쟁 정당이 해당 지지층을 공략하는 것을 허용했다.",
+                noRewardType = RewardType.Support,
+                noCardId = "",
+                noSupportChangeA = -5, noSupportChangeB = 10, noSupportChangeC = -5,
+                hasFail = false,
+                failSupportChangeA = 0, failSupportChangeB = 0, failSupportChangeC = 0
+            },
+            
+            // Quest 15
+            new QuestData
+            {
+                question = "우리 정당의 상징색을 강조하는 전국 단위 캠페인을 벌일까요?",
+                yesResponse = "브랜드 이미지가 강화되며 유용한 카드를 얻었다.",
+                yesRewardType = RewardType.Card,
+                yesCardId = "M3",
+                yesSupportChangeA = 0, yesSupportChangeB = 0, yesSupportChangeC = 0,
+                noResponse = "실리적인 캠페인으로 전환하여 카드를 확보했다.",
+                noRewardType = RewardType.Card,
+                noCardId = "M4",
+                noSupportChangeA = 0, noSupportChangeB = 0, noSupportChangeC = 0,
+                hasFail = false,
+                failSupportChangeA = 0, failSupportChangeB = 0, failSupportChangeC = 0
+            }
         };
     }
+
 
     // "홍보 시작하기" 버튼 클릭 시
     public void OnPromoteButtonClick()
     {
-        // 90% 성공, 10% 실패
-        bool isSuccess = Random.Range(0, 100) < 90;
-
-        if (isNationalMode) // 전국 선거운동
-        {
-            ProcessNationalPromotion(isSuccess);
-        }
-        else // 특정 지역 선거운동
-        {
-            ProcessRegionalPromotion(isSuccess);
-        }
-
-        // 퀘스트 시작
+        // Quest 바로 시작
         questPanel.SetActive(true);
         StartQuest();
     }
 
-    // 특정 지역 선거운동 처리
-    private void ProcessRegionalPromotion(bool isSuccess)
-    {
-        campaignSuccess = isSuccess;
-        if (isSuccess)
-        {
-            // 성공: 갑 +30, 을/병 -15
-            campaignChangeA = 30; campaignChangeB = -15; campaignChangeC = -15;
-            selectedRegion.ChangeSupportRate(30, -15, -15);
-            Debug.Log($"{selectedRegion.regionName} 선거운동 성공!");
-        }
-        else
-        {
-            // 실패: 갑 -30, 을/병 +15
-            campaignChangeA = -30; campaignChangeB = 15; campaignChangeC = 15;
-            selectedRegion.ChangeSupportRate(-30, 15, 15);
-            Debug.Log($"{selectedRegion.regionName} 선거운동 실패!");
-        }
-    }
 
-    // 전국 선거운동 처리
-    private void ProcessNationalPromotion(bool isSuccess)
-    {
-        campaignSuccess = isSuccess;
-        if (isSuccess)
-        {
-            // 성공: 모든 지역 갑 +6, 을/병 -3
-            campaignChangeA = 6; campaignChangeB = -3; campaignChangeC = -3;
-            GameManager.Instance.ChangeAllRegionsSupport(6, -3, -3);
-            Debug.Log("전국 선거운동 성공!");
-        }
-        else
-        {
-            // 실패: 모든 지역 갑 -6, 을/병 +3
-            campaignChangeA = -6; campaignChangeB = 3; campaignChangeC = 3;
-            GameManager.Instance.ChangeAllRegionsSupport(-6, 3, 3);
-            Debug.Log("전국 선거운동 실패!");
-        }
-    }
 
     // 선거 지지도 자연 증가
     public float regionalSupportBonus = 0;
@@ -220,18 +319,131 @@ public class PromotionUI : MonoBehaviour
 
     void OnYesButtonClick()
     {
-        eventText.text = currentQuest.yesResponse;
-        questPanel.SetActive(false);
-        eventPanel.SetActive(true);
+        ProcessQuestChoice(true);
     }
 
     void OnNoButtonClick()
     {
-        eventText.text = currentQuest.noResponse;
+        ProcessQuestChoice(false);
+    }
+    void ProcessQuestChoice(bool isYes)
+    {
+        // 90% 성공, 10% 실패
+        bool questSuccess = Random.Range(0, 100) < 90;
+
+        if (questSuccess)
+        {
+            // 성공
+            string responseText = isYes ? currentQuest.yesResponse : currentQuest.noResponse;
+            eventText.text = responseText;
+
+            if (isYes)
+            {
+                ProcessReward(
+                    currentQuest.yesRewardType,
+                    currentQuest.yesCardId,
+                    currentQuest.yesSupportChangeA,
+                    currentQuest.yesSupportChangeB,
+                    currentQuest.yesSupportChangeC
+                );
+            }
+            else
+            {
+                ProcessReward(
+                    currentQuest.noRewardType,
+                    currentQuest.noCardId,
+                    currentQuest.noSupportChangeA,
+                    currentQuest.noSupportChangeB,
+                    currentQuest.noSupportChangeC
+                );
+            }
+            ProcessRegionalPromotion(true);
+
+
+        }
+        else
+        {
+            // 실패
+            if (currentQuest.hasFail)
+            {
+                eventText.text = "선거 운동 실패! 여론이 악화되었습니다.";
+                questCardReward = "";
+
+                // 실패 패널티 (지지율 감소)
+                if (isNationalMode)
+                {
+                    GameManager.Instance.ChangeAllRegionsSupport(
+                        currentQuest.failSupportChangeA,
+                        currentQuest.failSupportChangeB,
+                        currentQuest.failSupportChangeC
+                    );
+                }
+                else
+                {
+                    selectedRegion.ChangeSupportRate(
+                        currentQuest.failSupportChangeA,
+                        currentQuest.failSupportChangeB,
+                        currentQuest.failSupportChangeC
+                    );
+                }
+                ProcessRegionalPromotion(false);
+
+
+                supportChangeText.text = $"지지율 하락!\n갑당 {currentQuest.failSupportChangeA}%, 을당 {currentQuest.failSupportChangeB:+#;-#;0}%, 병당 {currentQuest.failSupportChangeC:+#;-#;0}%";
+                Debug.Log($"Quest 실패 - 지지율 패널티: 갑{currentQuest.failSupportChangeA}, 을{currentQuest.failSupportChangeB}, 병{currentQuest.failSupportChangeC}");
+            }
+            else
+            {
+                eventText.text = "선거 운동 실패! 아무 일도 일어나지 않았습니다.";
+                questCardReward = "";
+                supportChangeText.text = "변화 없음";
+                Debug.Log("Quest 실패 - 패널티 없음");
+            }
+        }
+
         questPanel.SetActive(false);
         eventPanel.SetActive(true);
     }
 
+    void ProcessReward(RewardType type, string cardId, int changeA, int changeB, int changeC)
+    {
+        if (type == RewardType.Card)
+        {
+            // 카드 보상
+            questCardReward = cardId;
+            supportChangeText.text = $"카드 획득!\n{GetCardName(cardId)}";
+            Debug.Log($"Quest 성공 - 카드 보상: {cardId}");
+        }
+        else if (type == RewardType.Support)
+        {
+            // 지지율 보상
+            questCardReward = "";
+
+            if (isNationalMode)
+            {
+                GameManager.Instance.ChangeAllRegionsSupport(changeA, changeB, changeC);
+            }
+            else
+            {
+                selectedRegion.ChangeSupportRate(changeA, changeB, changeC);
+            }
+
+            supportChangeText.text = $"지지율 변화\n갑당 {changeA:+#;-#;0}%, 을당 {changeB:+#;-#;0}%, 병당 {changeC:+#;-#;0}%";
+            Debug.Log($"Quest 성공 - 지지율 보상: 갑{changeA}, 을{changeB}, 병{changeC}");
+        }
+        else // RewardType.None
+        {
+            // 보상 없음
+            questCardReward = "";
+            supportChangeText.text = "변화 없음";
+            Debug.Log("Quest 성공 - 보상 없음");
+        }
+    }
+    string GetCardName(string cardId)
+    {
+        Card card = CardDatabase.Instance.GetCard(cardId);
+        return card != null ? card.cardName : cardId;
+    }
     // Start Promotion 버튼에서 호출
     public void ShowPromotionPanel()
     {
@@ -405,35 +617,47 @@ public class PromotionUI : MonoBehaviour
         string result = isSuccess ? "선거운동 성공!" : "선거운동 실패!";
         supportChangeText.text = $"{result}\n갑당 {amountA:+#;-#;0}%, 을당 {amountB:+#;-#;0}%, 병당 {amountC:+#;-#;0}%";
     }
+    // 선거운동 결과에 따라 카드 추가
+    void ProcessRegionalPromotion(bool isSuccess)
+    {
+        CardDistributor distributor = FindObjectOfType<CardDistributor>();
+        if (distributor == null)
+        {
+            Debug.LogError("CardDistributor를 찾을 수 없습니다!");
+            return;
+        }
+
+
+        // 선거운동 성공: 3장, 실패: 2장
+        distributor.AddCampaignResultCards(isSuccess);
+
+        Debug.Log($"선거운동 {(isSuccess ? "성공" : "실패")} - 카드 {(isSuccess ? 3 : 2)}장 추가");
+    }
+
     void OnStartVoteButtonClick()
     {
-        // 카드 분배 로직
         CardDistributor distributor = FindObjectOfType<CardDistributor>();
         if (distributor != null)
         {
-            // 0. 플레이어 카드 수집 초기화
-            distributor.InitializePlayerCardCollection();
 
-            // 1. 홍보 선택 카드 추가 (0-1장)
-            distributor.AddPromotionCard(isNationalMode, selectedRegion);
+            // Quest 보상 카드 추가
+            if (!string.IsNullOrEmpty(questCardReward))
+            {
+                distributor.AddSpecificCard(questCardReward);
+                Debug.Log($"[PromotionUI] Quest 보상 카드: {questCardReward}");
+            }
 
-            // 2. 선거 운동 결과 카드 추가 (2-3장)
-            distributor.AddCampaignResultCards(campaignSuccess);
+            // 의석 보상 카드 추가 (TODO: 나중에 구현)
+            // int partyASeats = VotingUI.Instance.GetLastPartyASeats();
+            // distributor.AddSeatRewardCards(partyASeats);
 
-            // 3. 최종 카드 확정 (playerHand에 추가)
             distributor.FinalizePlayerCards();
-
-            Debug.Log($"[PromotionUI] 카드 분배 완료 - 선택: {(isNationalMode ? "전국" : selectedRegion?.regionName)}, 결과: {(campaignSuccess ? "성공" : "실패")}");
         }
         else
         {
             Debug.LogError("CardDistributor를 찾을 수 없습니다!");
         }
 
-        // 카드 배틀 UI로 전환
         UIManager.Instance.ShowCardBattleView();
-
-        // VotingUI는 CardBattleUI 종료 후 자동으로 호출됨
     }
-
 }
