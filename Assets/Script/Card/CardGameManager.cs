@@ -134,7 +134,7 @@ public class CardGameManager : MonoBehaviour
             int damage = attackCard.attackValue / 3;
             if (isAmplified) damage *= 2;
 
-            ApplyDamage(currentTurn, damage, attackCard.attackerGain / 3);
+            ApplyDamage(currentTurn, damage, damage);
             ClearAttackState();
             return true;
         }
