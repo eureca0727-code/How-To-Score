@@ -5,8 +5,8 @@ using UnityEngine;
 public class CardDistributor : MonoBehaviour
 {
     public PartyCardHand playerHand; // 플레이어
-    public PartyCardHand partyBHand; // 을
-    public PartyCardHand partyCHand; // 병
+    public PartyCardHand partyBHand; // 을당
+    public PartyCardHand partyCHand; // 병당
 
     // 각 지역별 특정 카드 매핑 (지역명 -> 카드ID)
     private Dictionary<string, string> regionCardMap;
@@ -38,20 +38,20 @@ public class CardDistributor : MonoBehaviour
         };
     }
 
-    // 라운드 시작 시 양당 행동 카드 분배
+    // 라운드 시작 시 양당 행동 카드 분배 (기존 카드에 추가)
     public void DistributeCardsForRound(int currentRound, List<Region> wonRegionsB, List<Region> wonRegionsC)
     {
-        // 을 카드 분배
+        // 을당 카드 분배
         DistributeCardsForParty(partyBHand, currentRound, wonRegionsB, true);
 
-        // 병 카드 분배
+        // 병당 카드 분배
         DistributeCardsForParty(partyCHand, currentRound, wonRegionsC, false);
     }
 
     void DistributeCardsForParty(PartyCardHand hand, int currentRound, List<Region> wonRegions, bool isPartyB)
     {
-        hand.ClearHand();
-        List<string> cards = new List<string>();
+        // ★ ClearHand() 제거 - 기존 카드 유지
+        List<string> newCards = new List<string>();
 
         // 2~5라운드 시, 직전 라운드에서 승리한 지역마다 해당 특정 카드 추가
         if (currentRound >= 2 && wonRegions != null && wonRegions.Count > 0)
@@ -64,45 +64,45 @@ public class CardDistributor : MonoBehaviour
                     Card card = CardDatabase.Instance.GetCard(cardId);
 
                     // 행동카드(M, A, S, D)만 추가, 중복 체크
-                    if (card != null && !cards.Contains(cardId))
+                    if (card != null && !newCards.Contains(cardId))
                     {
-                        cards.Add(cardId);
+                        newCards.Add(cardId);
                     }
                 }
             }
         }
 
         // 우선순위에 따라 정렬 후 6장 선택
-        if (cards.Count > 6)
+        if (newCards.Count > 6)
         {
-            cards = SortAndLimitCards(cards, isPartyB);
+            newCards = SortAndLimitCards(newCards, isPartyB);
         }
 
         // 6장 미만일 경우 기본 카드 추가
-        if (cards.Count < 6)
+        if (newCards.Count < 6)
         {
             if (isPartyB)
             {
-                // 을: A1, A2 우선
-                while (cards.Count < 6)
+                // 을당: A1, A2 우선
+                while (newCards.Count < 6)
                 {
-                    if (!cards.Contains("A1"))
-                        cards.Add("A1");
-                    else if (!cards.Contains("A2"))
-                        cards.Add("A2");
+                    if (!newCards.Contains("A1"))
+                        newCards.Add("A1");
+                    else if (!newCards.Contains("A2"))
+                        newCards.Add("A2");
                     else
                         break;
                 }
             }
             else
             {
-                // 병: D1, D2 우선
-                while (cards.Count < 6)
+                // 병당: D1, D2 우선
+                while (newCards.Count < 6)
                 {
-                    if (!cards.Contains("D1"))
-                        cards.Add("D1");
-                    else if (!cards.Contains("D2"))
-                        cards.Add("D2");
+                    if (!newCards.Contains("D1"))
+                        newCards.Add("D1");
+                    else if (!newCards.Contains("D2"))
+                        newCards.Add("D2");
                     else
                         break;
                 }
@@ -111,14 +111,14 @@ public class CardDistributor : MonoBehaviour
 
         // 그래도 6장 미만이면 M1~M5 랜덤 추가
         List<string> mCards = new List<string> { "M1", "M2", "M3", "M4", "M5" };
-        while (cards.Count < 6)
+        while (newCards.Count < 6)
         {
             string randomM = mCards[Random.Range(0, mCards.Count)];
-            cards.Add(randomM);
+            newCards.Add(randomM);
         }
 
-        // 카드 핸드에 추가
-        foreach (string cardId in cards)
+        // ★ 새로운 카드만 기존 핸드에 추가
+        foreach (string cardId in newCards)
         {
             hand.AddCard(cardId);
         }
@@ -200,7 +200,7 @@ public class CardDistributor : MonoBehaviour
         }
     }
 
-    // 최종 카드 확정 (있는 그대로, 채우지 않음)
+    // 최종 카드 확정 (기존 카드에 추가)
     public void FinalizePlayerCards()
     {
         if (playerHand == null)
@@ -209,17 +209,15 @@ public class CardDistributor : MonoBehaviour
             return;
         }
 
-        playerHand.ClearHand();
-
         Debug.Log($"최종 카드 확정: 임시 저장소에 {pendingPlayerCards.Count}장");
 
-        // playerHand에 카드 추가 (있는 그대로)
+        // playerHand에 새로운 카드만 추가
         foreach (string cardId in pendingPlayerCards)
         {
             playerHand.AddCard(cardId);
         }
 
-        Debug.Log($"플레이어 최종 카드 ({pendingPlayerCards.Count}장): {string.Join(", ", pendingPlayerCards)}");
+        Debug.Log($"플레이어 신규 카드 ({pendingPlayerCards.Count}장): {string.Join(", ", pendingPlayerCards)}");
 
         // 임시 저장소 초기화
         pendingPlayerCards.Clear();
@@ -245,7 +243,7 @@ public class CardDistributor : MonoBehaviour
 
         if (isPartyB)
         {
-            // 을 우선순위: M > A > S > D
+            // 을당 우선순위: M > A > S > D
             result.AddRange(cards.Where(c => CardDatabase.Instance.GetCard(c).cardType == CardType.M).OrderBy(c => c));
             result.AddRange(cards.Where(c => CardDatabase.Instance.GetCard(c).cardType == CardType.A).OrderBy(c => c));
             result.AddRange(cards.Where(c => CardDatabase.Instance.GetCard(c).cardType == CardType.S).OrderBy(c => c));
@@ -253,7 +251,7 @@ public class CardDistributor : MonoBehaviour
         }
         else
         {
-            // 병 우선순위: S > M > D > A
+            // 병당 우선순위: S > M > D > A
             result.AddRange(cards.Where(c => CardDatabase.Instance.GetCard(c).cardType == CardType.S).OrderBy(c => c));
             result.AddRange(cards.Where(c => CardDatabase.Instance.GetCard(c).cardType == CardType.M).OrderBy(c => c));
             result.AddRange(cards.Where(c => CardDatabase.Instance.GetCard(c).cardType == CardType.D).OrderBy(c => c));
