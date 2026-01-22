@@ -5,18 +5,20 @@ public class DebugUI : MonoBehaviour
 {
     public TextMeshProUGUI debugText;
     public static DebugUI Instance;
-    void Awake() 
+
+    void Awake()
     {
+        Instance = this;
+    }
+
+    void OnEnable()
+    {
+        // 켜질 때 Instance 재설정 (비활성화 상태에서 켜진 경우 대비)
         Instance = this;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F12))
-        {
-            gameObject.SetActive(!gameObject.activeSelf);
-        }
-
         if (gameObject.activeSelf)
         {
             UpdateDebugInfo();

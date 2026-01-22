@@ -6,29 +6,36 @@ public class MultiSectionPieChart : MonoBehaviour
 {
     public List<Image> sectionImages; // Inspector에서 순서대로 연결
 
-    // 3분할용 (정당)
-    public void SetData3(float value1, float value2, float value3)
+    // =============================
+    // PromotionUI에서 호출하는 메서드
+    // =============================
+
+    // 3분할 (정당 지지율)
+    public void UpdateChart(float value1, float value2, float value3)
     {
         SetDataMultiple(new float[] { value1, value2, value3 });
     }
-    // 4분할용 (정책)
-    public void SetData4(int value1, int value2, int value3, int value4)
-    {
 
+    // 4분할 (정책 선호)
+    public void UpdateChart(int value1, int value2, int value3, int value4)
+    {
         SetDataMultiple(new float[] { value1, value2, value3, value4 });
     }
 
-    // 범용 함수
+    // =============================
+    // 내부 처리
+    // =============================
+
     void SetDataMultiple(float[] values)
     {
-        // 총합 계산
-        int total = 0;
-        foreach (int val in values)
+        // 총합 계산 (float로!)
+        float total = 0f;
+        foreach (float val in values)
         {
             total += val;
         }
 
-        if (total == 0 || values.Length > sectionImages.Count)
+        if (total <= 0f || values.Length > sectionImages.Count)
         {
             HideAll();
             return;
@@ -38,16 +45,18 @@ public class MultiSectionPieChart : MonoBehaviour
 
         for (int i = 0; i < values.Length; i++)
         {
-            float percent = (float)values[i] / total;
+            float percent = values[i] / total;
 
             sectionImages[i].fillAmount = percent;
-            sectionImages[i].transform.localRotation = Quaternion.Euler(0, 0, -currentAngle);
+            sectionImages[i].transform.localRotation =
+                Quaternion.Euler(0, 0, -currentAngle);
+
             sectionImages[i].gameObject.SetActive(true);
 
             currentAngle += 360f * percent;
         }
 
-        // 사용 안 하는 이미지는 숨김
+        // 사용 안 하는 이미지 숨김
         for (int i = values.Length; i < sectionImages.Count; i++)
         {
             sectionImages[i].gameObject.SetActive(false);
@@ -58,8 +67,8 @@ public class MultiSectionPieChart : MonoBehaviour
     {
         foreach (var img in sectionImages)
         {
-            img.fillAmount = 0;
+            img.fillAmount = 0f;
+            img.gameObject.SetActive(false);
         }
     }
-
 }
