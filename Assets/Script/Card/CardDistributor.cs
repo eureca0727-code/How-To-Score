@@ -50,7 +50,9 @@ public class CardDistributor : MonoBehaviour
 
     void DistributeCardsForParty(PartyCardHand hand, int currentRound, List<Region> wonRegions, bool isPartyB)
     {
-        // ★ ClearHand() 제거 - 기존 카드 유지
+        // 매 라운드 시작 시 카드 초기화 (6장만 보유)
+        hand.ClearHand();
+
         List<string> newCards = new List<string>();
 
         // 2~5라운드 시, 직전 라운드에서 승리한 지역마다 해당 특정 카드 추가
@@ -117,13 +119,12 @@ public class CardDistributor : MonoBehaviour
             newCards.Add(randomM);
         }
 
-        // ★ 새로운 카드만 기존 핸드에 추가
+        // 새로운 카드 6장 추가
         foreach (string cardId in newCards)
         {
             hand.AddCard(cardId);
         }
     }
-
     // ===== 플레이어 카드 수집 시스템 =====
 
     // 플레이어 카드 수집 초기화 (라운드 시작 시)
@@ -208,7 +209,6 @@ public class CardDistributor : MonoBehaviour
             Debug.LogError("playerHand가 null입니다!");
             return;
         }
-
         Debug.Log($"최종 카드 확정: 임시 저장소에 {pendingPlayerCards.Count}장");
 
         // playerHand에 새로운 카드만 추가

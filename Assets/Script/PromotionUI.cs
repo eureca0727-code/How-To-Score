@@ -331,6 +331,9 @@ public class PromotionUI : MonoBehaviour
         // 90% 성공, 10% 실패
         bool questSuccess = Random.Range(0, 100) < 90;
 
+        Debug.Log($"========== ProcessQuestChoice 시작 ==========");
+        Debug.Log($"선택: {(isYes ? "Yes" : "No")}, 성공 여부: {questSuccess}");
+
         if (questSuccess)
         {
             // 성공
@@ -357,12 +360,15 @@ public class PromotionUI : MonoBehaviour
                     currentQuest.noSupportChangeC
                 );
             }
+
+            Debug.Log("ProcessRegionalPromotion(true) 호출 직전");
             ProcessRegionalPromotion(true);
-
-
+            Debug.Log("ProcessRegionalPromotion(true) 호출 완료");
         }
         else
         {
+            Debug.Log("Quest 실패 처리 시작");
+
             // 실패
             if (currentQuest.hasFail)
             {
@@ -386,8 +392,6 @@ public class PromotionUI : MonoBehaviour
                         currentQuest.failSupportChangeC
                     );
                 }
-                ProcessRegionalPromotion(false);
-
 
                 supportChangeText.text = $"지지율 하락!\n갑당 {currentQuest.failSupportChangeA}%, 을당 {currentQuest.failSupportChangeB:+#;-#;0}%, 병당 {currentQuest.failSupportChangeC:+#;-#;0}%";
                 Debug.Log($"Quest 실패 - 지지율 패널티: 갑{currentQuest.failSupportChangeA}, 을{currentQuest.failSupportChangeB}, 병{currentQuest.failSupportChangeC}");
@@ -399,12 +403,17 @@ public class PromotionUI : MonoBehaviour
                 supportChangeText.text = "변화 없음";
                 Debug.Log("Quest 실패 - 패널티 없음");
             }
+
+            Debug.Log("ProcessRegionalPromotion(false) 호출 직전");
+            ProcessRegionalPromotion(false);
+            Debug.Log("ProcessRegionalPromotion(false) 호출 완료");
         }
+
+        Debug.Log("========== ProcessQuestChoice 종료 ==========");
 
         questPanel.SetActive(false);
         eventPanel.SetActive(true);
     }
-
     void ProcessReward(RewardType type, string cardId, int changeA, int changeB, int changeC)
     {
         if (type == RewardType.Card)
@@ -620,6 +629,8 @@ public class PromotionUI : MonoBehaviour
     // 선거운동 결과에 따라 카드 추가
     void ProcessRegionalPromotion(bool isSuccess)
     {
+        Debug.Log($">>>>>> ProcessRegionalPromotion 진입: isSuccess={isSuccess}");
+
         CardDistributor distributor = FindObjectOfType<CardDistributor>();
         if (distributor == null)
         {
@@ -627,13 +638,12 @@ public class PromotionUI : MonoBehaviour
             return;
         }
 
+        Debug.Log("CardDistributor 찾음, AddCampaignResultCards 호출 직전");
 
-        // 선거운동 성공: 3장, 실패: 2장
         distributor.AddCampaignResultCards(isSuccess);
 
-        Debug.Log($"선거운동 {(isSuccess ? "성공" : "실패")} - 카드 {(isSuccess ? 3 : 2)}장 추가");
+        Debug.Log($"<<<<<<< ProcessRegionalPromotion 완료: {(isSuccess ? 3 : 2)}장 추가됨");
     }
-
     void OnStartVoteButtonClick()
     {
         CardDistributor distributor = FindObjectOfType<CardDistributor>();

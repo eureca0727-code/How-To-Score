@@ -136,36 +136,34 @@ public class ResultUI : MonoBehaviour
         // 1초 대기
         yield return new WaitForSeconds(1f);
 
-        // ===== 의석 결과 카드 분배 (새로 추가) =====
+        // 의석 결과 카드 분배
         CardDistributor distributor = FindObjectOfType<CardDistributor>();
         if (distributor != null)
         {
-            // 3. 의석 결과 카드 추가 (0-2장)
             distributor.AddSeatRewardCards(partyASeats);
-
-            // 4. 최종 카드 확정
             distributor.FinalizePlayerCards();
-
             Debug.Log($"[ResultUI] 카드 분배 완료 - {partyASeats}석");
         }
         else
         {
             Debug.LogError("CardDistributor를 찾을 수 없습니다!");
         }
-        // ===== 여기까지 추가 =====
 
-        // 성공/실패 판정
-        bool isSuccess = partyASeats > 0; // 1석 이상이면 성공
+        // 현재 라운드 가져오기
+        int currentRound = GameManager.Instance.GetCurrentRound();
+
+        // 성공/실패 판정 (2라운드부터만 0석일 때 실패)
+        bool isSuccess = (currentRound == 1) ? true : (partyASeats > 0);
 
         if (isSuccess)
         {
             statusText.text = "의석 획득 성공";
-            statusText.color = Color.red; 
+            statusText.color = Color.red;
         }
         else
         {
             statusText.text = "의석 획득 실패";
-            statusText.color = Color.red; 
+            statusText.color = Color.red;
         }
 
         // 1초 대기 후 버튼 표시
@@ -182,7 +180,6 @@ public class ResultUI : MonoBehaviour
 
         Debug.Log("선거 결과 표시 완료!");
     }
-
     // → 버튼 클릭 시 (성공)
     void OnNextButtonClick()
     {
