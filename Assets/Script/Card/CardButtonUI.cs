@@ -50,42 +50,42 @@
             if (cardTypeText != null)
                 cardTypeText.text = $"[{card.cardType}]";
 
-            // 배경색 설정
-            if (backgroundImage != null)
+        // 배경색 설정
+        if (backgroundImage != null)
+        {
+            switch (card.cardType)
             {
-                switch (card.cardType)
-                {
-                    case CardType.M:
-                        backgroundImage.color = mCardColor;
-                        break;
-                    case CardType.A:
-                        backgroundImage.color = aCardColor;
-                        break;
-                    case CardType.D:
-                        backgroundImage.color = dCardColor;
-                        break;
-                    case CardType.S:
-                        backgroundImage.color = sCardColor;
-                        break;
-                }
+                case CardType.M:
+                    backgroundImage.color = mCardColor;
+                    break;
+                case CardType.A:
+                    backgroundImage.color = aCardColor;
+                    break;
+                case CardType.D:
+                    backgroundImage.color = dCardColor;
+                    break;
+                case CardType.S:
+                    backgroundImage.color = sCardColor;
+                    break;
             }
+        }
 
-            // 공격력 표시 (M/A 카드만)
-            if (attackValueText != null)
+        // 공격력 표시 (M/A 카드만)
+        if (attackValueText != null)
+        {
+            if (card.cardType == CardType.M || card.cardType == CardType.A)
             {
-                if (card.cardType == CardType.M || card.cardType == CardType.A)
-                {
-                    attackValueText.text = $"공격: {card.attackValue}\n이득: {card.attackerGain}";
-                    attackValueText.gameObject.SetActive(true);
-                }
-                else
-                {
-                    attackValueText.gameObject.SetActive(false);
-                }
+                attackValueText.text = $"공격: {card.attackValue}\n이득: {card.attackerGain}";
+                attackValueText.gameObject.SetActive(true);
             }
+            else
+            {
+                attackValueText.gameObject.SetActive(false);
+            }
+        }
 
-            // 방어 정보 표시
-            UpdateDefenseInfo(card);
+        // 방어 정보 표시
+        UpdateDefenseInfo(card);
         }
 
         void UpdateDefenseInfo(Card card)
