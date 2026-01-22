@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     public GameObject detailResultView; 
 
 
+
     void Awake()
     {
         Instance = this;
@@ -28,13 +29,25 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F12))
         {
-            if (DebugUI.Instance != null)
+            // DebugUI.Instance가 null이면 FindObjectOfType으로 찾기
+            if (DebugUI.Instance == null)
+            {
+                DebugUI debugUI = FindObjectOfType<DebugUI>(true); // true: 비활성화된 것도 찾음
+                if (debugUI != null)
+                {
+                    debugUI.gameObject.SetActive(true);
+                }
+                else
+                {
+                    Debug.LogError("DebugUI를 찾을 수 없습니다!");
+                }
+            }
+            else
             {
                 DebugUI.Instance.gameObject.SetActive(!DebugUI.Instance.gameObject.activeSelf);
             }
         }
     }
-
     public void ShowMapView()
     {
         mapView.SetActive(true);

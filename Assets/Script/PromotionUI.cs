@@ -238,6 +238,8 @@ public class PromotionUI : MonoBehaviour
         // 차트 패널 상태 초기화
         if (questPanel != null) questPanel.SetActive(false);
         if (eventPanel != null) eventPanel.SetActive(false);
+        UpdateTitleText();
+
         UpdateChartsForMode();
     }
 
@@ -254,7 +256,27 @@ public class PromotionUI : MonoBehaviour
         isNationalMode = false;
         selectedRegion = region;
     }
+    // titleText 업데이트
+    void UpdateTitleText()
+    {
+        if (titleText == null) return;
 
+        if (isNationalMode)
+        {
+            titleText.text = "전국 홍보";
+        }
+        else
+        {
+            if (selectedRegion != null)
+            {
+                titleText.text = $"{selectedRegion.regionName} 지역 홍보";
+            }
+            else
+            {
+                titleText.text = "지역 홍보";
+            }
+        }
+    }
     void UpdateChartsForMode()
     {
         if (isNationalMode)
@@ -280,24 +302,39 @@ public class PromotionUI : MonoBehaviour
         var policyA = GameManager.Instance.GetNationalPolicyDemandForPartyA();
         if (partyA_PolicyChart != null && policyA != null)
         {
-            partyA_PolicyChart.UpdateChart(policyA.Economy, policyA.Education, policyA.Welfare, policyA.Environment, policyA.Industry);
+            partyA_PolicyChart.UpdateChart(
+                policyA.economy,      // Economy → economy
+                policyA.security,     // Security → security
+                policyA.welfare,      // Welfare → welfare
+                policyA.environment   // Environment → environment
+            );
         }
 
         // 3. 을 지지자들의 정책 선호
         var policyB = GameManager.Instance.GetNationalPolicyDemandForPartyB();
         if (partyB_PolicyChart != null && policyB != null)
         {
-            partyB_PolicyChart.UpdateChart(policyB.Economy, policyB.Education, policyB.Welfare, policyB.Environment, policyB.Industry);
+            partyB_PolicyChart.UpdateChart(
+                policyB.economy,      // Economy → economy
+                policyB.security,     // Security → security
+                policyB.welfare,      // Welfare → welfare
+                policyB.environment   // Environment → environment
+            );
         }
 
         // 4. 병 지지자들의 정책 선호
         var policyC = GameManager.Instance.GetNationalPolicyDemandForPartyC();
         if (partyC_PolicyChart != null && policyC != null)
         {
-            partyC_PolicyChart.UpdateChart(policyC.Economy, policyC.Education, policyC.Welfare, policyC.Environment, policyC.Industry);
+            partyC_PolicyChart.UpdateChart(
+                policyC.economy,      // Economy → economy
+                policyC.security,     // Security → security
+                policyC.welfare,      // Welfare → welfare
+                policyC.environment   // Environment → environment
+            );
         }
 
-        partyBarChart.UpdateChart(totalA, totalB, totalC); // 막대 그래프 업데이트 추가
+        partyBarChart.UpdateChart(totalA, totalB, totalC);
     }
 
     void UpdateChartsForRegion(Region region)
@@ -308,7 +345,7 @@ public class PromotionUI : MonoBehaviour
             return;
         }
 
-        // 1. 해당 지역 갑/을/병 지지율
+        // 해당 지역 갑 을 병 지지율
         float rateA = region.partyA.supportRate;
         float rateB = region.partyB.supportRate;
         float rateC = region.partyC.supportRate;
@@ -318,65 +355,43 @@ public class PromotionUI : MonoBehaviour
             partyChart.UpdateChart(rateA, rateB, rateC);
         }
 
-        // 2. 갑 정책 선호
-        var policyA = CalculatePolicyDemandForSupporter(region, rateA);
+        // 갑 지지자들의 정책 선호
         if (partyA_PolicyChart != null)
         {
+            var policyA = region.partyA.policyDemand;
             partyA_PolicyChart.UpdateChart(
-                policyA.Economy,
-                policyA.Education,
-                policyA.Welfare,
-                policyA.Environment,
-                policyA.Industry
+                policyA.economy,
+                policyA.security,
+                policyA.welfare,
+                policyA.environment
             );
         }
 
-        // 3. 을 정책 선호
-        var policyB = CalculatePolicyDemandForSupporter(region, rateB);
+        // 을 지지자들의 정책 선호
         if (partyB_PolicyChart != null)
         {
+            var policyB = region.partyB.policyDemand;
             partyB_PolicyChart.UpdateChart(
-                policyB.Economy,
-                policyB.Education,
-                policyB.Welfare,
-                policyB.Environment,
-                policyB.Industry
+                policyB.economy,
+                policyB.security,
+                policyB.welfare,
+                policyB.environment
             );
         }
 
-        // 4. 병 정책 선호
-        var policyC = CalculatePolicyDemandForSupporter(region, rateC);
+        // 병 지지자들의 정책 선호
         if (partyC_PolicyChart != null)
         {
+            var policyC = region.partyC.policyDemand;
             partyC_PolicyChart.UpdateChart(
-                policyC.Economy,
-                policyC.Education,
-                policyC.Welfare,
-                policyC.Environment,
-                policyC.Industry
+                policyC.economy,
+                policyC.security,
+                policyC.welfare,
+                policyC.environment
             );
         }
 
         partyBarChart.UpdateChart(rateA, rateB, rateC);
-    }
-
-    // 지역 지지자별 정책 선호 계산 함수
-    PolicyDemand CalculatePolicyDemandForSupporter(Region region, float supportRate)
-    {
-        PolicyDemand baseDemand = region.policyDemand;
-
-        float weight = supportRate / 100f;
-
-        PolicyDemand result = new PolicyDemand
-        {
-            Economy = baseDemand.Economy * weight,
-            Education = baseDemand.Education * weight,
-            Welfare = baseDemand.Welfare * weight,
-            Environment = baseDemand.Environment * weight,
-            Industry = baseDemand.Industry * weight
-        };
-
-        return result;
     }
 
     public void ClosePromotionPanel()
@@ -421,12 +436,4 @@ public class PromotionUI : MonoBehaviour
         // VotingUI는 CardBattleUI 종료 후 자동으로 호출됨
     }
 
-}
-
-[System.Serializable]
-public class QuestData
-{
-    public string question;
-    public string yesResponse;
-    public string noResponse;
 }

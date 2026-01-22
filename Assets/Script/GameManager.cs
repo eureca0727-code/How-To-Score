@@ -124,6 +124,22 @@ public class GameManager : MonoBehaviour
         }
         return total;
     }
+    // PromotionUI에서 사용하는 전국 지지율 Getter
+    public float GetNationalSupportRateA()
+    {
+        return GetTotalPartyASupport();
+    }
+
+    public float GetNationalSupportRateB()
+    {
+        return GetTotalPartyBSupport();
+    }
+
+    public float GetNationalSupportRateC()
+    {
+        return GetTotalPartyCSupport();
+    }
+
 
     // 모든 지역 지지율을 동시에 변경
     public void ChangeAllRegionsSupport(int amountA, int amountB, int amountC)
@@ -183,4 +199,86 @@ public class GameManager : MonoBehaviour
 
         return (districtSupportA, districtSupportB, districtSupportC);
     }
+    // 전국 정책 수요 계산 (정당별 지지율 가중 평균)
+    public PolicyDemand GetNationalPolicyDemandForPartyA()
+    {
+        PolicyDemand total = new PolicyDemand();
+        float totalSupport = 0;
+
+        foreach (var region in allRegions)
+        {
+            float weight = region.partyA.supportRate;
+            totalSupport += weight;
+
+            total.economy += region.partyA.policyDemand.economy * (int)weight;
+            total.welfare += region.partyA.policyDemand.welfare * (int)weight;
+            total.security += region.partyA.policyDemand.security * (int)weight;
+            total.environment += region.partyA.policyDemand.environment * (int)weight;
+        }
+
+        if (totalSupport > 0)
+        {
+            total.economy = (int)(total.economy / totalSupport);
+            total.welfare = (int)(total.welfare / totalSupport);
+            total.security = (int)(total.security / totalSupport);
+            total.environment = (int)(total.environment / totalSupport);
+        }
+
+        return total;
+    }
+
+    public PolicyDemand GetNationalPolicyDemandForPartyB()
+    {
+        PolicyDemand total = new PolicyDemand();
+        float totalSupport = 0;
+
+        foreach (var region in allRegions)
+        {
+            float weight = region.partyB.supportRate;
+            totalSupport += weight;
+
+            total.economy += region.partyB.policyDemand.economy * (int)weight;
+            total.welfare += region.partyB.policyDemand.welfare * (int)weight;
+            total.security += region.partyB.policyDemand.security * (int)weight;
+            total.environment += region.partyB.policyDemand.environment * (int)weight;
+        }
+
+        if (totalSupport > 0)
+        {
+            total.economy = (int)(total.economy / totalSupport);
+            total.welfare = (int)(total.welfare / totalSupport);
+            total.security = (int)(total.security / totalSupport);
+            total.environment = (int)(total.environment / totalSupport);
+        }
+
+        return total;
+    }
+
+    public PolicyDemand GetNationalPolicyDemandForPartyC()
+    {
+        PolicyDemand total = new PolicyDemand();
+        float totalSupport = 0;
+
+        foreach (var region in allRegions)
+        {
+            float weight = region.partyC.supportRate;
+            totalSupport += weight;
+
+            total.economy += region.partyC.policyDemand.economy * (int)weight;
+            total.welfare += region.partyC.policyDemand.welfare * (int)weight;
+            total.security += region.partyC.policyDemand.security * (int)weight;
+            total.environment += region.partyC.policyDemand.environment * (int)weight;
+        }
+
+        if (totalSupport > 0)
+        {
+            total.economy = (int)(total.economy / totalSupport);
+            total.welfare = (int)(total.welfare / totalSupport);
+            total.security = (int)(total.security / totalSupport);
+            total.environment = (int)(total.environment / totalSupport);
+        }
+
+        return total;
+    }
 }
+
