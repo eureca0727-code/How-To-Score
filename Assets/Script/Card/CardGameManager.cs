@@ -121,7 +121,17 @@ public class CardGameManager : MonoBehaviour
         attacker = attackingParty;
 
         Card card = CardDatabase.Instance.GetCard(cardId);
-        Debug.Log($"{GetPartyName(attackingParty)}이(가) {card.cardName} 공격!");
+        string attackerName = GetPartyName(attackingParty);
+
+        Debug.Log($"{attackerName}이(가) {card.cardName} 공격!");
+
+        // UI에 알림
+        if (CardBattleUI.Instance != null)
+        {
+            Party targetParty = GetNextParty(attackingParty);
+            string targetName = GetPartyName(targetParty);
+            CardBattleUI.Instance.ShowWarning($"{attackerName}당이 {targetName}당을 {card.cardName}(으)로 공격!");
+        }
     }
 
     // 방어 카드 제시 (방어 성공 여부 반환)
@@ -135,11 +145,17 @@ public class CardGameManager : MonoBehaviour
 
         Card attackCard = CardDatabase.Instance.GetCard(attackCardId);
         Card defenseCard = CardDatabase.Instance.GetCard(defenseCardId);
+        string partyName = GetPartyName(currentTurn);
 
         // 전체 방어 성공
         if (attackCard.fullDefenseCards.Contains(defenseCardId))
         {
             Debug.Log($"{defenseCard.cardName}으로 완전 방어 성공!");
+            if (CardBattleUI.Instance != null)
+            {
+                CardBattleUI.Instance.ShowWarning($"{partyName}당이 {defenseCard.cardName}(으)로 완전 방어 성공!");
+            }
+
             ClearAttackState();
             return true;
         }
@@ -150,6 +166,12 @@ public class CardGameManager : MonoBehaviour
             Debug.Log($"{defenseCard.cardName}으로 부분 방어 성공!");
             int damage = attackCard.attackValue / 3;
             if (isAmplified) damage *= 2;
+            
+            // UI에 알림
+            if (CardBattleUI.Instance != null)
+            {
+                CardBattleUI.Instance.ShowWarning($"{partyName}당이 {defenseCard.cardName}(으)로 부분 방어! 일부 데미지 받음");
+            }
 
             ApplyDamage(currentTurn, damage, damage);
             ClearAttackState();
@@ -159,10 +181,9 @@ public class CardGameManager : MonoBehaviour
         // 방어 실패
         Debug.LogWarning("방어 실패! 전체 데미지를 받습니다.");
 
-        // UI에 경고 표시 (추가)
+        // UI에 경고 표시
         if (CardBattleUI.Instance != null)
         {
-            string partyName = GetPartyName(currentTurn);
             CardBattleUI.Instance.ShowWarning($"{partyName}당의 방어 실패! {defenseCard.cardName}(으)로 {attackCard.cardName}을(를) 막을 수 없습니다.");
         }
         ApplyFullDamage();
@@ -200,6 +221,13 @@ public class CardGameManager : MonoBehaviour
                 if (isUnderAttack)
                 {
                     Debug.Log($"{GetPartyName(currentTurn)}이(가) 방어를 포기하고 반격합니다!");
+
+                    // UI에 알림 추가
+                    if (CardBattleUI.Instance != null)
+                    {
+                        CardBattleUI.Instance.ShowWarning($"{GetPartyName(currentTurn)}당이 방어를 포기하고 {card.cardName}(으)로 반격!");
+                    }
+
                     ApplyFullDamage();
                 }
                 PlayAttackCard(cardId, currentTurn);
@@ -540,5 +568,21 @@ public class CardGameManager : MonoBehaviour
         PassTurn();
         NextTurn();
         return true;
+    }
+    // 다음 턴 정당 계산 (currentTurn 변경 없이)
+    Party GetNextParty(Party current)
+    {
+        if (isClockwise)
+        {
+            if (current == Party.Player) return Party.PartyB;
+            else if (current == Party.PartyB) return Party.PartyC;
+            else return Party.Player;
+        }
+        else
+        {
+            if (current == Party.Player) return Party.PartyC;
+            else if (current == Party.PartyC) return Party.PartyB;
+            else return Party.Player;
+        }
     }
 }

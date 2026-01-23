@@ -41,12 +41,12 @@ public class CardBattleUI : MonoBehaviour
 
     [Header("Settings")]
     public float aiTurnDelay = 1.5f;              // AI 턴 딜레이
-    public float aiActionDisplayTime = 2f;         // AI 행동 표시 시간
+    public float aiActionDisplayTime = 3f;         // AI 행동 표시 시간
 
     [Header("Warning Message")]
     public TextMeshProUGUI warningMessageText;     // 경고 메시지 텍스트
     public GameObject warningMessagePanel;         // 경고 메시지 패널
-    public float warningDisplayTime = 2f;          // 경고 표시 시간
+    public float warningDisplayTime = 3f;          // 경고 표시 시간
 
     [Header("Support Change Display")]
     public TextMeshProUGUI supportChangeText;  // Inspector에서 방금 연결한 TMP
@@ -372,9 +372,12 @@ public class CardBattleUI : MonoBehaviour
             aiActionPanel.SetActive(true);
 
         if (aiActionText != null)
+        {
+            // 카드 타입별 색상 적용 
+            message = ApplyCardTypeColors(message);
             aiActionText.text = message;
+        }
     }
-
     // AI 패널 숨김
     void HideAIAction()
     {
@@ -634,6 +637,9 @@ public class CardBattleUI : MonoBehaviour
     {
         if (actionLogContainer == null || actionLogPrefab == null) return;
 
+        // 카드 타입별 색상 적용 
+        message = ApplyCardTypeColors(message);
+
         // 최대 개수 초과 시 가장 오래된 로그 제거
         if (actionLogEntries.Count >= maxLogEntries)
         {
@@ -688,5 +694,50 @@ public class CardBattleUI : MonoBehaviour
             supportChangeText.color = new Color(1f, 0.5f, 0.5f); // 연한 빨강
         else
             supportChangeText.color = Color.white;
+    }
+    // 카드 이름에 색상 적용
+    // 카드 이름에 색상 적용
+    string ApplyCardTypeColors(string message)
+    {
+        // CardDatabase의 모든 카드를 검사
+        List<string> allCardIds = CardDatabase.Instance.GetAllCardIds();
+
+        foreach (string cardId in allCardIds)
+        {
+            Card card = CardDatabase.Instance.GetCard(cardId);
+            if (card == null) continue;
+
+            string cardName = card.cardName;
+
+            // 메시지에 카드 이름이 있으면 색상 적용
+            if (message.Contains(cardName))
+            {
+                string colorCode = GetColorCodeByCardType(card.cardType);
+                if (colorCode != null) // null이 아닐 때만 색상 적용
+                {
+                    string coloredName = $"<color={colorCode}>{cardName}</color>";
+                    message = message.Replace(cardName, coloredName);
+                }
+            }
+        }
+
+        return message;
+    }
+    // 카드 타입별 색상 코드 반환
+    string GetColorCodeByCardType(CardType cardType)
+    {
+        switch (cardType)
+        {
+            case CardType.M:
+                return "#E6A64D"; // (1f, 0.8f, 0.4f) - 주황
+            case CardType.A:
+                return "#FF4D4D"; // (1f, 0.3f, 0.3f) - 빨강
+            case CardType.D:
+                return "#66CCFF"; // (0.4f, 0.8f, 1f) - 파랑
+            case CardType.S:
+                return "#CC66FF"; // (0.8f, 0.4f, 1f) - 보라
+            default:
+                return null;
+        }
     }
 }
