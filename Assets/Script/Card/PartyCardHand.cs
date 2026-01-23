@@ -21,9 +21,20 @@ public class PartyCardHand : MonoBehaviour
     // 카드 제거
     public void RemoveCard(string cardId)
     {
-        cardsInHand.Remove(cardId);
-    }
+        Debug.Log($"[RemoveCard] {partyName}당 - 제거 시도: {cardId}, 현재 카드 수: {cardsInHand.Count}");
 
+        bool removed = cardsInHand.Remove(cardId);
+
+        if (removed)
+        {
+            Debug.Log($"[RemoveCard 성공] {partyName}당 - 남은 카드 수: {cardsInHand.Count}");
+        }
+        else
+        {
+            Debug.LogError($"[RemoveCard 실패!] {partyName}당 - {cardId}가 핸드에 없습니다!");
+            Debug.Log($"현재 핸드: {string.Join(", ", cardsInHand)}");
+        }
+    }
     // 특정 타입의 카드가 있는지 확인
     public bool HasCardOfType(CardType type)
     {

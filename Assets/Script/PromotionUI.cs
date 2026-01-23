@@ -331,14 +331,13 @@ public class PromotionUI : MonoBehaviour
         // 90% 성공, 10% 실패
         bool questSuccess = Random.Range(0, 100) < 90;
 
-        Debug.Log($"========== ProcessQuestChoice 시작 ==========");
         Debug.Log($"선택: {(isYes ? "Yes" : "No")}, 성공 여부: {questSuccess}");
 
         if (questSuccess)
         {
             // 성공
             string responseText = isYes ? currentQuest.yesResponse : currentQuest.noResponse;
-            eventText.text = responseText;
+            eventText.text = $"<b>선거운동 성공!</b>\n\n{responseText}";
 
             if (isYes)
             {
@@ -404,12 +403,9 @@ public class PromotionUI : MonoBehaviour
                 Debug.Log("Quest 실패 - 패널티 없음");
             }
 
-            Debug.Log("ProcessRegionalPromotion(false) 호출 직전");
             ProcessRegionalPromotion(false);
-            Debug.Log("ProcessRegionalPromotion(false) 호출 완료");
         }
 
-        Debug.Log("========== ProcessQuestChoice 종료 ==========");
 
         questPanel.SetActive(false);
         eventPanel.SetActive(true);
@@ -631,7 +627,7 @@ public class PromotionUI : MonoBehaviour
     {
         Debug.Log($">>>>>> ProcessRegionalPromotion 진입: isSuccess={isSuccess}");
 
-        CardDistributor distributor = FindObjectOfType<CardDistributor>();
+        CardDistributor distributor = FindAnyObjectByType<CardDistributor>();
         if (distributor == null)
         {
             Debug.LogError("CardDistributor를 찾을 수 없습니다!");
@@ -646,7 +642,7 @@ public class PromotionUI : MonoBehaviour
     }
     void OnStartVoteButtonClick()
     {
-        CardDistributor distributor = FindObjectOfType<CardDistributor>();
+        CardDistributor distributor = FindAnyObjectByType<CardDistributor>();
         if (distributor != null)
         {
 

@@ -32,6 +32,14 @@ public class CardGameManager : MonoBehaviour
     // 라운드 번호
     public int currentRound = 1;
 
+    // 라운드 동안의 누적 지지율 변화 (변수 추가)
+    public int totalChangeA = 0;
+    public int totalChangeB = 0;
+    public int totalChangeC = 0;
+
+    // 연속 턴포기 카운터 
+    private int consecutivePassCount = 0;
+
     void Awake()
     {
         if (Instance == null)
@@ -51,11 +59,20 @@ public class CardGameManager : MonoBehaviour
         playerActionCount = 0;
         partyBActionCount = 0;
         partyCActionCount = 0;
+        partyCActionCount = 0;
 
         // 공격 상태 초기화
         isUnderAttack = false;
         attackCardId = null;
         isAmplified = false;
+
+        // 지지율 변화 초기화 
+        totalChangeA = 0;
+        totalChangeB = 0;
+        totalChangeC = 0;
+
+        // 연속 턴포기 초기화 
+        consecutivePassCount = 0;
 
         // 시작 정당 결정
         int random = Random.Range(0, 3);
@@ -139,7 +156,15 @@ public class CardGameManager : MonoBehaviour
             return true;
         }
 
+        // 방어 실패
         Debug.LogWarning("방어 실패! 전체 데미지를 받습니다.");
+
+        // UI에 경고 표시 (추가)
+        if (CardBattleUI.Instance != null)
+        {
+            string partyName = GetPartyName(currentTurn);
+            CardBattleUI.Instance.ShowWarning($"{partyName}당의 방어 실패! {defenseCard.cardName}(으)로 {attackCard.cardName}을(를) 막을 수 없습니다.");
+        }
         ApplyFullDamage();
         return false;
     }
@@ -148,20 +173,19 @@ public class CardGameManager : MonoBehaviour
     public void PlayCard(string cardId)
     {
         Card card = CardDatabase.Instance.GetCard(cardId);
-        if (card == null)
-        {
-            Debug.LogError($"카드 {cardId}를 찾을 수 없습니다!");
-            return;
-        }
+
+        Debug.Log($"[PlayCard 시작] {GetPartyName(currentTurn)}당 - 카드: {cardId}");
 
         // 행동 카운트 증가
         IncrementActionCount(currentTurn);
+
+        // 연속 턴포기 초기화 
+        consecutivePassCount = 0;
 
         // 카드 타입별 처리
         switch (card.cardType)
         {
             case CardType.M:
-                // M카드: 공격받는 중이면 방어, 아니면 공격
                 if (isUnderAttack)
                 {
                     PlayDefenseCard(cardId);
@@ -169,63 +193,50 @@ public class CardGameManager : MonoBehaviour
                 else
                 {
                     PlayAttackCard(cardId, currentTurn);
-                    NextTurn();  // 공격 후 다음 턴으로
                 }
                 break;
 
             case CardType.A:
-                // A카드: 무조건 공격
                 if (isUnderAttack)
                 {
-                    // 공격받는 중에 공격카드 제시 -> 먼저 피해 받고 공격
                     Debug.Log($"{GetPartyName(currentTurn)}이(가) 방어를 포기하고 반격합니다!");
                     ApplyFullDamage();
                 }
                 PlayAttackCard(cardId, currentTurn);
-                NextTurn();
                 break;
 
             case CardType.D:
-                // D카드: 무조건 방어
-                if (!isUnderAttack)
-                {
-                    Debug.LogWarning("현재 공격받고 있지 않아 방어 카드를 사용할 수 없습니다!");
-                    return;
-                }
                 PlayDefenseCard(cardId);
-                if (!isUnderAttack)  // 방어 성공 시에만 다음 턴
-                {
-                    NextTurn();
-                }
                 break;
 
             case CardType.S:
-                // S카드: 특수 효과
                 switch (card.specialEffect)
                 {
                     case SpecialEffect.PassAttack:
                         PassAttack();
-                        // PassAttack 내부에서 NextTurn() 호출됨
-                        break;
+                        // PassAttack 내부에서 NextTurn() 호출되므로 여기서는 제거만
+                        GetCurrentHand().RemoveCard(cardId);
+                        Debug.Log($"[PlayCard 끝] {GetPartyName(currentTurn)}당 - 핸드 카드 수: {GetCurrentHand().GetCardCount()}");
+                        return; // 여기서 종료
 
                     case SpecialEffect.ReverseOrder:
                         ReverseOrder();
-                        NextTurn();
                         break;
 
                     case SpecialEffect.AmplifyAttack:
                         AmplifyNextAttack();
-                        NextTurn();
                         break;
                 }
                 break;
         }
 
-        // 사용한 카드는 핸드에서 제거
+        // ===== 카드 제거를 NextTurn() 전에! =====
         GetCurrentHand().RemoveCard(cardId);
-    }
+        Debug.Log($"[PlayCard 끝] {GetPartyName(currentTurn)}당 - 핸드 카드 수: {GetCurrentHand().GetCardCount()}");
 
-    // AI 턴 실행 (을/병 전용)
+        // 이제 턴 넘김
+        NextTurn();
+    }    // AI 턴 실행 (을/병 전용)
     public void ExecuteAITurn()
     {
         if (currentTurn == Party.Player)
@@ -328,11 +339,23 @@ public class CardGameManager : MonoBehaviour
             else changeC += remainingGain;
         }
 
+        // 누적 변화량 기록 
+        totalChangeA += changeA;
+        totalChangeB += changeB;
+        totalChangeC += changeC;
+
         // GameManager를 통해 실제 지지율 변경
         GameManager.Instance.ChangeAllRegionsSupport(changeA, changeB, changeC);
 
         Debug.Log($"지지율 변경: 갑({changeA:+#;-#;0}), 을({changeB:+#;-#;0}), 병({changeC:+#;-#;0})");
+        Debug.Log($"누적 변화: 갑({totalChangeA:+#;-#;0}), 을({totalChangeB:+#;-#;0}), 병({totalChangeC:+#;-#;0})");
     }
+
+    public (int, int, int) GetTotalSupportChange()
+    {
+        return (totalChangeA, totalChangeB, totalChangeC);
+    }
+
 
     // 공격 상태 초기화
     void ClearAttackState()
@@ -347,14 +370,16 @@ public class CardGameManager : MonoBehaviour
     {
         IncrementActionCount(currentTurn);
 
+        // 연속 턴포기 증가 (추가)
+        consecutivePassCount++;
+
         // 공격받고 있는 상태에서 턴 포기 시 전체 데미지
         if (isUnderAttack)
         {
             ApplyFullDamage();
         }
 
-        Debug.Log($"{GetPartyName(currentTurn)}이(가) 턴을 포기했습니다.");
-        // NextTurn()은 호출하는 쪽에서 처리 (ExecuteAITurn 등)
+        Debug.Log($"{GetPartyName(currentTurn)}이(가) 턴을 포기했습니다. (연속 {consecutivePassCount}번)");
     }
 
     // 행동 카운트 증가
@@ -374,10 +399,28 @@ public class CardGameManager : MonoBehaviour
         }
     }
 
-    // 라운드 종료 체크
+    // 라운드 종료 체크 
     public bool IsRoundEnd()
     {
-        return playerActionCount >= 3 && partyBActionCount >= 3 && partyCActionCount >= 3;
+        // 3명 연속 턴포기
+        if (consecutivePassCount >= 3)
+        {
+            Debug.Log("3명 모두 연속 턴포기! 라운드 종료!");
+            return true;
+        }
+
+        // 모든 정당의 카드 소진
+        bool allEmpty = playerHand.GetCardCount() == 0
+                     && partyBHand.GetCardCount() == 0
+                     && partyCHand.GetCardCount() == 0;
+
+        if (allEmpty)
+        {
+            Debug.Log("모든 카드 소진! 라운드 종료!");
+            return true;
+        }
+
+        return false;
     }
 
     // 헬퍼 메소드들
@@ -428,5 +471,74 @@ public class CardGameManager : MonoBehaviour
     public bool IsClockwise()
     {
         return isClockwise;
+    }
+    // 카드 사용 가능 여부 검증 (새 메서드 추가)
+    public string CanUseCard(string cardId)
+    {
+        Card card = CardDatabase.Instance.GetCard(cardId);
+        if (card == null)
+        {
+            return "카드 데이터를 찾을 수 없습니다.";
+        }
+
+        PartyCardHand hand = GetCurrentHand();
+        if (!hand.HasCard(cardId))
+        {
+            return "보유하지 않은 카드입니다.";
+        }
+
+        // D카드는 공격받을 때만 사용 가능
+        if (card.cardType == CardType.D && !isUnderAttack)
+        {
+            return "공격받고 있지 않아 방어 카드를 사용할 수 없습니다.";
+        }
+
+        // S1(공격 넘기기)는 공격받을 때만 사용 가능
+        if (card.cardType == CardType.S && card.specialEffect == SpecialEffect.PassAttack && !isUnderAttack)
+        {
+            return "공격받고 있지 않아 공격 넘기기를 사용할 수 없습니다.";
+        }
+
+        return null; // 사용 가능
+    }
+
+    // 플레이어 카드 사용 (통합 메서드)
+    public bool ExecutePlayerAction(string cardId, out string errorMessage)
+    {
+        errorMessage = null;
+
+        if (currentTurn != Party.Player)
+        {
+            errorMessage = "플레이어의 턴이 아닙니다.";
+            return false;
+        }
+
+        // 카드 사용 가능 여부 검증
+        errorMessage = CanUseCard(cardId);
+        if (errorMessage != null)
+        {
+            return false;
+        }
+
+        // 카드 사용
+        PlayCard(cardId);
+        return true;
+    }
+
+    // 플레이어 턴 포기 (통합 메서드)
+    public bool ExecutePlayerPass(out string errorMessage)
+    {
+        errorMessage = null;
+
+        if (currentTurn != Party.Player)
+        {
+            errorMessage = "플레이어의 턴이 아닙니다.";
+            return false;
+        }
+
+        // 턴 포기 처리
+        PassTurn();
+        NextTurn();
+        return true;
     }
 }

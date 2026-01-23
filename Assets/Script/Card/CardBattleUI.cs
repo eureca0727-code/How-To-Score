@@ -6,6 +6,8 @@ using TMPro;
 
 public class CardBattleUI : MonoBehaviour
 {
+    public static CardBattleUI Instance { get; private set; }  // ← 이것도 추가!
+
     [Header("Game State Display")]
     public TextMeshProUGUI turnInfoText;           // "현재: 갑의 차례"
     public TextMeshProUGUI attackStatusText;       // "을이(가) M1(기자회견)으로 공격 중!"
@@ -41,17 +43,52 @@ public class CardBattleUI : MonoBehaviour
     public float aiTurnDelay = 1.5f;              // AI 턴 딜레이
     public float aiActionDisplayTime = 2f;         // AI 행동 표시 시간
 
+    [Header("Warning Message")]
+    public TextMeshProUGUI warningMessageText;     // 경고 메시지 텍스트
+    public GameObject warningMessagePanel;         // 경고 메시지 패널
+    public float warningDisplayTime = 2f;          // 경고 표시 시간
+
+    [Header("Support Change Display")]
+    public TextMeshProUGUI supportChangeText;  // Inspector에서 방금 연결한 TMP
+
+
+
     // 내부 상태
     private List<GameObject> currentCardButtons = new List<GameObject>();
     private List<GameObject> partyBCardBacks = new List<GameObject>();
     private List<GameObject> partyCCardBacks = new List<GameObject>();
     private bool isProcessingTurn = false;         // 중복 클릭 방지
 
+    void Awake()
+    {
+        // Singleton 설정
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("CardBattleUI의 중복 인스턴스가 감지되었습니다!");
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
+
     void Start()
     {
         // 버튼 이벤트 등록
         if (passButton != null)
             passButton.onClick.AddListener(OnPassButtonClick);
+
+        // 경고 패널 초기 숨김
+        if (warningMessagePanel != null)
+            warningMessagePanel.SetActive(false);
 
         // AI 패널 초기 숨김
         if (aiActionPanel != null)
@@ -68,7 +105,7 @@ public class CardBattleUI : MonoBehaviour
         AddActionLog("=== 카드 배틀 시작 ===");
 
         // ===== AI 카드 분배 추가 =====
-        CardDistributor distributor = FindObjectOfType<CardDistributor>();
+        CardDistributor distributor = FindAnyObjectByType<CardDistributor>();
         if (distributor != null)
         {
             int currentRound = GameManager.Instance.GetCurrentRound();
@@ -86,7 +123,6 @@ public class CardBattleUI : MonoBehaviour
         {
             Debug.LogError("CardDistributor를 찾을 수 없습니다!");
         }
-        // ===== 여기까지 추가 =====
 
         // CardGameManager 라운드 시작
         CardGameManager.Instance.StartRound();
@@ -96,6 +132,10 @@ public class CardBattleUI : MonoBehaviour
 
         // AI 카드 뒷면 표시
         UpdateAICardBacks();
+
+        // 플레이어 카드 버튼 생성 
+        CreatePlayerCardButtons();
+        SetCardButtonsInteractable(false); // 일단 비활성화
 
         // 로그 추가
         string firstPlayer = CardGameManager.Instance.GetPartyName(CardGameManager.Instance.currentTurn);
@@ -144,8 +184,6 @@ public class CardBattleUI : MonoBehaviour
     // 플레이어 턴 처리
     IEnumerator WaitForPlayerAction()
     {
-        // 플레이어 카드 버튼 생성
-        CreatePlayerCardButtons();
 
         // 버튼 활성화
         SetCardButtonsInteractable(true);
@@ -171,40 +209,99 @@ public class CardBattleUI : MonoBehaviour
     {
         if (isProcessingTurn) return;
 
-        isProcessingTurn = true;
-
         Card card = CardDatabase.Instance.GetCard(cardId);
         Debug.Log($"플레이어가 {cardId} 카드를 선택했습니다!");
 
-        // 행동 로그 추가
-        AddActionLog($"갑당: {card.cardName} 사용");
-
         // CardGameManager를 통해 카드 사용
-        CardGameManager.Instance.PlayCard(cardId);
+        string errorMessage;
+        bool success = CardGameManager.Instance.ExecutePlayerAction(cardId, out errorMessage);
 
-        // 카드 버튼 제거
-        ClearPlayerCardButtons();
+        if (success)
+        {
+            isProcessingTurn = true;
+            AddActionLog($"갑당: {card.cardName} 사용");
+
+            // 카드 버튼 제거하지 않고, 사용한 카드만 UI 업데이트
+            UpdatePlayerCardButtons(); 
+        }
+        else
+        {
+            // 경고 메시지 표시
+            ShowWarning(errorMessage);
+            Debug.LogWarning($"카드 사용 실패: {errorMessage}");
+        }
     }
+    // 플레이어 카드 UI 업데이트 (카드 사용 후 갱신)
+    void UpdatePlayerCardButtons()
+    {
+        // 기존 버튼 제거
+        ClearPlayerCardButtons();
 
+        // 현재 핸드의 카드로 다시 생성
+        PartyCardHand playerHand = CardGameManager.Instance.playerHand;
+
+        foreach (string cardId in playerHand.cardsInHand)
+        {
+            GameObject cardButton = Instantiate(cardButtonPrefab, playerCardContainer);
+
+            CardButtonUI cardButtonUI = cardButton.GetComponent<CardButtonUI>();
+            if (cardButtonUI != null)
+            {
+                cardButtonUI.SetCard(cardId);
+                cardButtonUI.onCardClick = OnCardButtonClick;
+            }
+
+            currentCardButtons.Add(cardButton);
+        }
+
+        // 카드 수 업데이트
+        UpdateCardCounts();
+    }
     // 턴 포기 버튼 클릭
     void OnPassButtonClick()
     {
         if (isProcessingTurn) return;
 
-        isProcessingTurn = true;
-
         Debug.Log("플레이어가 턴을 포기했습니다.");
 
-        // 행동 로그 추가
-        AddActionLog("갑당: 턴 포기");
-
         // CardGameManager를 통해 턴 포기
-        CardGameManager.Instance.PassTurn();
-        CardGameManager.Instance.NextTurn();
+        string errorMessage;
+        bool success = CardGameManager.Instance.ExecutePlayerPass(out errorMessage);
 
-        // 카드 버튼 제거
-        ClearPlayerCardButtons();
+        if (success)
+        {
+            isProcessingTurn = true;
+            AddActionLog("갑당: 턴 포기");
+        }
+        else
+        {
+            // 경고 메시지 표시
+            ShowWarning(errorMessage);
+            Debug.LogWarning($"턴 포기 실패: {errorMessage}");
+        }
     }
+
+    // 경고 메시지 표시
+    public void ShowWarning(string message)
+    {
+        if (warningMessagePanel != null)
+            warningMessagePanel.SetActive(true);
+
+        if (warningMessageText != null)
+            warningMessageText.text = message;
+
+        // 일정 시간 후 자동으로 숨김
+        StartCoroutine(HideWarningAfterDelay());
+    }
+
+    IEnumerator HideWarningAfterDelay()
+    {
+        yield return new WaitForSeconds(warningDisplayTime);
+
+        if (warningMessagePanel != null)
+            warningMessagePanel.SetActive(false);
+    }
+
 
     // AI 턴 처리
     IEnumerator ExecuteAITurn()
@@ -295,6 +392,8 @@ public class CardBattleUI : MonoBehaviour
         UpdateAttackStatus();
         UpdateActionCount();
         UpdateCardCounts();
+        UpdateSupportChange(); 
+
     }
 
     // 라운드 정보 업데이트
@@ -308,15 +407,61 @@ public class CardBattleUI : MonoBehaviour
     }
 
     // 턴 정보 업데이트
+    // 턴 정보 업데이트
     void UpdateTurnInfo()
     {
         if (turnInfoText == null) return;
 
         var currentTurn = CardGameManager.Instance.currentTurn;
-        string partyName = CardGameManager.Instance.GetPartyName(currentTurn);
-        string direction = CardGameManager.Instance.IsClockwise() ? "▶" : "◀";
+        bool isClockwise = CardGameManager.Instance.IsClockwise();
 
-        turnInfoText.text = $"{direction} 현재: {partyName}의 차례";
+        string currentParty = CardGameManager.Instance.GetPartyName(currentTurn);
+
+        // 다음 턴 계산
+        string nextParty1, nextParty2;
+        if (isClockwise)
+        {
+            // 갑 -> 을 -> 병
+            if (currentTurn == CardGameManager.Party.Player)
+            {
+                nextParty1 = "을";
+                nextParty2 = "병";
+            }
+            else if (currentTurn == CardGameManager.Party.PartyB)
+            {
+                nextParty1 = "병";
+                nextParty2 = "갑";
+            }
+            else
+            {
+                nextParty1 = "갑";
+                nextParty2 = "을";
+            }
+        }
+        else
+        {
+            // 갑 -> 병 -> 을
+            if (currentTurn == CardGameManager.Party.Player)
+            {
+                nextParty1 = "병";
+                nextParty2 = "을";
+            }
+            else if (currentTurn == CardGameManager.Party.PartyB)
+            {
+                nextParty1 = "갑";
+                nextParty2 = "병";
+            }
+            else
+            {
+                nextParty1 = "을";
+                nextParty2 = "갑";
+            }
+        }
+
+        string direction = isClockwise ? "▶" : "◀";
+
+        // TMP Rich Text로 크기 조절
+        turnInfoText.text = $"{direction} <size=150%><b>{currentParty}</b></size> → <size=80%>{nextParty1}</size> → <size=60%>{nextParty2}</size>";
     }
 
     // 공격 상태 업데이트
@@ -526,5 +671,22 @@ public class CardBattleUI : MonoBehaviour
             Destroy(log);
         }
         actionLogEntries.Clear();
+    }
+    // 지지율 변화 표시
+    void UpdateSupportChange()
+    {
+        if (supportChangeText == null) return;
+
+        var (changeA, changeB, changeC) = CardGameManager.Instance.GetTotalSupportChange();
+
+        supportChangeText.text = $"지지율 변화: 갑({changeA:+#;-#;0}), 을({changeB:+#;-#;0}), 병({changeC:+#;-#;0})";
+
+        // 갑당 지지율 변화에 따른 색상
+        if (changeA > 0)
+            supportChangeText.color = new Color(0.5f, 1f, 0.5f); // 연한 초록
+        else if (changeA < 0)
+            supportChangeText.color = new Color(1f, 0.5f, 0.5f); // 연한 빨강
+        else
+            supportChangeText.color = Color.white;
     }
 }

@@ -137,7 +137,7 @@ public class ResultUI : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // 의석 결과 카드 분배
-        CardDistributor distributor = FindObjectOfType<CardDistributor>();
+        CardDistributor distributor = FindAnyObjectByType<CardDistributor>();
         if (distributor != null)
         {
             distributor.AddSeatRewardCards(partyASeats);

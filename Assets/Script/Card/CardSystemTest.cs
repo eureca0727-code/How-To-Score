@@ -72,7 +72,7 @@ public class CardSystemTest : MonoBehaviour
     void TestPartyCardHand()
     {
         // CardDistributor에서 손패 참조 가져오기
-        CardDistributor distributor = FindObjectOfType<CardDistributor>();
+        CardDistributor distributor = FindAnyObjectByType<CardDistributor>();
         if (distributor == null || distributor.partyBHand == null)
         {
             Debug.LogError("CardDistributor 또는 PartyHand를 찾을 수 없습니다!");
@@ -105,7 +105,7 @@ public class CardSystemTest : MonoBehaviour
 
     void TestCardDistributor()
     {
-        CardDistributor distributor = FindObjectOfType<CardDistributor>();
+        CardDistributor distributor = FindAnyObjectByType<CardDistributor>();
         if (distributor == null)
         {
             Debug.LogError("CardDistributor를 찾을 수 없습니다!");
