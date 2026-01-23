@@ -6,7 +6,7 @@ using TMPro;
 
 public class CardBattleUI : MonoBehaviour
 {
-    public static CardBattleUI Instance { get; private set; }  // ← 이것도 추가!
+    public static CardBattleUI Instance { get; private set; }  
 
     [Header("Game State Display")]
     public TextMeshProUGUI turnInfoText;           // "현재: 갑의 차례"
