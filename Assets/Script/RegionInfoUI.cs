@@ -45,15 +45,36 @@ public class RegionInfoUI : MonoBehaviour
         float totalB = GameManager.Instance.GetTotalPartyBSupport();
         float totalC = GameManager.Instance.GetTotalPartyCSupport();
 
-        barChart.UpdateChart(totalA, totalB, totalC);
-
         int totalPopulation = 120;
+
+        // 퍼센트로 변환 후 int로 변환
+        int percentA = Mathf.RoundToInt((totalA / totalPopulation) * 100f);
+        int percentB = Mathf.RoundToInt((totalB / totalPopulation) * 100f);
+        int percentC = Mathf.RoundToInt((totalC / totalPopulation) * 100f);
+
+        // 반올림 오차 보정 (합이 100이 되도록)
+        int total = percentA + percentB + percentC;
+        if (total != 100)
+        {
+            int diff = 100 - total;
+            // 가장 큰 정당에게 오차 할당
+            if (percentA >= percentB && percentA >= percentC)
+                percentA += diff;
+            else if (percentB >= percentC)
+                percentB += diff;
+            else
+                percentC += diff;
+        }
+
+        // 바 차트에 퍼센트 전달
+        barChart.UpdateChartPercent(percentA, percentB, percentC);
+
         string info = "<size=28><b>전국 통계</b></size>\n\n";
         info += $"총 인구: {totalPopulation}백만 명\n\n";
         info += "정당별 지지자 수:\n\n\n";
-        info += $"정당 갑: {totalA}백만 명\n\n";
-        info += $"정당 을: {totalB}백만 명\n\n";
-        info += $"정당 병: {totalC}백만 명\n";
+        info += $"정당 갑: {totalA:F1}백만 명\n\n";
+        info += $"정당 을: {totalB:F1}백만 명\n\n";
+        info += $"정당 병: {totalC:F1}백만 명\n";
 
         infoText.text = info;
 
@@ -62,9 +83,7 @@ public class RegionInfoUI : MonoBehaviour
         {
             promoteButton.GetComponentInChildren<TextMeshProUGUI>().text = "전국 홍보";
         }
-    }
-
-    // 특정 지역 정보 표시
+    }    // 특정 지역 정보 표시
     public void ShowRegionInfo(Region region)
     {
         panel.SetActive(true);

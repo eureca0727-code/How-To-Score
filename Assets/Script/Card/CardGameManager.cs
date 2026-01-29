@@ -241,10 +241,12 @@ public class CardGameManager : MonoBehaviour
                 switch (card.specialEffect)
                 {
                     case SpecialEffect.PassAttack:
-                        PassAttack();
-                        // PassAttack 내부에서 NextTurn() 호출되므로 여기서는 제거만
+                        // PassAttack 전에 카드 제거 (턴이 바뀌기 전!)
                         GetCurrentHand().RemoveCard(cardId);
-                        Debug.Log($"[PlayCard 끝] {GetPartyName(currentTurn)}당 - 핸드 카드 수: {GetCurrentHand().GetCardCount()}");
+                        Debug.Log($"[PlayCard - S1] {GetPartyName(currentTurn)}당 - 핸드 카드 수: {GetCurrentHand().GetCardCount()}");
+
+                        PassAttack();
+                        // PassAttack 내부에서 NextTurn() 호출됨
                         return; // 여기서 종료
 
                     case SpecialEffect.ReverseOrder:
@@ -450,7 +452,7 @@ public class CardGameManager : MonoBehaviour
 
         return false;
     }
-
+    
     // 헬퍼 메소드들
     // 현재 턴의 카드 핸드 반환
     public PartyCardHand GetCurrentHand()

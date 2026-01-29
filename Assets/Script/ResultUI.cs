@@ -152,20 +152,28 @@ public class ResultUI : MonoBehaviour
         // 현재 라운드 가져오기
         int currentRound = GameManager.Instance.GetCurrentRound();
 
-        // 성공/실패 판정 (2라운드부터만 0석일 때 실패)
-        bool isSuccess = (currentRound == 1) ? true : (partyASeats > 0);
+        // 1라운드는 0석이어도 생존하지만, 메시지는 "실패"로 표시
+        bool isSuccess = (partyASeats > 0);
+        bool canContinue = (currentRound == 1) || (partyASeats > 0);
 
         if (isSuccess)
         {
             statusText.text = "의석 획득 성공";
-            statusText.color = Color.red;
+            statusText.color = Color.green; // 초록색으로 변경 권장
         }
         else
         {
-            statusText.text = "의석 획득 실패";
-            statusText.color = Color.red;
+            if (canContinue)
+            {
+                statusText.text = "의석 획득 실패 (1라운드 특별 생존)";
+                statusText.color = Color.yellow;
+            }
+            else
+            {
+                statusText.text = "의석 획득 실패 - 게임 오버";
+                statusText.color = Color.red;
+            }
         }
-
         // 1초 대기 후 버튼 표시
         yield return new WaitForSeconds(1f);
 

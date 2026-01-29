@@ -148,7 +148,7 @@ public class Region : MonoBehaviour
     }
 
     // 각 정당의 지지율을 동시에 변경
-public void ChangeSupportRate(int amountA, int amountB, int amountC)
+    public void ChangeSupportRate(int amountA, int amountB, int amountC)
     {
         // 변화량 합이 0인지 확인
         if (amountA + amountB + amountC != 0)
@@ -157,15 +157,84 @@ public void ChangeSupportRate(int amountA, int amountB, int amountC)
             return;
         }
 
-        partyA.supportRate += amountA;
-        partyB.supportRate += amountB;
-        partyC.supportRate += amountC;
+        // 임시로 변화량 적용
+        float tempA = partyA.supportRate + amountA;
+        float tempB = partyB.supportRate + amountB;
+        float tempC = partyC.supportRate + amountC;
 
-        // 0~100 범위 제한
+        // 음수 처리: 0 미만으로 떨어진 값 보정
+        float excessA = Mathf.Min(0, tempA); // 음수면 그 값, 0 이상이면 0
+        float excessB = Mathf.Min(0, tempB);
+        float excessC = Mathf.Min(0, tempC);
+
+        float totalExcess = -(excessA + excessB + excessC); // 음수를 양수로 전환
+
+        // 0으로 보정
+        tempA = Mathf.Max(0, tempA);
+        tempB = Mathf.Max(0, tempB);
+        tempC = Mathf.Max(0, tempC);
+
+        // 초과분을 양수인 정당들에게 비례 배분
+        if (totalExcess > 0)
+        {
+            // 양수인 정당들의 변화량 합계
+            float positiveSum = 0;
+            if (tempA > partyA.supportRate) positiveSum += (tempA - partyA.supportRate);
+            if (tempB > partyB.supportRate) positiveSum += (tempB - partyB.supportRate);
+            if (tempC > partyC.supportRate) positiveSum += (tempC - partyC.supportRate);
+
+            // 비례 배분 (양수 변화가 있는 정당들에게만)
+            if (positiveSum > 0)
+            {
+                if (tempA > partyA.supportRate)
+                {
+                    float ratio = (tempA - partyA.supportRate) / positiveSum;
+                    tempA -= totalExcess * ratio;
+                }
+                if (tempB > partyB.supportRate)
+                {
+                    float ratio = (tempB - partyB.supportRate) / positiveSum;
+                    tempB -= totalExcess * ratio;
+                }
+                if (tempC > partyC.supportRate)
+                {
+                    float ratio = (tempC - partyC.supportRate) / positiveSum;
+                    tempC -= totalExcess * ratio;
+                }
+            }
+            else
+            {
+                // 모든 정당이 감소하는 경우: 초과분을 균등 배분
+                tempA += totalExcess / 3f;
+                tempB += totalExcess / 3f;
+                tempC += totalExcess / 3f;
+            }
+        }
+
+        // 최종 적용 (반올림 후 int로 변환)
+        partyA.supportRate = Mathf.RoundToInt(tempA);
+        partyB.supportRate = Mathf.RoundToInt(tempB);
+        partyC.supportRate = Mathf.RoundToInt(tempC);
+
+        // 반올림 오차 보정 (합이 정확히 100이 되도록)
+        int total = partyA.supportRate + partyB.supportRate + partyC.supportRate;
+        if (total != 100)
+        {
+            int diff = 100 - total;
+            // 가장 큰 정당에게 오차 할당
+            if (partyA.supportRate >= partyB.supportRate && partyA.supportRate >= partyC.supportRate)
+                partyA.supportRate += diff;
+            else if (partyB.supportRate >= partyC.supportRate)
+                partyB.supportRate += diff;
+            else
+                partyC.supportRate += diff;
+        }
+
+        // 최종 0~100 범위 제한
         partyA.supportRate = Mathf.Clamp(partyA.supportRate, 0, 100);
         partyB.supportRate = Mathf.Clamp(partyB.supportRate, 0, 100);
         partyC.supportRate = Mathf.Clamp(partyC.supportRate, 0, 100);
+
+        Debug.Log($"{regionName} 지지율 변경 후: 갑({partyA.supportRate}%), 을({partyB.supportRate}%), 병({partyC.supportRate}%) = {partyA.supportRate + partyB.supportRate + partyC.supportRate}%");
     }
-
-
 }
