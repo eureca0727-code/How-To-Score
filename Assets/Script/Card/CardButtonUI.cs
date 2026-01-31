@@ -102,13 +102,13 @@
                 {
                     if (attackCard.fullDefenseCards.Contains(cardId))
                     {
-                        defenseInfoText.text = "✓ 완전 방어";
+                        defenseInfoText.text = "완전 방어";
                         defenseInfoText.color = Color.green;
                         defenseInfoText.gameObject.SetActive(true);
                     }
                     else if (attackCard.partialDefenseCards.Contains(cardId))
                     {
-                        defenseInfoText.text = "△ 부분 방어";
+                        defenseInfoText.text = "부분 방어";
                         defenseInfoText.color = Color.yellow;
                         defenseInfoText.gameObject.SetActive(true);
                     }
