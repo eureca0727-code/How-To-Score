@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour
             {
                 DebugUI.Instance.gameObject.SetActive(!DebugUI.Instance.gameObject.activeSelf);
             }
-        } // 디버그패널(지지도확인용)
+        }
     }
     public void ShowMapView()
     {

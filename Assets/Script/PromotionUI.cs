@@ -303,7 +303,6 @@ public class PromotionUI : MonoBehaviour
         // Quest 바로 시작
         questPanel.SetActive(true);
         StartQuest();
-        Debug.Log("현재 이함수");
     }
 
 
@@ -654,7 +653,9 @@ public class PromotionUI : MonoBehaviour
                 Debug.Log($"[PromotionUI] Quest 보상 카드: {questCardReward}");
             }
 
-            // 의석 보상 카드는 ResultUI에서 처리하므로 여기서는 제외
+            // 의석 보상 카드 추가 (TODO: 나중에 구현)
+            // int partyASeats = VotingUI.Instance.GetLastPartyASeats();
+            // distributor.AddSeatRewardCards(partyASeats);
 
             distributor.FinalizePlayerCards();
         }

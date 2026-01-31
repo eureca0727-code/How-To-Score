@@ -126,8 +126,6 @@ public class RegionInfoUI : MonoBehaviour
         if (UIManager.Instance != null)
         {
             UIManager.Instance.ShowPromotionView(currentRegion);
-            Debug.Log
-                ("È«º¸ ¹öÆ°2 Å¬¸¯µÊ");
         }
     }
 
